@@ -1,6 +1,7 @@
 //
 //  MacControlCenterSliderImageProtocol.swift
-//  MacControlCenterSlider
+//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
@@ -10,7 +11,8 @@ public protocol MacControlCenterSliderImageProtocol {
     func staticImage() -> Image?
     
     /// Return an image conditionally based on slider value.
-    func image(for value: CGFloat, oldValue: CGFloat?, force: Bool) -> MacControlCenterSliderImageUpdate?
+    func image(for value: CGFloat, oldValue: CGFloat?, force: Bool)
+        -> MacControlCenterSliderImageUpdate?
     
     /// Transform the image.
     func transform(image: Image, for value: CGFloat) -> AnyView?
@@ -23,7 +25,11 @@ extension MacControlCenterSliderImageProtocol {
     }
     
     // Default implementation.
-    public func image(for value: CGFloat, oldValue: CGFloat?, force: Bool) -> MacControlCenterSliderImageUpdate? {
+    public func image(
+        for value: CGFloat,
+        oldValue: CGFloat?,
+        force: Bool
+    ) -> MacControlCenterSliderImageUpdate? {
         nil
     }
     
@@ -49,7 +55,7 @@ extension MacControlCenterSliderImageProtocol {
 
 // MARK: Types
 
-/// Type returned by ``MacControlCenterSliderImageProtocol/image(for:oldValue:)``.
+/// Type returned by ``MacControlCenterSliderImageProtocol/image(for:oldValue:force:)-3y6w9``.
 public enum MacControlCenterSliderImageUpdate {
     case noChange
     case newImage(Image)

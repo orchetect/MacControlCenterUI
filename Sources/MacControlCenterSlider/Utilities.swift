@@ -1,6 +1,7 @@
 //
 //  Utilities.swift
-//  MacControlCenterSlider
+//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI

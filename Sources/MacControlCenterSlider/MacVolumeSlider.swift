@@ -1,6 +1,7 @@
 //
 //  MacVolumeSlider.swift
-//  MacControlCenterSlider
+//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
@@ -13,11 +14,18 @@ public struct MacVolumeSlider: View {
     @Binding public var value: CGFloat
     
     public var body: some View {
-        MacControlCenterSlider(value: $value, image: VolumeSliderIcon())
+        MacControlCenterSlider(
+            value: $value,
+            image: VolumeSliderIcon()
+        )
     }
     
     private struct VolumeSliderIcon: MacControlCenterSliderImageProtocol {
-        func image(for value: CGFloat, oldValue: CGFloat?, force: Bool = false) -> MacControlCenterSliderImageUpdate? {
+        func image(
+            for value: CGFloat,
+            oldValue: CGFloat?,
+            force: Bool = false
+        ) -> MacControlCenterSliderImageUpdate? {
             if newlyEntered(value: value, oldValue: oldValue, in: Level.off.range, force: force) {
                 return .newImage(Level.off.image)
             }
@@ -51,7 +59,7 @@ public struct MacVolumeSlider: View {
                         .frame(width: 22, alignment: .center)
                 )
             } else {
-                return AnyView (
+                return AnyView(
                     img
                         .offset(x: 4, y: 0)
                 )
@@ -119,8 +127,8 @@ public struct MacVolumeSlider: View {
     }
 }
 
-private extension Image {
-    static let speakerOff: Self = {
+extension Image {
+    fileprivate static let speakerOff: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.slash.fill")
         } else {
@@ -129,7 +137,7 @@ private extension Image {
         }
     }()
     
-    static let speakerVol1: Self = {
+    fileprivate static let speakerVol1: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.1.fill")
         } else {
@@ -138,7 +146,7 @@ private extension Image {
         }
     }()
     
-    static let speakerVol2: Self = {
+    fileprivate static let speakerVol2: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.2.fill")
         } else {
@@ -147,7 +155,7 @@ private extension Image {
         }
     }()
     
-    static let speakerVol3: Self = {
+    fileprivate static let speakerVol3: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.3.fill")
         } else {

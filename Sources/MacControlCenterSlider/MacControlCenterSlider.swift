@@ -1,13 +1,13 @@
 //
 //  MacControlCenterSlider.swift
-//  MacControlCenterSlider
+//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
 
 public struct MacControlCenterSlider<SliderImage>: View
-where SliderImage: MacControlCenterSliderImageProtocol
-{
+where SliderImage: MacControlCenterSliderImageProtocol {
     // MARK: Public Properties
     
     /// Value (0.0 ... 1.0).
@@ -33,8 +33,8 @@ where SliderImage: MacControlCenterSliderImageProtocol
         value: Binding<CGFloat>,
         image: @autoclosure () -> Image
     ) where SliderImage == StaticSliderImage {
-        self._value = value
-        self.sliderImage = StaticSliderImage(image())
+        _value = value
+        sliderImage = StaticSliderImage(image())
     }
     
     @_disfavoredOverload
@@ -42,8 +42,8 @@ where SliderImage: MacControlCenterSliderImageProtocol
         value: Binding<CGFloat>,
         image: @autoclosure () -> SliderImage
     ) {
-        self._value = value
-        self.sliderImage = image()
+        _value = value
+        sliderImage = image()
     }
     
     func fgColor(colorScheme: ColorScheme) -> Color {
@@ -53,6 +53,7 @@ where SliderImage: MacControlCenterSliderImageProtocol
         @unknown default: return Color(NSColor.darkGray)
         }
     }
+
     func bgColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
         case .light: return Color(white: 0.8)
@@ -60,6 +61,7 @@ where SliderImage: MacControlCenterSliderImageProtocol
         @unknown default: return Color(white: 0.5)
         }
     }
+
     func borderColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
         case .light: return Color(white: 0.5)
@@ -146,7 +148,8 @@ where SliderImage: MacControlCenterSliderImageProtocol
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
-                        let calc = (value.location.x - (Self.sliderHeight / 2)) / (geometry.size.width - Self.sliderHeight)
+                        let calc = (value.location.x - (Self.sliderHeight / 2)) /
+                            (geometry.size.width - Self.sliderHeight)
                         let newValue = min(max(0.0, calc), 1.0) // clamp
                         // assign only if value changed
                         if self.value != newValue {
@@ -231,7 +234,10 @@ public struct StaticSliderImage: MacControlCenterSliderImageProtocol {
         img
     }
     
-    public func image(for value: CGFloat, oldValue: CGFloat?) -> MacControlCenterSliderImageUpdate? {
+    public func image(
+        for value: CGFloat,
+        oldValue: CGFloat?
+    ) -> MacControlCenterSliderImageUpdate? {
         nil
     }
 }
