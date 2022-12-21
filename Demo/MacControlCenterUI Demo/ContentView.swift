@@ -20,9 +20,10 @@ struct ContentView: View {
             Spacer()
             
             if #available(macOS 11.0, *) {
-                MacControlCenterPanelView(label: "Display") {
+                MacControlCenterPanelView {
                     MacControlCenterSlider(
                         value: $brightnessLevel,
+                        label: "Display",
                         image: Image(systemName: "sun.max.fill")
                     )
                     .frame(minWidth: sliderWidth)
@@ -37,8 +38,8 @@ struct ContentView: View {
             
             Spacer()
             
-            MacControlCenterPanelView(label: "Sound") {
-                MacControlCenterVolumeSlider(value: $volumeLevel)
+            MacControlCenterPanelView {
+                MacControlCenterVolumeSlider(value: $volumeLevel, label: "Sound")
                     .frame(minWidth: sliderWidth)
             }
             .frame(height: 64)

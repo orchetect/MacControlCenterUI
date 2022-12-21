@@ -12,14 +12,17 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MacControlCenterVolumeSlider: View {
     @Binding public var value: CGFloat
+    public var label: String?
     
-    public init(value: Binding<CGFloat>) {
+    public init(value: Binding<CGFloat>, label: String? = "") {
         _value = value
+        self.label = label
     }
     
     public var body: some View {
         MacControlCenterSlider(
             value: $value,
+            label: label,
             image: VolumeSliderIcon()
         )
     }

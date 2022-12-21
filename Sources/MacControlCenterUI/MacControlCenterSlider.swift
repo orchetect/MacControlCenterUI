@@ -17,6 +17,8 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     /// Value (0.0 ... 1.0).
     @Binding public var value: CGFloat
     
+    public var label: String?
+    
     // MARK: Environment
     
     @Environment(\.colorScheme) private var colorScheme
@@ -37,18 +39,22 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     
     public init(
         value: Binding<CGFloat>,
+        label: String? = "",
         image: @autoclosure () -> Image
     ) where SliderImage == StaticSliderImage {
         _value = value
+        self.label = label
         sliderImage = StaticSliderImage(image())
     }
     
     @_disfavoredOverload
     public init(
         value: Binding<CGFloat>,
+        label: String? = "",
         image: @autoclosure () -> SliderImage
     ) {
         _value = value
+        self.label = label
         sliderImage = image()
     }
     
@@ -77,8 +83,22 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     }
     
     public var body: some View {
+        VStack(spacing: 8) {
+            if let label = label {
+                HStack {
+                    Text("\(label)")
+                        .font(.system(size: 12, weight: .semibold))
+                    Spacer()
+                }
+            }
+            dynamicImageBody
+        }
+    }
+    
+    @ViewBuilder
+    public var dynamicImageBody: some View {
         if #available(macOS 11, *) {
-            mainBody
+            sliderBody
                 .onChange(of: value) { _ in
                     updateImage(fgColor: fgColor(colorScheme: colorScheme))
                 }
@@ -89,12 +109,12 @@ where SliderImage: MacControlCenterSliderImageProtocol {
         } else {
             // on macOS 10.15, a non-static image will not be able to change dynamically
             // from changes to `value` externally
-            mainBody
+            sliderBody
         }
     }
     
     @ViewBuilder
-    public var mainBody: some View {
+    public var sliderBody: some View {
         let fgColor = fgColor(colorScheme: colorScheme)
         let bgColor = bgColor(colorScheme: colorScheme)
         let borderColor = borderColor(colorScheme: colorScheme)
