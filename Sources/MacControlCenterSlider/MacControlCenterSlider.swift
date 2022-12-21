@@ -94,10 +94,14 @@ where SliderImage: MacControlCenterSliderImageProtocol {
         let borderColor = borderColor(colorScheme: colorScheme)
         
         GeometryReader { geometry in
-            let progressRange = Self.sliderHeight / 2 ...
-            geometry.size.width - (Self.sliderHeight / 2)
-            let sliderRange = 0.0 ... geometry.size.width - Self.sliderHeight
-            let fadeArea = (geometry.size.width / Self.sliderHeight) / 2
+            let progressRangeLower: CGFloat = Self.sliderHeight / 2
+            let progressRangeUpper: CGFloat = geometry.size.width - (Self.sliderHeight / 2)
+            let progressRange = progressRangeLower ... progressRangeUpper.clamped(to: progressRangeLower...)
+            
+            let sliderRangeLower: CGFloat = 0.0
+            let sliderRangeUpper: CGFloat = geometry.size.width - Self.sliderHeight
+            let sliderRange = sliderRangeLower ... sliderRangeUpper.clamped(to: sliderRangeLower...)
+            let fadeArea: CGFloat = (geometry.size.width / Self.sliderHeight) / 2
             
             ZStack(alignment: .center) {
                 Rectangle()

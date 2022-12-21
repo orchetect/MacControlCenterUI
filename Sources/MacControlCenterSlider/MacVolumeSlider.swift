@@ -13,6 +13,10 @@ import SwiftUI
 public struct MacVolumeSlider: View {
     @Binding public var value: CGFloat
     
+    public init(value: Binding<CGFloat>) {
+        _value = value
+    }
+    
     public var body: some View {
         MacControlCenterSlider(
             value: $value,
