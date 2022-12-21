@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let contentView = ContentView()
         
         window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 320, height: 500),
+            contentRect: NSRect(x: 0, y: 0, width: 320, height: 400),
             styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
             backing: .buffered,
             defer: false

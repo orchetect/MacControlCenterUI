@@ -16,7 +16,11 @@ public struct MacControlCenterPanelView<Content: View>: View {
     public var shadow: Bool
     public var content: () -> Content
     
+    // MARK: Environment
+    
     @Environment(\.colorScheme) private var colorScheme
+    
+    // MARK: Init
     
     public init(
         shadow: Bool = true,
@@ -29,7 +33,7 @@ public struct MacControlCenterPanelView<Content: View>: View {
     public var body: some View {
         let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.5)
         
-        ZStack {
+        ZStack(alignment: .top) {
             if shadow {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(panelColor)
@@ -53,5 +57,6 @@ public struct MacControlCenterPanelView<Content: View>: View {
             }
             .padding(10)
         }
+        //.fixedSize()
     }
 }

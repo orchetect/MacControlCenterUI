@@ -17,8 +17,6 @@ struct ContentView: View {
     
     var body: some View {
         MacControlCenterPanelView {
-            Spacer()
-            
             if #available(macOS 11.0, *) {
                 MacControlCenterPanelView {
                     MacControlCenterSlider(
@@ -36,7 +34,7 @@ struct ContentView: View {
                     .font(.system(size: 12, design: .monospaced))
             }
             
-            Spacer()
+            Spacer().frame(height: 20)
             
             MacControlCenterPanelView {
                 MacControlCenterVolumeSlider(value: $volumeLevel, label: "Sound")
@@ -49,7 +47,7 @@ struct ContentView: View {
                     .font(.system(size: 12, design: .monospaced))
             }
             
-            Spacer()
+            Spacer().frame(height: 20)
             
             MacControlCenterPanelView {
                 HStack {
@@ -60,9 +58,9 @@ struct ContentView: View {
                         ) {
                             Text("Toggle Button")
                         }
+                        Spacer()
+                        Toggle("On", isOn: $buttonState)
                     }
-                    Spacer()
-                    Toggle("On", isOn: $buttonState)
                 }
                 
                 HStack {
@@ -76,10 +74,9 @@ struct ContentView: View {
                             print("Clicked.")
                             NSSound.beep()
                         }
-                        
+                        Spacer()
+                        Text("(Static On)")
                     }
-                    Spacer()
-                    Text("(Static On)")
                 }
                 
                 HStack {
@@ -92,13 +89,11 @@ struct ContentView: View {
                             NSSound.beep()
                         }
                         Text("Text Not Part of Button")
+                        Spacer()
+                        Text("(Static Off)")
                     }
-                    Spacer()
-                    Text("(Static Off)")
                 }
             }
-            
-            Spacer()
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)

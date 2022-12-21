@@ -55,7 +55,7 @@ public struct MacControlCenterCircleButton<Content: View>: View {
     public var body: some View {
         if label != nil {
             hitTestBody
-                .frame(minHeight: circleSize)
+                .frame(height: circleSize)
         } else {
             hitTestBody
                 .frame(width: circleSize, height: circleSize)
