@@ -10,9 +10,10 @@ import MacControlCenterUI
 struct ContentView: View {
     @State var volumeLevel: CGFloat = 0.75
     @State var brightnessLevel: CGFloat = 0.5
-    @State var button1State: Bool = false
-    @State var button2State: Bool = false
-    @State var button3State: Bool = false
+    @State var button1State: Bool = true
+    @State var button2State: Bool = true
+    @State var button3State: Bool = true
+    @State var button4State: Bool = true
     
     /// Based on macOS Control Center slider width
     let sliderWidth: CGFloat = 270
@@ -91,6 +92,18 @@ struct ContentView: View {
                 HStack {
                     HStack {
                         MacControlCenterCircleButton(
+                            isOn: $button4State,
+                            image: .macControlCenterSpeaker
+                        )
+                        Text("Text Not Clickable")
+                        Spacer()
+                        Toggle("On", isOn: $button4State)
+                    }
+                }
+                
+                HStack {
+                    HStack {
+                        MacControlCenterCircleButton(
                             isOn: .constant(true),
                             image: .macControlCenterSpeaker
                         ) {
@@ -115,21 +128,6 @@ struct ContentView: View {
                             print("Clicked.")
                             NSSound.beep()
                         }
-                        Spacer()
-                        Text("(Static Off)")
-                    }
-                }
-                
-                HStack {
-                    HStack {
-                        MacControlCenterCircleButton(
-                            isOn: .constant(false),
-                            image: .macControlCenterSpeaker
-                        ) { _ in
-                            print("Clicked.")
-                            NSSound.beep()
-                        }
-                        Text("Text Not Clickable")
                         Spacer()
                         Text("(Static Off)")
                     }
