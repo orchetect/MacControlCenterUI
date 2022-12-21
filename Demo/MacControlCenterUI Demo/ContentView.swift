@@ -16,7 +16,7 @@ struct ContentView: View {
     let sliderWidth: CGFloat = 270
     
     var body: some View {
-        VStack(spacing: 20) {
+        MacControlCenterPanelView {
             Spacer()
             
             if #available(macOS 11.0, *) {
