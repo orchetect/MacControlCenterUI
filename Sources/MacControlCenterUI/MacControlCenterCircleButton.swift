@@ -98,9 +98,21 @@ public struct MacControlCenterCircleButton<Content: View>: View {
     
     @ViewBuilder
     public var circleBody: some View {
-        let buttonBackColor = isOn
-            ? Color(NSColor.controlAccentColor)
-            : Color(NSColor.controlColor)
+        let buttonBackColor: Color = {
+            switch isOn {
+            case true:
+                return Color(NSColor.controlAccentColor)
+            case false:
+                switch colorScheme {
+                case .dark:
+                    return Color(NSColor.controlColor)
+                case .light:
+                    return Color(white: 0.75)
+                @unknown default:
+                    return Color(NSColor.controlColor)
+                }
+            }
+        }()
         
         let buttonForeColor: Color = {
             switch colorScheme {
@@ -123,9 +135,15 @@ public struct MacControlCenterCircleButton<Content: View>: View {
                 .foregroundColor(buttonForeColor)
             
             if isMouseDown {
-                Circle()
-                    .foregroundColor(.white)
-                    .opacity(0.08)
+                if colorScheme == .dark {
+                    Circle()
+                        .foregroundColor(.white)
+                        .opacity(0.1)
+                } else {
+                    Circle()
+                        .foregroundColor(.black)
+                        .opacity(0.1)
+                }
             }
         }
         .frame(width: circleSize, height: circleSize)
