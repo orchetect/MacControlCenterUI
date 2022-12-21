@@ -15,6 +15,8 @@ public struct MacControlCenterCircleButton<Content: View>: View {
     
     @Binding public var isOn: Bool
     public var image: Image
+    public var color: Color
+    public var invertForeground: Bool
     public var label: (() -> Content)?
     public var onChangeBlock: (Bool) -> Void
     
@@ -31,10 +33,14 @@ public struct MacControlCenterCircleButton<Content: View>: View {
     
     public init(
         isOn: Binding<Bool>,
+        color: Color = Color(NSColor.controlAccentColor),
+        invertForeground: Bool = false,
         image: Image,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where Content == EmptyView {
         self._isOn = isOn
+        self.color = color
+        self.invertForeground = invertForeground
         self.image = image
         self.label = nil
         self.onChangeBlock = onChangeBlock
@@ -42,11 +48,15 @@ public struct MacControlCenterCircleButton<Content: View>: View {
     
     public init(
         isOn: Binding<Bool>,
+        color: Color = Color(NSColor.controlAccentColor),
+        invertForeground: Bool = false,
         image: Image,
         @ViewBuilder _ label: @escaping () -> Content,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) {
         self._isOn = isOn
+        self.color = color
+        self.invertForeground = invertForeground
         self.image = image
         self.label = label
         self.onChangeBlock = onChangeBlock
@@ -101,7 +111,7 @@ public struct MacControlCenterCircleButton<Content: View>: View {
         let buttonBackColor: Color = {
             switch isOn {
             case true:
-                return Color(NSColor.controlAccentColor)
+                return color
             case false:
                 switch colorScheme {
                 case .dark:
@@ -115,13 +125,20 @@ public struct MacControlCenterCircleButton<Content: View>: View {
         }()
         
         let buttonForeColor: Color = {
-            switch colorScheme {
-            case .dark:
-                return isOn ? Color(NSColor.selectedMenuItemTextColor) : Color(white: 0.85)
-            case .light:
-                return isOn ? Color(NSColor.selectedMenuItemTextColor) : .black
-            @unknown default:
-                return Color(NSColor.selectedMenuItemTextColor)
+            switch isOn {
+            case true:
+                return invertForeground
+                    ? Color(NSColor.textBackgroundColor)
+                    : Color(NSColor.textColor)
+            case false:
+                switch colorScheme {
+                case .dark:
+                    return Color(white: 0.85)
+                case .light:
+                    return .black
+                @unknown default:
+                    return Color(NSColor.selectedMenuItemTextColor)
+                }
             }
         }()
         

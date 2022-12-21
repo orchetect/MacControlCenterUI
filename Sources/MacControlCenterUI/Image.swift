@@ -47,11 +47,21 @@ extension Image {
     
     // MARK: Circle Button Images
     
-    public static let macControlCenterCircleButtonSpeaker: Self = {
+    public static let macControlCenterSpeaker: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.2.fill")
         } else {
             let img = NSImage(named: NSImage.touchBarAudioOutputVolumeMediumTemplateName) ?? .init()
+            return Image(nsImage: img)
+        }
+    }()
+    
+    public static let macControlCenterDisplayBrightness: Self = {
+        if #available(macOS 11, *) {
+            return Image(systemName: "sun.max.fill")
+        } else {
+            // TODO: this is a temporary placeholder, needs actual image
+            let img = NSImage(named: NSImage.touchBarAddDetailTemplateName) ?? .init()
             return Image(nsImage: img)
         }
     }()

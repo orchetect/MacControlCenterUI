@@ -10,7 +10,9 @@ import MacControlCenterUI
 struct ContentView: View {
     @State var volumeLevel: CGFloat = 0.75
     @State var brightnessLevel: CGFloat = 0.5
-    @State var buttonState: Bool = false
+    @State var button1State: Bool = false
+    @State var button2State: Bool = false
+    @State var button3State: Bool = false
     
     /// Based on macOS Control Center slider width
     let sliderWidth: CGFloat = 270
@@ -22,7 +24,7 @@ struct ContentView: View {
                     MacControlCenterSlider(
                         value: $brightnessLevel,
                         label: "Display",
-                        image: Image(systemName: "sun.max.fill")
+                        image: .macControlCenterDisplayBrightness
                     )
                     .frame(minWidth: sliderWidth)
                 }
@@ -51,25 +53,48 @@ struct ContentView: View {
             
             MacControlCenterPanel {
                 HStack {
-                    HStack {
-                        MacControlCenterCircleButton(
-                            isOn: $buttonState,
-                            image: .macControlCenterCircleButtonSpeaker
-                        ) {
-                            Text("Toggle Button")
-                        }
-                        Spacer()
-                        Toggle("On", isOn: $buttonState)
+                    MacControlCenterCircleButton(
+                        isOn: $button1State,
+                        image: .macControlCenterSpeaker
+                    ) {
+                        Text("Toggle Button")
                     }
+                    Spacer()
+                    Toggle("On", isOn: $button1State)
+                }
+                
+                HStack {
+                    MacControlCenterCircleButton(
+                        isOn: $button2State,
+                        color: .white,
+                        invertForeground: true,
+                        image: .macControlCenterSpeaker
+                    ) {
+                        Text("Toggle Button (White)")
+                    }
+                    Spacer()
+                    Toggle("On", isOn: $button2State)
+                }
+                
+                HStack {
+                    MacControlCenterCircleButton(
+                        isOn: $button3State,
+                        color: .orange,
+                        image: .macControlCenterDisplayBrightness
+                    ) {
+                        Text("Toggle Button (Orange)")
+                    }
+                    Spacer()
+                    Toggle("On", isOn: $button3State)
                 }
                 
                 HStack {
                     HStack {
                         MacControlCenterCircleButton(
                             isOn: .constant(true),
-                            image: .macControlCenterCircleButtonSpeaker
+                            image: .macControlCenterSpeaker
                         ) {
-                            Text("Text Part of Button")
+                            Text("Button")
                         } onChange: { _ in
                             print("Clicked.")
                             NSSound.beep()
@@ -83,12 +108,28 @@ struct ContentView: View {
                     HStack {
                         MacControlCenterCircleButton(
                             isOn: .constant(false),
-                            image: .macControlCenterCircleButtonSpeaker
+                            image: .macControlCenterSpeaker
+                        ) {
+                            Text("Button")
+                        } onChange: { _ in
+                            print("Clicked.")
+                            NSSound.beep()
+                        }
+                        Spacer()
+                        Text("(Static Off)")
+                    }
+                }
+                
+                HStack {
+                    HStack {
+                        MacControlCenterCircleButton(
+                            isOn: .constant(false),
+                            image: .macControlCenterSpeaker
                         ) { _ in
                             print("Clicked.")
                             NSSound.beep()
                         }
-                        Text("Text Not Part of Button")
+                        Text("Text Not Clickable")
                         Spacer()
                         Text("(Static Off)")
                     }
