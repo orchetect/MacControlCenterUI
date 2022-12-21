@@ -127,9 +127,18 @@ public struct MacControlCenterCircleButton<Content: View>: View {
         let buttonForeColor: Color = {
             switch isOn {
             case true:
-                return invertForeground
-                    ? Color(NSColor.textBackgroundColor)
-                    : Color(NSColor.textColor)
+                switch colorScheme {
+                case .dark:
+                    return invertForeground
+                        ? Color(NSColor.textBackgroundColor)
+                        : Color(NSColor.textColor)
+                case .light:
+                    return invertForeground
+                        ? Color(NSColor.textColor)
+                        : Color(NSColor.textBackgroundColor)
+                @unknown default:
+                    return Color(NSColor.textColor)
+                }
             case false:
                 switch colorScheme {
                 case .dark:
