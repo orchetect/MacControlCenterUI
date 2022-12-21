@@ -28,7 +28,7 @@ public struct MacControlCenterPanelView<Content: View>: View {
     }
     
     public var body: some View {
-        let panelColor = Color(NSColor.windowBackgroundColor)
+        let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.5)
         
         ZStack {
             if shadow {
