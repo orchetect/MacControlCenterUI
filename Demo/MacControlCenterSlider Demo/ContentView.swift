@@ -8,7 +8,8 @@ import SwiftUI
 import MacControlCenterSlider
 
 struct ContentView: View {
-    @State var volumeLevel: CGFloat = 0.5
+    @State var volumeLevel: CGFloat = 0.75
+    @State var brightnessLevel: CGFloat = 0.5
     
     /// Based on macOS Control Center slider width
     let sliderWidth: CGFloat = 270
@@ -20,7 +21,7 @@ struct ContentView: View {
             if #available(macOS 11.0, *) {
                 PanelView(label: "Display", shadow: false) {
                     MacControlCenterSlider(
-                        value: $volumeLevel,
+                        value: $brightnessLevel,
                         image: Image(systemName: "sun.max.fill")
                     )
                     .frame(minWidth: sliderWidth)
@@ -28,13 +29,23 @@ struct ContentView: View {
                 .frame(height: 64)
             }
             
+            Slider(value: $brightnessLevel) {
+                Text("\(brightnessLevel)")
+                    .font(.system(size: 12, design: .monospaced))
+            }
+            
+            Spacer()
+            
             PanelView(label: "Sound", shadow: true) {
                 MacVolumeSlider(value: $volumeLevel)
                     .frame(minWidth: sliderWidth)
             }
             .frame(height: 64)
             
-            Text("Level: \(volumeLevel)")
+            Slider(value: $volumeLevel) {
+                Text("\(volumeLevel)")
+                    .font(.system(size: 12, design: .monospaced))
+            }
             
             Spacer()
         }
