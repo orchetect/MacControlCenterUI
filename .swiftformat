@@ -23,7 +23,7 @@
 --funcattributes prev-line
 --groupedextension "MARK: %c"
 --guardelse auto
---header "\n {file}\n MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider\n © {year} Steffan Andrews • Licensed under MIT License\n"
+--header "\n {file}\n MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI\n © {year} Steffan Andrews • Licensed under MIT License\n"
 --hexgrouping 4,8
 --hexliteralcase uppercase
 --ifdef no-indent

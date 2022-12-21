@@ -4,12 +4,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "MacControlCenterSlider",
+    name: "MacControlCenterUI",
     platforms: [.macOS(.v10_15)],
     products: [
         .library(
-            name: "MacControlCenterSlider",
-            targets: ["MacControlCenterSlider"]
+            name: "MacControlCenterUI",
+            targets: ["MacControlCenterUI"]
         )
     ],
     dependencies: [
@@ -17,12 +17,12 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "MacControlCenterSlider",
+            name: "MacControlCenterUI",
             dependencies: []
         ),
         .testTarget(
-            name: "MacControlCenterSliderTests",
-            dependencies: ["MacControlCenterSlider"]
+            name: "MacControlCenterUITests",
+            dependencies: ["MacControlCenterUI"]
         )
     ]
 )

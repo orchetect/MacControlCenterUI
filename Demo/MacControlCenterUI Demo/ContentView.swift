@@ -1,11 +1,11 @@
 //
 //  ContentView.swift
-//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
-import MacControlCenterSlider
+import MacControlCenterUI
 
 struct ContentView: View {
     @State var volumeLevel: CGFloat = 0.75

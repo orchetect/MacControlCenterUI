@@ -1,11 +1,11 @@
 //
-//  MacControlCenterSliderTests.swift
-//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  MacControlCenterUITests.swift
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import XCTest
-@testable import MacControlCenterSlider
+@testable import MacControlCenterUI
 
 final class MacControlCenterSliderTests: XCTestCase {
     func testEmpty() throws {

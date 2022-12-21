@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         )
         window.isReleasedWhenClosed = false
         window.center()
-        window.title = "Mac Control Center Slider"
+        window.title = "Mac Control Center UI Demo"
 //        window.setFrameAutosaveName("Main Window")
         window.contentView = NSHostingView(rootView: contentView)
         window.makeKeyAndOrderFront(nil)

@@ -1,6 +1,6 @@
 //
 //  Image.swift
-//  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
