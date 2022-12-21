@@ -1,4 +1,5 @@
 // swift-tools-version: 5.5
+// (be sure to update the .swift-version file when this Swift version changes)
 
 import PackageDescription
 
@@ -8,7 +9,8 @@ let package = Package(
     products: [
         .library(
             name: "MacControlCenterSlider",
-            targets: ["MacControlCenterSlider"]),
+            targets: ["MacControlCenterSlider"]
+        )
     ],
     dependencies: [
         // none
@@ -16,9 +18,11 @@ let package = Package(
     targets: [
         .target(
             name: "MacControlCenterSlider",
-            dependencies: []),
+            dependencies: []
+        ),
         .testTarget(
             name: "MacControlCenterSliderTests",
-            dependencies: ["MacControlCenterSlider"]),
+            dependencies: ["MacControlCenterSlider"]
+        )
     ]
 )
