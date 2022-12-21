@@ -16,9 +16,9 @@ struct ContentView: View {
     let sliderWidth: CGFloat = 270
     
     var body: some View {
-        MacControlCenterPanelView {
+        MacControlCenterPanel {
             if #available(macOS 11.0, *) {
-                MacControlCenterPanelView {
+                MacControlCenterPanel {
                     MacControlCenterSlider(
                         value: $brightnessLevel,
                         label: "Display",
@@ -36,7 +36,7 @@ struct ContentView: View {
             
             Spacer().frame(height: 20)
             
-            MacControlCenterPanelView {
+            MacControlCenterPanel {
                 MacControlCenterVolumeSlider(value: $volumeLevel, label: "Sound")
                     .frame(minWidth: sliderWidth)
             }
@@ -49,7 +49,7 @@ struct ContentView: View {
             
             Spacer().frame(height: 20)
             
-            MacControlCenterPanelView {
+            MacControlCenterPanel {
                 HStack {
                     HStack {
                         MacControlCenterCircleButton(
