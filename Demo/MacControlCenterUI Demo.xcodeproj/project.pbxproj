@@ -42,7 +42,6 @@
 				E250DCAC29530165009534D7 /* MacControlCenterUI */,
 				E212FC19295167E4007E27BB /* MacControlCenterUI Demo */,
 				E212FC18295167E4007E27BB /* Products */,
-				E250DCAD29530268009534D7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,13 +63,6 @@
 				E212FC23295167E5007E27BB /* MacControlCenterUI_Demo.entitlements */,
 			);
 			path = "MacControlCenterUI Demo";
-			sourceTree = "<group>";
-		};
-		E250DCAD29530268009534D7 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
