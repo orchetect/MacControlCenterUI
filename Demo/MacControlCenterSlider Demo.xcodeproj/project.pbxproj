@@ -12,7 +12,6 @@
 		E212FC22295167E5007E27BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E212FC20295167E5007E27BB /* Main.storyboard */; };
 		E212FC2A29516847007E27BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212FC2929516847007E27BB /* ContentView.swift */; };
 		E212FC2E295168BF007E27BB /* MacControlCenterSlider in Frameworks */ = {isa = PBXBuildFile; productRef = E212FC2D295168BF007E27BB /* MacControlCenterSlider */; };
-		E212FC302952D0BD007E27BB /* PanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212FC2F2952D0BD007E27BB /* PanelView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,7 +22,6 @@
 		E212FC23295167E5007E27BB /* MacControlCenterSlider_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacControlCenterSlider_Demo.entitlements; sourceTree = "<group>"; };
 		E212FC2929516847007E27BB /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E212FC2B29516851007E27BB /* MacControlCenterSlider */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MacControlCenterSlider; path = ..; sourceTree = "<group>"; };
-		E212FC2F2952D0BD007E27BB /* PanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 			children = (
 				E212FC1A295167E4007E27BB /* AppDelegate.swift */,
 				E212FC2929516847007E27BB /* ContentView.swift */,
-				E212FC2F2952D0BD007E27BB /* PanelView.swift */,
 				E212FC1E295167E5007E27BB /* Assets.xcassets */,
 				E212FC20295167E5007E27BB /* Main.storyboard */,
 				E212FC23295167E5007E27BB /* MacControlCenterSlider_Demo.entitlements */,
@@ -141,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E212FC302952D0BD007E27BB /* PanelView.swift in Sources */,
 				E212FC2A29516847007E27BB /* ContentView.swift in Sources */,
 				E212FC1B295167E4007E27BB /* AppDelegate.swift in Sources */,
 			);

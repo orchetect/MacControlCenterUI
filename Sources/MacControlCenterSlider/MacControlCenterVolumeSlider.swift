@@ -1,5 +1,5 @@
 //
-//  MacVolumeSlider.swift
+//  MacControlCenterVolumeSlider.swift
 //  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -10,7 +10,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacVolumeSlider: View {
+public struct MacControlCenterVolumeSlider: View {
     @Binding public var value: CGFloat
     
     public init(value: Binding<CGFloat>) {
@@ -121,50 +121,12 @@ public struct MacVolumeSlider: View {
             
             var image: Image {
                 switch self {
-                case .off: return .speakerOff
-                case .vol1: return .speakerVol1
-                case .vol2: return .speakerVol2
-                case .vol3: return .speakerVol3
+                case .off: return .macControlCenterSoundSliderSpeakerOff
+                case .vol1: return .macControlCenterSoundSliderSpeakerVol1
+                case .vol2: return .macControlCenterSoundSliderSpeakerVol2
+                case .vol3: return .macControlCenterSoundSliderSpeakerVol3
                 }
             }
         }
     }
-}
-
-extension Image {
-    fileprivate static let speakerOff: Self = {
-        if #available(macOS 11, *) {
-            return Image(systemName: "speaker.slash.fill")
-        } else {
-            let img = NSImage(named: NSImage.touchBarAudioOutputMuteTemplateName) ?? .init()
-            return Image(nsImage: img)
-        }
-    }()
-    
-    fileprivate static let speakerVol1: Self = {
-        if #available(macOS 11, *) {
-            return Image(systemName: "speaker.wave.1.fill")
-        } else {
-            let img = NSImage(named: NSImage.touchBarAudioOutputVolumeLowTemplateName) ?? .init()
-            return Image(nsImage: img)
-        }
-    }()
-    
-    fileprivate static let speakerVol2: Self = {
-        if #available(macOS 11, *) {
-            return Image(systemName: "speaker.wave.2.fill")
-        } else {
-            let img = NSImage(named: NSImage.touchBarAudioOutputVolumeMediumTemplateName) ?? .init()
-            return Image(nsImage: img)
-        }
-    }()
-    
-    fileprivate static let speakerVol3: Self = {
-        if #available(macOS 11, *) {
-            return Image(systemName: "speaker.wave.3.fill")
-        } else {
-            let img = NSImage(named: NSImage.touchBarAudioOutputVolumeHighTemplateName) ?? .init()
-            return Image(nsImage: img)
-        }
-    }()
 }

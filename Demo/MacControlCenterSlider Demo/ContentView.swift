@@ -10,6 +10,7 @@ import MacControlCenterSlider
 struct ContentView: View {
     @State var volumeLevel: CGFloat = 0.75
     @State var brightnessLevel: CGFloat = 0.5
+    @State var buttonState: Bool = false
     
     /// Based on macOS Control Center slider width
     let sliderWidth: CGFloat = 270
@@ -19,7 +20,7 @@ struct ContentView: View {
             Spacer()
             
             if #available(macOS 11.0, *) {
-                PanelView(label: "Display", shadow: false) {
+                MacControlCenterPanelView(label: "Display") {
                     MacControlCenterSlider(
                         value: $brightnessLevel,
                         image: Image(systemName: "sun.max.fill")
@@ -36,8 +37,8 @@ struct ContentView: View {
             
             Spacer()
             
-            PanelView(label: "Sound", shadow: true) {
-                MacVolumeSlider(value: $volumeLevel)
+            MacControlCenterPanelView(label: "Sound") {
+                MacControlCenterVolumeSlider(value: $volumeLevel)
                     .frame(minWidth: sliderWidth)
             }
             .frame(height: 64)
@@ -45,6 +46,55 @@ struct ContentView: View {
             Slider(value: $volumeLevel) {
                 Text("\(volumeLevel)")
                     .font(.system(size: 12, design: .monospaced))
+            }
+            
+            Spacer()
+            
+            MacControlCenterPanelView {
+                HStack {
+                    HStack {
+                        MacControlCenterCircleButton(
+                            isOn: $buttonState,
+                            image: .macControlCenterCircleButtonSpeaker
+                        ) {
+                            Text("Toggle Button")
+                        }
+                    }
+                    Spacer()
+                    Toggle("On", isOn: $buttonState)
+                }
+                
+                HStack {
+                    HStack {
+                        MacControlCenterCircleButton(
+                            isOn: .constant(true),
+                            image: .macControlCenterCircleButtonSpeaker
+                        ) {
+                            Text("Text Part of Button")
+                        } onChange: { _ in
+                            print("Clicked.")
+                            NSSound.beep()
+                        }
+                        
+                    }
+                    Spacer()
+                    Text("(Static On)")
+                }
+                
+                HStack {
+                    HStack {
+                        MacControlCenterCircleButton(
+                            isOn: .constant(false),
+                            image: .macControlCenterCircleButtonSpeaker
+                        ) { _ in
+                            print("Clicked.")
+                            NSSound.beep()
+                        }
+                        Text("Text Not Part of Button")
+                    }
+                    Spacer()
+                    Text("(Static Off)")
+                }
             }
             
             Spacer()

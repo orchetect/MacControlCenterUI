@@ -1,19 +1,33 @@
 //
-//  PanelView.swift
+//  MacControlCenterPanelView.swift
 //  MacControlCenterSlider • https://github.com/orchetect/MacControlCenterSlider
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
 
-struct PanelView<Content: View>: View {
-    var label: String
-    var shadow: Bool = false
-    var content: () -> Content
+@available(macOS 10.15, *)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
+public struct MacControlCenterPanelView<Content: View>: View {
+    public var label: String?
+    public var shadow: Bool
+    public var content: () -> Content
     
     @Environment(\.colorScheme) private var colorScheme
     
-    var body: some View {
+    public init(
+        label: String? = nil,
+        shadow: Bool = true,
+        @ViewBuilder _ content: @escaping () -> Content
+    ) {
+        self.label = label
+        self.shadow = shadow
+        self.content = content
+    }
+    
+    public var body: some View {
         let panelColor = Color(NSColor.windowBackgroundColor)
         
         ZStack {
@@ -25,10 +39,14 @@ struct PanelView<Content: View>: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(panelColor)
             
-            VStack(alignment: .leading, spacing: 8) {
-                Text("\(label)")
-                    .font(.system(size: 12, weight: .semibold))
-                
+            VStack(spacing: 8) {
+                if let label = label {
+                    HStack {
+                        Text("\(label)")
+                            .font(.system(size: 12, weight: .semibold))
+                        Spacer()
+                    }
+                }
                 content()
             }
             .padding(10)

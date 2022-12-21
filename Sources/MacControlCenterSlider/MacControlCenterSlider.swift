@@ -6,6 +6,10 @@
 
 import SwiftUI
 
+@available(macOS 10.15, *)
+@available(iOS, unavailable)
+@available(tvOS, unavailable)
+@available(watchOS, unavailable)
 public struct MacControlCenterSlider<SliderImage>: View
 where SliderImage: MacControlCenterSliderImageProtocol {
     // MARK: Public Properties
@@ -28,6 +32,8 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     /// This value is fixed to mirror that of macOS's Control Center.
     /// These sliders are never found at variable heights. They can be any width however.
     private static var sliderHeight: CGFloat { 22 }
+    
+    // MARK: Init
     
     public init(
         value: Binding<CGFloat>,
