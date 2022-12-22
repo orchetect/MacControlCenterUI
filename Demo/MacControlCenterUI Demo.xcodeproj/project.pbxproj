@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,7 @@
 		E212FC23295167E5007E27BB /* MacControlCenterUI_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacControlCenterUI_Demo.entitlements; sourceTree = "<group>"; };
 		E212FC2929516847007E27BB /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E250DCAC29530165009534D7 /* MacControlCenterUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MacControlCenterUI; path = ..; sourceTree = "<group>"; };
+		E2ADB6BB295404BC001AED9C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 				E212FC1A295167E4007E27BB /* AppDelegate.swift */,
 				E212FC2929516847007E27BB /* ContentView.swift */,
 				E212FC1E295167E5007E27BB /* Assets.xcassets */,
+				E2ADB6BB295404BC001AED9C /* Info.plist */,
 				E212FC20295167E5007E27BB /* Main.storyboard */,
 				E212FC23295167E5007E27BB /* MacControlCenterUI_Demo.entitlements */,
 			);
@@ -104,7 +106,7 @@
 				};
 			};
 			buildConfigurationList = E212FC12295167E4007E27BB /* Build configuration list for PBXProject "MacControlCenterUI Demo" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -282,6 +284,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MacControlCenterUI Demo/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -310,6 +313,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "MacControlCenterUI Demo/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;

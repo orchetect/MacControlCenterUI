@@ -58,23 +58,23 @@ where SliderImage: MacControlCenterSliderImageProtocol {
         sliderImage = image()
     }
     
-    func fgColor(colorScheme: ColorScheme) -> Color {
+    func generateFGColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
         case .light: return Color(NSColor.gray)
         case .dark: return Color(NSColor.controlBackgroundColor)
         @unknown default: return Color(NSColor.darkGray)
         }
     }
-
-    func bgColor(colorScheme: ColorScheme) -> Color {
+    
+    func generateBGColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
         case .light: return Color(white: 0.8)
         case .dark: return Color(white: 0.28)
         @unknown default: return Color(white: 0.5)
         }
     }
-
-    func borderColor(colorScheme: ColorScheme) -> Color {
+    
+    func generateBorderColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
         case .light: return Color(white: 0.5)
         case .dark: return Color(white: 0.3)
@@ -100,11 +100,11 @@ where SliderImage: MacControlCenterSliderImageProtocol {
         if #available(macOS 11, *) {
             sliderBody
                 .onChange(of: value) { _ in
-                    updateImage(fgColor: fgColor(colorScheme: colorScheme))
+                    updateImage(fgColor: generateFGColor(colorScheme: colorScheme))
                 }
                 .onChange(of: colorScheme) { _ in
                     currentImageView = nil
-                    updateImage(fgColor: fgColor(colorScheme: colorScheme), force: true)
+                    updateImage(fgColor: generateFGColor(colorScheme: colorScheme), force: true)
                 }
         } else {
             // on macOS 10.15, a non-static image will not be able to change dynamically
@@ -115,9 +115,9 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     
     @ViewBuilder
     public var sliderBody: some View {
-        let fgColor = fgColor(colorScheme: colorScheme)
-        let bgColor = bgColor(colorScheme: colorScheme)
-        let borderColor = borderColor(colorScheme: colorScheme)
+        let fgColor = generateFGColor(colorScheme: colorScheme)
+        let bgColor = generateBGColor(colorScheme: colorScheme)
+        let borderColor = generateBorderColor(colorScheme: colorScheme)
         
         GeometryReader { geometry in
             let progressRangeLower: CGFloat = Self.sliderHeight / 2
@@ -179,9 +179,9 @@ where SliderImage: MacControlCenterSliderImageProtocol {
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
                         let calc = (value.location.x - (Self.sliderHeight / 2)) /
-                            (geometry.size.width - Self.sliderHeight)
+                        (geometry.size.width - Self.sliderHeight)
                         let newValue = min(max(0.0, calc), 1.0) // clamp
-                        // assign only if value changed
+                                                                // assign only if value changed
                         if self.value != newValue {
                             oldValue = self.value
                             self.value = newValue

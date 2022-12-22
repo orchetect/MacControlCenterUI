@@ -20,17 +20,15 @@ struct ContentView: View {
     
     var body: some View {
         MacControlCenterPanel {
-            if #available(macOS 11.0, *) {
-                MacControlCenterPanel {
-                    MacControlCenterSlider(
-                        value: $brightnessLevel,
-                        label: "Display",
-                        image: .macControlCenterDisplayBrightness
-                    )
-                    .frame(minWidth: sliderWidth)
-                }
-                .frame(height: 64)
+            MacControlCenterPanel {
+                MacControlCenterSlider(
+                    value: $brightnessLevel,
+                    label: "Display",
+                    image: .macControlCenterDisplayBrightness
+                )
+                .frame(minWidth: sliderWidth)
             }
+            .frame(height: 64)
             
             Slider(value: $brightnessLevel) {
                 Text("\(brightnessLevel)")
