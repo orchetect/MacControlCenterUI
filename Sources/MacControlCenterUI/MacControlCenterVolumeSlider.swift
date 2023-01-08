@@ -14,7 +14,7 @@ public struct MacControlCenterVolumeSlider: View {
     @Binding public var value: CGFloat
     public var label: String?
     
-    public init(value: Binding<CGFloat>, label: String? = "") {
+    public init(value: Binding<CGFloat>, label: String? = nil) {
         _value = value
         self.label = label
     }
