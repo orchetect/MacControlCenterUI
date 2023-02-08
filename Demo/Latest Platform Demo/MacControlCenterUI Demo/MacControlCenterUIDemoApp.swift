@@ -54,16 +54,43 @@ struct Menu: View {
             
             Divider()
             
+            MenuCommand("About") {
+                activateAppAndShowStandardAboutWindow()
+            }
+            
             MenuCommand("Settings...") {
-                NSApp.activate(ignoringOtherApps: true)
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                activateAppAndShowSettingsWindow()
             }
             
             Divider()
             
             MenuCommand("Quit") {
-                NSApp.terminate(self)
+                quit()
             }
         }
+    }
+    
+    // MARK: Helpers
+    
+    func activateApp() {
+        NSApp.activate(ignoringOtherApps: true)
+    }
+    
+    func activateAppAndShowStandardAboutWindow() {
+        activateApp()
+        NSApp.sendAction(
+            #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
+            to: nil,
+            from: nil
+        )
+    }
+    
+    func activateAppAndShowSettingsWindow() {
+        activateApp()
+        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+    }
+    
+    func quit() {
+        NSApp.terminate(nil)
     }
 }
