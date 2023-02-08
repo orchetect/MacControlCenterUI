@@ -1,12 +1,12 @@
 //
-//  MacControlCenterSliderImageProtocol.swift
+//  MacControlCenterSliderImage.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
 
-public protocol MacControlCenterSliderImageProtocol {
+public protocol MacControlCenterSliderImage {
     /// Return an image if the image is static.
     func staticImage() -> Image?
     
@@ -18,7 +18,7 @@ public protocol MacControlCenterSliderImageProtocol {
     func transform(image: Image, for value: CGFloat) -> AnyView?
 }
 
-extension MacControlCenterSliderImageProtocol {
+extension MacControlCenterSliderImage {
     // Default implementation.
     public func staticImage() -> Image? {
         nil
@@ -39,7 +39,7 @@ extension MacControlCenterSliderImageProtocol {
     }
 }
 
-extension MacControlCenterSliderImageProtocol {
+extension MacControlCenterSliderImage {
     /// Convenience method to test if a value has newly entered a given value range.
     public func newlyEntered(
         value: CGFloat,

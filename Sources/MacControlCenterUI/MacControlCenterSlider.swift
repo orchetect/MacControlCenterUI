@@ -10,14 +10,15 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacControlCenterSlider<SliderImage>: View
-where SliderImage: MacControlCenterSliderImageProtocol {
+public struct MacControlCenterSlider<Label, SliderImage>: View
+where Label: View, SliderImage: MacControlCenterSliderImage
+{
     // MARK: Public Properties
     
     /// Value (0.0 ... 1.0).
     @Binding public var value: CGFloat
     
-    public var label: String?
+    public var label: Label?
     
     // MARK: Environment
     
@@ -35,58 +36,97 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     /// These sliders are never found at variable heights. They can be any width however.
     private static var sliderHeight: CGFloat { 22 }
     
-    // MARK: Init
+    // MARK: Init - Image
     
     public init(
         value: Binding<CGFloat>,
-        label: String? = "",
+        image: @autoclosure () -> Image
+    ) where Label == EmptyView, SliderImage == StaticSliderImage {
+        _value = value
+        sliderImage = StaticSliderImage(image())
+    }
+    
+    public init<S>(
+        _ label: S,
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> Image
+    ) where S: StringProtocol, Label == Text, SliderImage == StaticSliderImage {
+        _value = value
+        self.label = Text(label)
+        sliderImage = StaticSliderImage(image())
+    }
+    
+    public init(
+        _ titleKey: LocalizedStringKey,
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> Image
+    ) where Label == Text, SliderImage == StaticSliderImage {
+        _value = value
+        self.label = Text(titleKey)
+        sliderImage = StaticSliderImage(image())
+    }
+    
+    public init(
+        value: Binding<CGFloat>,
+        label: () -> Label,
         image: @autoclosure () -> Image
     ) where SliderImage == StaticSliderImage {
         _value = value
-        self.label = label
+        self.label = label()
         sliderImage = StaticSliderImage(image())
+    }
+    
+    // MARK: Init - SliderImage
+    
+    @_disfavoredOverload
+    public init(
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> SliderImage
+    ) where Label == EmptyView {
+        _value = value
+        sliderImage = image()
+    }
+    
+    @_disfavoredOverload
+    public init<S>(
+        _ label: S,
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> SliderImage
+    ) where S: StringProtocol, Label == Text {
+        _value = value
+        self.label = Text(label)
+        sliderImage = image()
+    }
+    
+    @_disfavoredOverload
+    public init(
+        _ titleKey: LocalizedStringKey,
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> SliderImage
+    ) where Label == Text {
+        _value = value
+        label = Text(titleKey)
+        sliderImage = image()
     }
     
     @_disfavoredOverload
     public init(
         value: Binding<CGFloat>,
-        label: String? = "",
+        label: () -> Label,
         image: @autoclosure () -> SliderImage
     ) {
         _value = value
-        self.label = label
+        self.label = label()
         sliderImage = image()
     }
     
-    func generateFGColor(colorScheme: ColorScheme) -> Color {
-        switch colorScheme {
-        case .light: return Color(NSColor.gray)
-        case .dark: return Color(NSColor.controlBackgroundColor)
-        @unknown default: return Color(NSColor.darkGray)
-        }
-    }
-    
-    func generateBGColor(colorScheme: ColorScheme) -> Color {
-        switch colorScheme {
-        case .light: return Color(white: 0.8)
-        case .dark: return Color(white: 0.28)
-        @unknown default: return Color(white: 0.5)
-        }
-    }
-    
-    func generateBorderColor(colorScheme: ColorScheme) -> Color {
-        switch colorScheme {
-        case .light: return Color(white: 0.5)
-        case .dark: return Color(white: 0.3)
-        @unknown default: return Color(white: 0.5)
-        }
-    }
+    // MARK: Body
     
     public var body: some View {
         VStack(spacing: 8) {
             if let label = label {
                 HStack {
-                    Text("\(label)")
+                    label
                         .font(.system(size: 12, weight: .semibold))
                     Spacer()
                 }
@@ -96,7 +136,7 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     }
     
     @ViewBuilder
-    public var dynamicImageBody: some View {
+    private var dynamicImageBody: some View {
         if #available(macOS 11, *) {
             sliderBody
                 .onChange(of: value) { _ in
@@ -114,7 +154,7 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     }
     
     @ViewBuilder
-    public var sliderBody: some View {
+    private var sliderBody: some View {
         let fgColor = generateFGColor(colorScheme: colorScheme)
         let bgColor = generateBGColor(colorScheme: colorScheme)
         let borderColor = generateBorderColor(colorScheme: colorScheme)
@@ -251,9 +291,33 @@ where SliderImage: MacControlCenterSliderImageProtocol {
     private func scale(_ unitIntervalValue: CGFloat, to range: ClosedRange<CGFloat>) -> CGFloat {
         range.lowerBound + (unitIntervalValue * (range.upperBound - range.lowerBound))
     }
+    
+    private func generateFGColor(colorScheme: ColorScheme) -> Color {
+        switch colorScheme {
+        case .light: return Color(NSColor.gray)
+        case .dark: return Color(NSColor.controlBackgroundColor)
+        @unknown default: return Color(NSColor.darkGray)
+        }
+    }
+    
+    private func generateBGColor(colorScheme: ColorScheme) -> Color {
+        switch colorScheme {
+        case .light: return Color(white: 0.8)
+        case .dark: return Color(white: 0.28)
+        @unknown default: return Color(white: 0.5)
+        }
+    }
+    
+    private func generateBorderColor(colorScheme: ColorScheme) -> Color {
+        switch colorScheme {
+        case .light: return Color(white: 0.5)
+        case .dark: return Color(white: 0.3)
+        @unknown default: return Color(white: 0.5)
+        }
+    }
 }
 
-public struct StaticSliderImage: MacControlCenterSliderImageProtocol {
+public struct StaticSliderImage: MacControlCenterSliderImage {
     private let img: Image
     
     public init(_ img: Image) {

@@ -9,6 +9,7 @@ import SwiftUI
 extension Image {
     // MARK: Sound Slider Icon Stages
     
+    @_disfavoredOverload
     public static let macControlCenterSoundSliderSpeakerOff: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.slash.fill")
@@ -18,6 +19,7 @@ extension Image {
         }
     }()
     
+    @_disfavoredOverload
     public static let macControlCenterSoundSliderSpeakerVol1: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.1.fill")
@@ -27,6 +29,7 @@ extension Image {
         }
     }()
     
+    @_disfavoredOverload
     public static let macControlCenterSoundSliderSpeakerVol2: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.2.fill")
@@ -36,6 +39,7 @@ extension Image {
         }
     }()
     
+    @_disfavoredOverload
     public static let macControlCenterSoundSliderSpeakerVol3: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.3.fill")
@@ -47,6 +51,7 @@ extension Image {
     
     // MARK: Circle Button Images
     
+    @_disfavoredOverload
     public static let macControlCenterSpeaker: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "speaker.wave.2.fill")
@@ -56,6 +61,7 @@ extension Image {
         }
     }()
     
+    @_disfavoredOverload
     public static let macControlCenterDisplayBrightness: Self = {
         if #available(macOS 11, *) {
             return Image(systemName: "sun.max.fill")

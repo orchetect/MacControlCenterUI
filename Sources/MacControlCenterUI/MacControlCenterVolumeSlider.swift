@@ -10,24 +10,62 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacControlCenterVolumeSlider: View {
+public struct MacControlCenterVolumeSlider<Label: View>: View {
     @Binding public var value: CGFloat
-    public var label: String?
+    public var label: Label?
     
-    public init(value: Binding<CGFloat>, label: String? = nil) {
+    // MARK: Init
+    
+    public init(
+        value: Binding<CGFloat>
+    ) where Label == EmptyView {
         _value = value
-        self.label = label
     }
+    
+    public init<S>(
+        _ label: S,
+        value: Binding<CGFloat>
+    ) where S: StringProtocol, Label == Text {
+        _value = value
+        self.label = Text(label)
+    }
+    
+    public init(
+        _ titleKey: LocalizedStringKey,
+        value: Binding<CGFloat>
+    ) where Label == Text {
+        _value = value
+        self.label = Text(titleKey)
+    }
+    
+    public init(
+        value: Binding<CGFloat>,
+        label: () -> Label
+    ) {
+        _value = value
+        self.label = label()
+    }
+    
+    // MARK: Body
     
     public var body: some View {
-        MacControlCenterSlider(
-            value: $value,
-            label: label,
-            image: VolumeSliderIcon()
-        )
+        if let label = label {
+            MacControlCenterSlider(
+                value: $value,
+                label: { label },
+                image: VolumeSliderIcon()
+            )
+        } else {
+            MacControlCenterSlider(
+                value: $value,
+                image: VolumeSliderIcon()
+            )
+        }
     }
-    
-    private struct VolumeSliderIcon: MacControlCenterSliderImageProtocol {
+}
+
+extension MacControlCenterVolumeSlider {
+    private struct VolumeSliderIcon: MacControlCenterSliderImage {
         func image(
             for value: CGFloat,
             oldValue: CGFloat?,

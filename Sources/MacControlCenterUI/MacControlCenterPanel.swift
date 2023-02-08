@@ -30,6 +30,8 @@ public struct MacControlCenterPanel<Content: View>: View {
         self.content = content
     }
     
+    // MARK: Body
+    
     public var body: some View {
         let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.5)
         
@@ -57,6 +59,5 @@ public struct MacControlCenterPanel<Content: View>: View {
             }
             .padding(10)
         }
-        //.fixedSize()
     }
 }
