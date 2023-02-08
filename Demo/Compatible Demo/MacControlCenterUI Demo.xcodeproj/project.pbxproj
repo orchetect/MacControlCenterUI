@@ -11,7 +11,7 @@
 		E212FC1F295167E5007E27BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E212FC1E295167E5007E27BB /* Assets.xcassets */; };
 		E212FC22295167E5007E27BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E212FC20295167E5007E27BB /* Main.storyboard */; };
 		E212FC2A29516847007E27BB /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212FC2929516847007E27BB /* ContentView.swift */; };
-		E250DCAF29530268009534D7 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E250DCAE29530268009534D7 /* MacControlCenterUI */; };
+		E294B3AB299356BB00B7CB84 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E294B3AA299356BB00B7CB84 /* MacControlCenterUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,7 +21,7 @@
 		E212FC21295167E5007E27BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E212FC23295167E5007E27BB /* MacControlCenterUI_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacControlCenterUI_Demo.entitlements; sourceTree = "<group>"; };
 		E212FC2929516847007E27BB /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		E250DCAC29530165009534D7 /* MacControlCenterUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MacControlCenterUI; path = ..; sourceTree = "<group>"; };
+		E294B3A8299356A800B7CB84 /* MacControlCenterUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MacControlCenterUI; path = ../..; sourceTree = "<group>"; };
 		E2ADB6BB295404BC001AED9C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -30,7 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E250DCAF29530268009534D7 /* MacControlCenterUI in Frameworks */,
+				E294B3AB299356BB00B7CB84 /* MacControlCenterUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,9 +40,10 @@
 		E212FC0E295167E4007E27BB = {
 			isa = PBXGroup;
 			children = (
-				E250DCAC29530165009534D7 /* MacControlCenterUI */,
+				E294B3A8299356A800B7CB84 /* MacControlCenterUI */,
 				E212FC19295167E4007E27BB /* MacControlCenterUI Demo */,
 				E212FC18295167E4007E27BB /* Products */,
+				E294B3A9299356BB00B7CB84 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -67,6 +68,13 @@
 			path = "MacControlCenterUI Demo";
 			sourceTree = "<group>";
 		};
+		E294B3A9299356BB00B7CB84 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -84,7 +92,7 @@
 			);
 			name = "MacControlCenterUI Demo";
 			packageProductDependencies = (
-				E250DCAE29530268009534D7 /* MacControlCenterUI */,
+				E294B3AA299356BB00B7CB84 /* MacControlCenterUI */,
 			);
 			productName = "MacControlCenterSlider Demo";
 			productReference = E212FC17295167E4007E27BB /* MacControlCenterUI Demo.app */;
@@ -354,7 +362,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E250DCAE29530268009534D7 /* MacControlCenterUI */ = {
+		E294B3AA299356BB00B7CB84 /* MacControlCenterUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MacControlCenterUI;
 		};

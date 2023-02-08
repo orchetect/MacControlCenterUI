@@ -22,8 +22,8 @@ struct ContentView: View {
         MacControlCenterPanel {
             MacControlCenterPanel {
                 MacControlCenterSlider(
+                    "Display",
                     value: $brightnessLevel,
-                    label: "Display",
                     image: .macControlCenterDisplayBrightness
                 )
                 .frame(minWidth: sliderWidth)
@@ -38,7 +38,7 @@ struct ContentView: View {
             Spacer().frame(height: 20)
             
             MacControlCenterPanel {
-                MacControlCenterVolumeSlider(value: $volumeLevel, label: "Sound")
+                MacControlCenterVolumeSlider("Sound", value: $volumeLevel)
                     .frame(minWidth: sliderWidth)
             }
             .frame(height: 64)
@@ -52,44 +52,41 @@ struct ContentView: View {
             
             MacControlCenterPanel {
                 HStack {
-                    MacControlCenterCircleButton(
+                    MacControlCenterCircleToggle(
+                        "Toggle Button",
                         isOn: $button1State,
                         image: .macControlCenterSpeaker
-                    ) {
-                        Text("Toggle Button")
-                    }
+                    )
                     Spacer()
                     Toggle("On", isOn: $button1State)
                 }
                 
                 HStack {
-                    MacControlCenterCircleButton(
+                    MacControlCenterCircleToggle(
+                        "Toggle Button (White)",
                         isOn: $button2State,
                         color: .white,
                         invertForeground: true,
                         image: .macControlCenterSpeaker
-                    ) {
-                        Text("Toggle Button (White)")
-                    }
+                    )
                     Spacer()
                     Toggle("On", isOn: $button2State)
                 }
                 
                 HStack {
-                    MacControlCenterCircleButton(
+                    MacControlCenterCircleToggle(
+                        "Toggle Button (Orange)",
                         isOn: $button3State,
                         color: .orange,
                         image: .macControlCenterDisplayBrightness
-                    ) {
-                        Text("Toggle Button (Orange)")
-                    }
+                    )
                     Spacer()
                     Toggle("On", isOn: $button3State)
                 }
                 
                 HStack {
                     HStack {
-                        MacControlCenterCircleButton(
+                        MacControlCenterCircleToggle(
                             isOn: $button4State,
                             image: .macControlCenterSpeaker
                         )
@@ -101,7 +98,7 @@ struct ContentView: View {
                 
                 HStack {
                     HStack {
-                        MacControlCenterCircleButton(
+                        MacControlCenterCircleToggle(
                             isOn: .constant(true),
                             image: .macControlCenterSpeaker
                         ) {
@@ -117,7 +114,7 @@ struct ContentView: View {
                 
                 HStack {
                     HStack {
-                        MacControlCenterCircleButton(
+                        MacControlCenterCircleToggle(
                             isOn: .constant(false),
                             image: .macControlCenterSpeaker
                         ) {
