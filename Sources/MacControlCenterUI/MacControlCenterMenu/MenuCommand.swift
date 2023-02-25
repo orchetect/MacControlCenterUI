@@ -4,6 +4,7 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+import AppKit
 import SwiftUI
 
 /// ``MacControlCenterMenu`` menu entry that acts like a traditional `NSMenuItem` that highlights
@@ -95,8 +96,6 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Helpers
     
     private func blinkAndCallAction() {
-        // mimic macOS's behavior of blinking menu items when clicked
-        
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             mouseIsHovering = false
         }
@@ -106,14 +105,11 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [activatesApp, dismissesMenu, action] in
             if activatesApp {
                 NSApp.activate(ignoringOtherApps: true)
-                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: self)
             }
             
             if dismissesMenu {
-                // TODO: need better solution to dismiss the menu window
-                // this works but internal SwiftUI state thinks the MenuBarExtra window
-                // is still open, so it takes two clicks on the menubar item to reopen the window
-                NSApp.sendAction(#selector(NSWindow.close), to: nil, from: self)
+                print("Toggling status item index", menuBarExtraIndex)
+                MenuBarExtraAccess.togglePresented(index: menuBarExtraIndex)
             }
             
             action()
