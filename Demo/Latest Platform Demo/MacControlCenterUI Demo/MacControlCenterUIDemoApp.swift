@@ -33,6 +33,9 @@ struct MacControlCenterUIDemoApp: App {
 struct MenuView: View {
     @Binding var isMenuPresented: Bool
     
+    @State private var darkMode: Bool = true
+    @State private var nightShift: Bool = true
+    @State private var trueTone: Bool = true
     @State private var volume: CGFloat = 0.75
     @State private var brightness: CGFloat = 0.5
     @State private var item1: Bool = false
@@ -42,6 +45,30 @@ struct MenuView: View {
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
+            MacControlCenterPanel {
+                HStack {
+                    MacControlCenterCircleToggle(
+                        isOn: $darkMode,
+                        style: .prominent,
+                        color: .white,
+                        invertForeground: true,
+                        image: .macControlCenterAirplayVideo
+                    ) { Text("Dark Mode") }
+                    MacControlCenterCircleToggle(
+                        isOn: $nightShift,
+                        style: .prominent,
+                        color: .orange,
+                        image: .macControlCenterDisplayBrightness
+                    ) { Text("Night Shift") }
+                    MacControlCenterCircleToggle(
+                        isOn: $trueTone,
+                        style: .prominent,
+                        color: .blue,
+                        image: .macControlCenterDisplayBrightness
+                    ) { Text("True Tone") }
+                }
+            }
+            
             MacControlCenterSlider(
                 "Display",
                 value: $brightness,
@@ -56,7 +83,7 @@ struct MenuView: View {
             
             MacControlCenterCircleToggle(
                 "Toggle",
-                isOn: $item1,
+                isOn: .constant(true),
                 image: .macControlCenterSpeaker
             )
             

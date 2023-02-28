@@ -33,13 +33,13 @@ public struct MacControlCenterPanel<Content: View>: View {
     // MARK: Body
     
     public var body: some View {
-        let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.5)
+        let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.15)
         
         ZStack(alignment: .top) {
             if shadow {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(panelColor)
-                    .shadow(color: Color(white: 0, opacity: 0.25), radius: 3)
+                    .fill(.clear)
+                    .shadow(color: Color(white: 0, opacity: 1), radius: 2)
             }
             RoundedRectangle(cornerRadius: 10)
                 .fill(panelColor)
@@ -47,10 +47,10 @@ public struct MacControlCenterPanel<Content: View>: View {
             // macOS Control Center only borders the panel in Dark mode
             if colorScheme == .dark {
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(white: 0.1), lineWidth: 0.5)
+                    .stroke(Color(white: 0.1, opacity: 0.5), lineWidth: 0.5)
                 
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color(white: 0.3), lineWidth: 0.5)
+                    .stroke(Color(white: 0.4), lineWidth: 0.5)
                     .padding(0.5)
             }
             

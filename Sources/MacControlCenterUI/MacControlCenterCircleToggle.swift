@@ -27,18 +27,42 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     // MARK: Private State
     
     @State private var isMouseDown: Bool = false
-    private var circleSize: CGFloat = 26
+    private var style: ButtonStyle
+    
+    public enum ButtonStyle {
+        /// Standard Control Center Menu item size with trailing label.
+        case menu
+        
+        /// Prominent size with bottom edge label.
+        case prominent
+        
+        var size: CGFloat {
+            switch self {
+            case .menu: return 26
+            case .prominent: return 38
+            }
+        }
+        
+        var imagePadding: CGFloat {
+            switch self {
+            case .menu: return 5
+            case .prominent: return 10
+            }
+        }
+    }
     
     // MARK: Init
     
     public init(
         isOn: Binding<Bool>,
+        style: ButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
         image: Image,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
         self._isOn = isOn
+        self.style = style
         self.color = color
         self.invertForeground = invertForeground
         self.image = image
@@ -49,6 +73,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     public init<S>(
         _ title: S,
         isOn: Binding<Bool>,
+        style: ButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
         image: Image,
@@ -57,6 +82,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     ) where S: StringProtocol, Label == Text {
         self.init(
             isOn: isOn,
+            style: style,
             color: color,
             invertForeground: invertForeground,
             image: image,
@@ -68,6 +94,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool>,
+        style: ButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
         image: Image,
@@ -75,6 +102,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     ) where Label == Text {
         self.init(
             isOn: isOn,
+            style: style,
             color: color,
             invertForeground: invertForeground,
             image: image,
@@ -85,6 +113,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     
     public init(
         isOn: Binding<Bool>,
+        style: ButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
         image: Image,
@@ -92,6 +121,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) {
         self._isOn = isOn
+        self.style = style
         self.color = color
         self.invertForeground = invertForeground
         self.image = image
@@ -102,12 +132,27 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     // MARK: Body
     
     public var body: some View {
-        if label != nil {
-            hitTestBody
-                .frame(height: circleSize)
-        } else {
-            hitTestBody
-                .frame(width: circleSize, height: circleSize)
+        switch style {
+        case .menu:
+            if label != nil {
+                hitTestBody
+                    .frame(height: style.size)
+                    .frame(maxWidth: .infinity)
+            } else {
+                hitTestBody
+                    .frame(width: style.size, height: style.size)
+            }
+        case .prominent:
+            if label != nil {
+                hitTestBody
+                    .frame(minHeight: style.size + 26,
+                           alignment: .top)
+            } else {
+                hitTestBody
+                    .frame( //width: style.size,
+                        height: style.size,
+                        alignment: .top)
+            }
         }
     }
     
@@ -115,6 +160,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     private var hitTestBody: some View {
         GeometryReader { geometry in
             buttonBody
+                .position(x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY)
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged { value in
@@ -129,16 +175,27 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
                             }
                         }
                 )
-                
         }
     }
     
     @ViewBuilder
     private var buttonBody: some View {
         if let label = label {
-            HStack {
-                circleBody
-                label
+            switch style {
+            case .menu:
+                HStack {
+                    circleBody
+                    label
+                    Rectangle()
+                        // workaround because .clear isn't clickable
+                        .fill(Color(white: 0.00000001, opacity: 0.00000001))
+                }
+            case .prominent:
+                VStack(alignment: .center, spacing: 4) {
+                    circleBody
+                    label
+                }
+                .fixedSize()
             }
         } else {
             circleBody
@@ -154,7 +211,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
             image
                 .resizable()
                 .scaledToFit()
-                .padding(5)
+                .padding(style.imagePadding)
                 .foregroundColor(buttonForeColor)
             
             if isMouseDown {
@@ -169,7 +226,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
                 }
             }
         }
-        .frame(width: circleSize, height: circleSize)
+        .frame(width: style.size, height: style.size)
     }
     
     // MARK: Helpers
@@ -194,7 +251,10 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     }
     
     private func mask() -> NSImage?  {
-        NSImage(color: .black, ovalSize: .init(width: circleSize, height: circleSize))
+        NSImage(
+            color: .black,
+            ovalSize: .init(width: style.size, height: style.size)
+        )
     }
     
     private var buttonBackColor: Color {

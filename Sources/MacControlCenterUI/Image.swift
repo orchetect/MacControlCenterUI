@@ -71,4 +71,15 @@ extension Image {
             return Image(nsImage: img)
         }
     }()
+    
+    @_disfavoredOverload
+    public static let macControlCenterAirplayVideo: Self = {
+        if #available(macOS 11, *) {
+            return Image(systemName: "airplayvideo")
+        } else {
+            // TODO: this is a temporary placeholder, needs actual image
+            let img = NSImage(named: NSImage.touchBarAddDetailTemplateName) ?? .init()
+            return Image(nsImage: img)
+        }
+    }()
 }
