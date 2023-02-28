@@ -185,10 +185,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
             case .menu:
                 HStack {
                     circleBody
-                    label
-                    Rectangle()
-                        // workaround because .clear isn't clickable
-                        .fill(Color(white: 0.00000001, opacity: 0.00000001))
+                    label.frame(maxWidth: .infinity, alignment: .leading)
                 }
             case .prominent:
                 VStack(alignment: .center, spacing: 4) {
