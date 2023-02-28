@@ -39,7 +39,7 @@ Both **Dark** and **Light Mode** are fully supported.
 
 Minimum requirements to compile: Xcode 12 on macOS 10.15 Catalina or newer.
 
-Supports macOS 10.15+ once compiled.
+Supports macOS 10.15+ once compiled. The best experience is on macOS 13.0+.
 
 ## Author
 

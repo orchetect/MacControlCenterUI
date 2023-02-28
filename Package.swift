@@ -13,12 +13,13 @@ let package = Package(
         )
     ],
     dependencies: [
-        // none
+        .package(url: "https://github.com/orchetect/MenuBarExtraAccess", from: "1.0.3")
     ],
     targets: [
         .target(
             name: "MacControlCenterUI",
-            dependencies: []
+            dependencies: ["MenuBarExtraAccess"],
+            resources: [.process("Assets")]
         ),
         .testTarget(
             name: "MacControlCenterUITests",

@@ -16,7 +16,7 @@
 		E212FC17295167E4007E27BB /* MacControlCenterUI Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MacControlCenterUI Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacControlCenterUIDemoApp.swift; sourceTree = "<group>"; };
 		E212FC1E295167E5007E27BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E212FC23295167E5007E27BB /* MacControlCenterUI_Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacControlCenterUI_Demo.entitlements; sourceTree = "<group>"; };
+		E212FC23295167E5007E27BB /* MacControlCenterUIDemo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MacControlCenterUIDemo.entitlements; sourceTree = "<group>"; };
 		E294B3A72993568C00B7CB84 /* MacControlCenterUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = MacControlCenterUI; path = ../..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,7 +54,7 @@
 			children = (
 				E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */,
 				E212FC1E295167E5007E27BB /* Assets.xcassets */,
-				E212FC23295167E5007E27BB /* MacControlCenterUI_Demo.entitlements */,
+				E212FC23295167E5007E27BB /* MacControlCenterUIDemo.entitlements */,
 			);
 			path = "MacControlCenterUI Demo";
 			sourceTree = "<group>";
@@ -256,7 +256,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "MacControlCenterUI Demo/MacControlCenterUI_Demo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "MacControlCenterUI Demo/MacControlCenterUIDemo.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -270,7 +270,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.MacControlCenterUI.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.MacControlCenterUI.Demo${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -282,7 +282,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "MacControlCenterUI Demo/MacControlCenterUI_Demo.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "MacControlCenterUI Demo/MacControlCenterUIDemo.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -296,7 +296,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.MacControlCenterUI.Demo;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.MacControlCenterUI.Demo${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

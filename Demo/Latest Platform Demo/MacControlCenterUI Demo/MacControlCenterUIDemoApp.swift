@@ -1,25 +1,38 @@
 //
-//  AppDelegate.swift
+//  MacControlCenterUIDemoApp.swift
 //  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
 import MacControlCenterUI
+import MenuBarExtraAccess
 
 @main
 struct MacControlCenterUIDemoApp: App {
-    //@Environment(\.scenePhase) private var scenePhase
+    @State var isMenuPresented: Bool = false
     
     var body: some Scene {
-        MenuBarExtra("MacControlCenterUI Demo", systemImage: "slider.horizontal.3") {
-            Menu()
+        WindowGroup {
+            ContentView(isMenuPresented: $isMenuPresented)
+        }
+        .windowResizability(.contentSize)
+        
+        Settings {
+            SettingsView()
+        }
+        
+        MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
+            MenuView(isMenuPresented: $isMenuPresented)
         }
         .menuBarExtraStyle(.window)
+        .menuBarExtraAccess(isPresented: $isMenuPresented)
     }
 }
 
-struct Menu: View {
+struct MenuView: View {
+    @Binding var isMenuPresented: Bool
+    
     @State private var volume: CGFloat = 0.75
     @State private var brightness: CGFloat = 0.5
     @State private var item1: Bool = false
@@ -28,7 +41,7 @@ struct Menu: View {
     let sliderWidth: CGFloat = 270
     
     var body: some View {
-        MacControlCenterMenu {
+        MacControlCenterMenu(isPresented: $isMenuPresented) {
             MacControlCenterSlider(
                 "Display",
                 value: $brightness,
@@ -47,8 +60,69 @@ struct Menu: View {
                 image: .macControlCenterSpeaker
             )
             
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
             // standard macOS-style button
             Button("Test") {
+                isMenuPresented = false // dismiss the window
                 print("Test pressed")
             }
             
@@ -70,7 +144,7 @@ struct Menu: View {
         }
     }
     
-    // MARK: Helpers
+    // MARK: Actions
     
     func activateApp() {
         NSApp.activate(ignoringOtherApps: true)
@@ -92,5 +166,39 @@ struct Menu: View {
     
     func quit() {
         NSApp.terminate(nil)
+    }
+}
+
+struct ContentView: View {
+    @Binding var isMenuPresented: Bool
+    
+    var body: some View {
+        VStack(spacing: 40) {
+            Image(systemName: "message.fill")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .foregroundColor(.secondary)
+            
+            Text("Explore this menu bar button in the system status bar.")
+            
+            Text("Or toggle me:")
+            
+            Toggle("", isOn: $isMenuPresented)
+                .toggleStyle(.switch)
+                .labelsHidden()
+        }
+        .padding()
+        .frame(minWidth: 500, minHeight: 350)
+        .background(VisualEffect.nonvibrant())
+    }
+}
+
+struct SettingsView: View {
+    var body: some View {
+        VStack(spacing: 40) {
+            Text("Settings window.")
+        }
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
