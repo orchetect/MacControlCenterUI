@@ -171,6 +171,7 @@ where Label: View, SliderImage: MacControlCenterSliderImage
             
             ZStack(alignment: .center) {
                 Rectangle()
+                    .background(visualEffect)
                     .foregroundColor(bgColor)
                 ZStack(alignment: .leading) {
                     Rectangle()
@@ -204,7 +205,7 @@ where Label: View, SliderImage: MacControlCenterSliderImage
             .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(borderColor, lineWidth: 0.5)
+                    .stroke(borderColor, lineWidth: 0.25)
             )
             
             .onAppear {
@@ -238,10 +239,27 @@ where Label: View, SliderImage: MacControlCenterSliderImage
             )
         }
         .frame(height: Self.sliderHeight)
-        
         // Adding animation is a nice touch, but Apple doesn't even animate their own sliders
         // So to remain faithful, we shouldn't animate ours.
         // .animation(.linear(duration: 0.05))
+    }
+    
+    private var visualEffect: VisualEffect? {
+        if colorScheme == .dark {
+            return VisualEffect(
+                .hudWindow,
+                vibrancy: true,
+                blendingMode: .behindWindow,
+                mask: nil //mask()
+            )
+        } else {
+            return VisualEffect(
+                .underWindowBackground,
+                vibrancy: true,
+                blendingMode: .behindWindow,
+                mask: nil //mask()
+            )
+        }
     }
     
     private func updateImage(fgColor: Color, force: Bool = false) {
@@ -302,8 +320,8 @@ where Label: View, SliderImage: MacControlCenterSliderImage
     
     private func generateBGColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
-        case .light: return Color(white: 0.8)
-        case .dark: return Color(white: 0.28)
+        case .light: return Color(white: 0.8).opacity(0.2)
+        case .dark: return Color(white: 0.3).opacity(0.5)
         @unknown default: return Color(white: 0.5)
         }
     }
@@ -311,7 +329,7 @@ where Label: View, SliderImage: MacControlCenterSliderImage
     private func generateBorderColor(colorScheme: ColorScheme) -> Color {
         switch colorScheme {
         case .light: return Color(white: 0.5)
-        case .dark: return Color(white: 0.3)
+        case .dark: return Color(white: 0.2)
         @unknown default: return Color(white: 0.5)
         }
     }

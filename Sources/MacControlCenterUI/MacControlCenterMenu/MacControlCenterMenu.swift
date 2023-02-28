@@ -84,12 +84,9 @@ public struct MacControlCenterMenu: View {
         }
         .padding([.top, .bottom], menuPadding)
         .background(VisualEffect.popoverWindow())
-        .introspectMenuBarExtraWindow { menuBarExtraWindow in
-            // add additional transparency to mimic macOS menus
-            if colorScheme == .dark{
-                menuBarExtraWindow.contentView?.alphaValue = 0.9
-            }
-        }
+        //.introspectMenuBarExtraWindow { menuBarExtraWindow in
+        //
+        //}
     }
     
     // MARK: Helpers
