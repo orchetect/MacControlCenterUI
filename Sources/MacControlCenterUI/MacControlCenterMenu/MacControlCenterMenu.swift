@@ -5,6 +5,7 @@
 //
 
 import SwiftUI
+import MenuBarExtraAccess
 
 /// macOS Control Center Menu view.
 /// For menu-style items that highlight on mouse hover and execute code upon being clicked, use
@@ -42,15 +43,29 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MacControlCenterMenu: View {
-    public var content: [any View]
+    @Binding public var menuBarExtraIsPresented: Bool
     public var activateAppOnCommandSelection: Bool
+    public var content: [any View]
     
     // MARK: Init
     
+    /// Useful for building a custom `MenuBarExtra` menu when using `.menuBarExtraStyle(.window)`.
+    /// This builder allows the use of any custom View, and also supplies a special
+    /// ``MenuCommand`` view for replicating clickable system menu items.
+    ///
+    /// - Parameters:
+    ///   - isPresented: Pass the binding from `.menuBarExtraAccess(isPresented:)` here.
+    ///   - activateAppOnCommandSelection: Activate the app before executing
+    ///     command action blocks. This is often necessary since menubar items
+    ///     can be accessed while the app is not in focus. This will allow
+    ///     actions that open a window to bring the window (and app) to the front.
+    ///   - content: Menu item builder content.
     public init(
+        isPresented: Binding<Bool>,
         activateAppOnCommandSelection: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
+        self._menuBarExtraIsPresented = isPresented
         self.activateAppOnCommandSelection = activateAppOnCommandSelection
         self.content = content()
     }
@@ -58,15 +73,15 @@ public struct MacControlCenterMenu: View {
     // MARK: Body
     
     public var body: some View {
-        HStack(alignment: .top, spacing: 0) {
-            VStack(spacing: 0) {
-                VStack(alignment: .leading, spacing: 0) {
-                    unwrapContent
-                }
-                //Spacer()
-            }
+        VStack(alignment: .leading, spacing: 0) {
+            unwrapContent
         }
         .padding([.top, .bottom], menuPadding)
+        .visualEffectBackground()
+        .introspectMenuBarExtraWindow { menuBarExtraWindow in
+            // add additional transparency to mimic macOS menus
+            //menuBarExtraWindow.contentView?.alphaValue = 0.8
+        }
     }
     
     // MARK: Helpers
@@ -74,6 +89,7 @@ public struct MacControlCenterMenu: View {
     private var unwrapContent: some View {
         ForEach(content.indices, id: \.self) {
             convertView(content[$0])
+                .environment(\.menuBarExtraIsPresented, $menuBarExtraIsPresented)
         }
     }
     
