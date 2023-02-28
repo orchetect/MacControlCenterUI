@@ -38,13 +38,20 @@ struct MenuView: View {
     @State private var trueTone: Bool = true
     @State private var volume: CGFloat = 0.75
     @State private var brightness: CGFloat = 0.5
-    @State private var item1: Bool = false
+    @State private var selectedItem: Int = 0
     
     /// Based on macOS Control Center slider width
     let sliderWidth: CGFloat = 270
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
+            MacControlCenterSlider(
+                "Display",
+                value: $brightness,
+                image: .macControlCenterDisplayBrightness
+            )
+            .frame(minWidth: sliderWidth)
+            
             MacControlCenterPanel {
                 HStack {
                     MacControlCenterCircleToggle(
@@ -69,88 +76,30 @@ struct MenuView: View {
                 }
             }
             
-            MacControlCenterSlider(
-                "Display",
-                value: $brightness,
-                image: .macControlCenterDisplayBrightness
-            )
-            .frame(minWidth: sliderWidth)
-            
             Divider()
             
             MacControlCenterVolumeSlider("Sound", value: $volume)
                 .frame(minWidth: sliderWidth)
             
+            ForEach(0...6, id: \.self) { num in
+                MacControlCenterCircleToggle(
+                    "Selectable Menu Item \(num)",
+                    isOn: .constant(selectedItem == num),
+                    image: .macControlCenterSpeaker
+                ) { _ in
+                    selectedItem = num
+                }
+            }
+            
+            Divider()
+            
             MacControlCenterCircleToggle(
-                "Toggle",
                 isOn: .constant(true),
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            MacControlCenterCircleToggle(
-                "Toggle",
-                isOn: $item1,
-                image: .macControlCenterSpeaker
-            )
-            
-            // standard macOS-style button
-            Button("Test") {
+                image: .macControlCenterAirplayVideo,
+                label: { Text("Command Button") }
+            ) { _ in
                 isMenuPresented = false // dismiss the window
-                print("Test pressed")
+                print("Button pressed.")
             }
             
             Divider()
