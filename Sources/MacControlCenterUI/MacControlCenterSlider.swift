@@ -127,7 +127,7 @@ where Label: View, SliderImage: MacControlCenterSliderImage
             if let label = label {
                 HStack {
                     label
-                        .font(.system(size: 12, weight: .semibold))
+                        .font(.system(size: 12, weight: .bold))
                     Spacer()
                 }
             }
