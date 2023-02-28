@@ -43,9 +43,15 @@ import MenuBarExtraAccess
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MacControlCenterMenu: View {
+    // MARK: Public Properties
+    
     @Binding public var menuBarExtraIsPresented: Bool
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
+    
+    // MARK: Environment
+    
+    @Environment(\.colorScheme) private var colorScheme
     
     // MARK: Init
     
@@ -77,11 +83,12 @@ public struct MacControlCenterMenu: View {
             unwrapContent
         }
         .padding([.top, .bottom], menuPadding)
-        .visualEffectBackground()
+        .background(VisualEffect.popoverWindow())
         .introspectMenuBarExtraWindow { menuBarExtraWindow in
             // add additional transparency to mimic macOS menus
-            //menuBarExtraWindow.contentView?.alphaValue = 0.8
-            //menuBarExtraWindow.backgroundColor = .clear
+            if colorScheme == .dark{
+                menuBarExtraWindow.contentView?.alphaValue = 0.9
+            }
         }
     }
     

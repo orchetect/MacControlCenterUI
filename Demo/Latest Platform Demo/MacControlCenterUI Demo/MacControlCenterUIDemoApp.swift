@@ -60,6 +60,66 @@ struct MenuView: View {
                 image: .macControlCenterSpeaker
             )
             
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
+            MacControlCenterCircleToggle(
+                "Toggle",
+                isOn: $item1,
+                image: .macControlCenterSpeaker
+            )
+            
             // standard macOS-style button
             Button("Test") {
                 isMenuPresented = false // dismiss the window
@@ -129,7 +189,7 @@ struct ContentView: View {
         }
         .padding()
         .frame(minWidth: 500, minHeight: 350)
-        .visualEffectBackground()
+        .background(VisualEffect.nonvibrant())
     }
 }
 

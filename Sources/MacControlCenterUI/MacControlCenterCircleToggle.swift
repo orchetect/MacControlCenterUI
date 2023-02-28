@@ -149,8 +149,8 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     private var circleBody: some View {
         ZStack {
             Circle()
+                .background(visualEffect)
                 .foregroundColor(buttonBackColor)
-                .foregroundStyleThinMaterial()
             image
                 .resizable()
                 .scaledToFit()
@@ -174,6 +174,29 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     
     // MARK: Helpers
     
+    private var visualEffect: VisualEffect? {
+        guard !isOn else { return nil }
+        if colorScheme == .dark {
+            return VisualEffect(
+                .hudWindow,
+                vibrancy: false,
+                blendingMode: .withinWindow,
+                mask: mask()
+            )
+        } else {
+            return VisualEffect(
+                .underWindowBackground,
+                vibrancy: true,
+                blendingMode: .behindWindow,
+                mask: mask()
+            )
+        }
+    }
+    
+    private func mask() -> NSImage?  {
+        NSImage(color: .black, ovalSize: .init(width: circleSize, height: circleSize))
+    }
+    
     private var buttonBackColor: Color {
         switch isOn {
         case true:
@@ -181,11 +204,11 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         case false:
             switch colorScheme {
             case .dark:
-                return Color(NSColor.controlColor)
+                return Color(NSColor.controlColor) //.opacity(0.8)
             case .light:
-                return Color(white: 0.75)
+                return Color(white: 1).opacity(0.2)
             @unknown default:
-                return Color(NSColor.controlColor)
+                return Color(NSColor.controlColor) //.opacity(0.8)
             }
         }
     }
