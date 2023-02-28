@@ -35,7 +35,7 @@ struct VisualEffect: NSViewRepresentable {
         view.material = material
         if let appearance {
             view.appearance = .init(named: appearance)
-        }
+        } else { view.appearance = nil }
         
         return view
     }

@@ -81,6 +81,7 @@ public struct MacControlCenterMenu: View {
         .introspectMenuBarExtraWindow { menuBarExtraWindow in
             // add additional transparency to mimic macOS menus
             //menuBarExtraWindow.contentView?.alphaValue = 0.8
+            //menuBarExtraWindow.backgroundColor = .clear
         }
     }
     
