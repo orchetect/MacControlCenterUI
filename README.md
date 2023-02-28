@@ -24,7 +24,7 @@ Both **Dark** and **Light Mode** are fully supported.
    - In a Swift Package, add it to the Package.swift dependencies:
 
      ```swift
-     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "0.1.0")
+     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "1.0.0")
      ```
 
 2. Import the library:
@@ -39,7 +39,7 @@ Both **Dark** and **Light Mode** are fully supported.
 
 Minimum requirements to compile: Xcode 12 on macOS 10.15 Catalina or newer.
 
-Supports macOS 10.15+ once compiled. The best experience is on macOS 13.0+.
+Supports macOS 10.15+ once compiled. Menu builder is available on macOS 13.0+.
 
 ## Author
 
