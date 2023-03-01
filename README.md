@@ -18,8 +18,8 @@ Both **Dark** and **Light Mode** are fully supported.
 
    - In an app project or framework, in Xcode:
 
-     - Select the menu: **File → Swift Packages → Add Package Dependency...**
-     - Enter this URL: `https://github.com/orchetect/MacControlCenterUI`
+     Select the menu: **File → Swift Packages → Add Package Dependency...**
+     Enter this URL: `https://github.com/orchetect/MacControlCenterUI`
 
    - In a Swift Package, add it to the Package.swift dependencies:
 
