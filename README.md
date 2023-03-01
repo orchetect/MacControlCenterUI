@@ -4,6 +4,8 @@
 
 <img align="right" width="315" src="Images/demo.png" alt="Example">
 
+
+
 A suite of SwiftUI views that mimic the look and feel of controls used in **macOS Control Center** (introduced in Big Sur).
 
 Careful attention has been paid to **reproducing small details**, such as the slider knob gradually fading as it approaches the image overlay, and the sound slider image overlay changing between muted, low, medium, and high volume symbols to match macOS's Control Center behavior.
