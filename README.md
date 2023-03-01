@@ -2,7 +2,7 @@
 
 [![Platforms - macOS 10.15+](https://img.shields.io/badge/platforms-macOS%2010.15+-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.3-5.7](https://img.shields.io/badge/Swift-5.3–5.7-orange.svg?style=flat) [![Xcode 12.4-14](https://img.shields.io/badge/Xcode-12.4–14-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
 
-<img align="right" width="315" src="Images/demo.png" alt="Example">
+<img align="right" width="40%" src="Images/demo.png" alt="Example">
 
 
 
