@@ -16,17 +16,23 @@ import MenuBarExtraAccess
 /// ```swift
 /// @main
 /// struct MyApp: App {
+///     @State var isMenuPresented: Bool = false
 ///     @State var val: CGFloat = 0.0
 ///
 ///     var body: some Scene {
 ///         MenuBarExtra("MyApp") {
-///             MacControlCenterMenu {
+///             MacControlCenterMenu(isPresented: $isMenuPresented) {
 ///                 MacControlCenterSlider("Amount", value: $val)
+///                 // using MenuCommand will auto-dismiss the popup window
 ///                 MenuCommand("Command 1") {
 ///                     print("Command 1 pressed")
 ///                 }
 ///                 MenuCommand("Command 2") {
 ///                     print("Command 2 pressed")
+///                 }
+///                 SomeCustomView {
+///                     isMenuPresented = false // dismiss popup window manually
+///                     doSomeStuff() // perform an action
 ///                 }
 ///                 Divider()
 ///                 MenuCommand("Quit") {
@@ -35,6 +41,7 @@ import MenuBarExtraAccess
 ///             }
 ///         }
 ///         .menuBarExtraStyle(.window) // required to render correctly
+///         .menuBarExtraAccess(isPresented: $isMenuPresented) // show/dismiss binding
 ///     }
 /// }
 /// ```
