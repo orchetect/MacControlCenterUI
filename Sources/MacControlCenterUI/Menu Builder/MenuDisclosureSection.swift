@@ -26,7 +26,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) where S: StringProtocol, Label == Text{
-        self.label = Self.stylized(Text(label))
+        self.label = MenuSectionStyling.stylized(Text(label))
         self._isExpanded = isExpanded
         self.content = content()
     }
@@ -36,7 +36,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) where Label == Text {
-        self.label = Self.stylized(Text(titleKey))
+        self.label = MenuSectionStyling.stylized(Text(titleKey))
         self._isExpanded = isExpanded
         self.content = content()
     }
@@ -93,11 +93,5 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         } else {
             EmptyView()
         }
-    }
-    
-    private static func stylized(_ text: Text) -> Text {
-        text
-            .font(.system(size: MenuStyling.headerFontSize, weight: .bold))
-            .foregroundColor(.secondary)
     }
 }

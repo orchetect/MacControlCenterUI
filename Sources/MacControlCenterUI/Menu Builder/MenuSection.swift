@@ -20,13 +20,13 @@ public struct MenuSection<Label: View>: View {
     public init<S>(
         _ label: S
     ) where S: StringProtocol, Label == Text{
-        self.label = Self.stylized(Text(label))
+        self.label = MenuSectionStyling.stylized(Text(label))
     }
     
     public init(
         _ titleKey: LocalizedStringKey
     ) where Label == Text {
-        self.label = Self.stylized(Text(titleKey))
+        self.label = MenuSectionStyling.stylized(Text(titleKey))
     }
     
     public init(
@@ -41,10 +41,12 @@ public struct MenuSection<Label: View>: View {
         Divider()
         label
     }
-    
-    private static func stylized(_ text: Text) -> Text {
+}
+
+enum MenuSectionStyling {
+    static func stylized(_ text: Text) -> Text {
         text
             .font(.system(size: MenuStyling.headerFontSize, weight: .bold))
-            .foregroundColor(.secondary)
+            .foregroundColor(Color(white: 1).opacity(0.6))
     }
 }

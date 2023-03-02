@@ -10,7 +10,7 @@ internal enum MenuGeometry {
     static let menuItemStandardHoverForeColor = Color(NSColor.selectedMenuItemTextColor)
     static let menuItemStandardHoverBackColor = Color(NSColor.selectedContentBackgroundColor)
     
-    static let menuItemControlCenterHoverBackColor = Color(white: 0.4, opacity: 0.7)
+    static let menuItemControlCenterHoverBackColor = Color(white: 0.4, opacity: 0.2)
     
     static let menuHorizontalContentInset: CGFloat = 14
     static let menuHorizontalHighlightInset: CGFloat = 4
