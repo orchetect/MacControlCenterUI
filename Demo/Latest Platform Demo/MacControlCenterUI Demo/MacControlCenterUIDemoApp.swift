@@ -93,11 +93,10 @@ struct MenuView: View {
             
             Divider()
             
-            MacControlCenterCircleToggle(
-                isOn: .constant(false),
+            MacControlCenterCircleButton(
                 image: .macControlCenterAirplayVideo,
                 label: { Text("Command Button With a Really Long Name That will Get Truncated") }
-            ) { _ in
+            ) {
                 isMenuPresented = false // dismiss the window
                 print("Button pressed.")
             }
