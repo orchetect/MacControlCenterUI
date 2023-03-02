@@ -26,7 +26,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     public var dismissesMenu: Bool = true
     public var style: MenuCommandStyle = .controlCenter
     
-    @State private var mouseIsHovering: Bool = false
+    @State public var isHighlighted: Bool = false
     
     // MARK: Init
     
@@ -69,24 +69,11 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        ZStack {
-            RoundedRectangle(cornerSize: .init(width: 5, height: 5))
-                .fill(style.backColor(hover: mouseIsHovering) ?? .clear)
-                .padding([.leading, .trailing], MenuGeometry.menuHorizontalHighlightInset)
-            
-            VStack(alignment: .leading) {
-                HStack {
-                    label
-                        .foregroundColor(style.textColor(hover: mouseIsHovering))
-                    Spacer()
-                }
-            }
-            .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
-        }
-        .frame(height: MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding)
-        .onHover { state in
-            if mouseIsHovering != state {
-                mouseIsHovering = state
+        HighlightingMenuItem(style: style, isHighlighted: $isHighlighted) {
+            HStack {
+                label
+                    .foregroundColor(style.textColor(hover: isHighlighted))
+                Spacer()
             }
         }
         .onTapGesture {
@@ -98,10 +85,10 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     
     private func blinkAndCallAction() {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
-            mouseIsHovering = false
+            isHighlighted = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            mouseIsHovering = true
+            isHighlighted = true
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [activatesApp, dismissesMenu, action] in
             if activatesApp {
