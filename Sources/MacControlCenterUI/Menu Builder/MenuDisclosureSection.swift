@@ -57,6 +57,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         MenuBody {
             Divider()
         }
+        
         HighlightingMenuItem(
             style: .controlCenter,
             height: 20,
@@ -65,23 +66,32 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
             HStack {
                 label
                 Spacer()
-                Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                Image(systemName: /* isExpanded ? "chevron.down" : */ "chevron.right")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 10, height: 10)
                     .foregroundColor(.primary)
+                    .rotationEffect(isExpanded ? .degrees(90) : .zero)
+                    .animation(.default, value: isExpanded)
             }
         }
         .onTapGesture {
-            //withAnimation {
-            isExpanded.toggle()
-            //}
+            withAnimation(.spring()) {
+                isExpanded.toggle()
+            }
         }
         
+        conditionalContent
+    }
+    
+    @ViewBuilder
+    private var conditionalContent: some View {
         if isExpanded {
             //withAnimation {
             content
             //}
+        } else {
+            EmptyView()
         }
     }
     
