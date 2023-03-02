@@ -18,6 +18,8 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
     public var content: Content
     @Binding public var isHighlighted: Bool
     
+    @State private var isHighlightedInternal: Bool = false
+    
     // MARK: Init
     
     public init(
@@ -32,12 +34,23 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
         self.content = content()
     }
     
+    public init(
+        style: MenuCommandStyle = .controlCenter,
+        height: CGFloat,
+        @ViewBuilder _ content: () -> Content
+    ) {
+        self.style = style
+        self.height = height
+        self._isHighlighted = .constant(false)
+        self.content = content()
+    }
+    
     // MARK: Body
     
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerSize: .init(width: 5, height: 5))
-                .fill(style.backColor(hover: isHighlighted) ?? .clear)
+                .fill(style.backColor(hover: isHighlightedInternal) ?? .clear)
                 .padding([.leading, .trailing], MenuGeometry.menuHorizontalHighlightInset)
             
             VStack(alignment: .leading) {
@@ -47,9 +60,13 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
         }
         .frame(minHeight: height)
         .onHover { state in
-            if isHighlighted != state {
+            if isHighlightedInternal != state {
+                isHighlightedInternal = state
                 isHighlighted = state
             }
+        }
+        .onChange(of: isHighlighted) { newValue in
+            isHighlightedInternal = newValue
         }
     }
 }
