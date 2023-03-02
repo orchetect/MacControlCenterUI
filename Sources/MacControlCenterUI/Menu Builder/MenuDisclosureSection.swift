@@ -65,7 +65,10 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
             HStack {
                 label
                 Spacer()
-                Text(">")
+                Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 10, height: 10)
                     .foregroundColor(.primary)
             }
         }
