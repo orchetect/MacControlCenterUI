@@ -29,7 +29,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     @State private var isMouseDown: Bool = false
     private var style: MacControlCenterCircleButtonStyle
     
-    // MARK: Init
+    // MARK: Init - No Label
     
     public init(
         isOn: Binding<Bool>,
@@ -48,6 +48,8 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self.onChangeBlock = onChangeBlock
     }
     
+    // MARK: Init - With String Label
+    
     public init<S>(
         _ title: S,
         isOn: Binding<Bool>,
@@ -55,19 +57,18 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
         image: Image,
-        @ViewBuilder label: @escaping () -> Label,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
-        self.init(
-            isOn: isOn,
-            style: style,
-            color: color,
-            invertForeground: invertForeground,
-            image: image,
-            label: { Text(title) },
-            onChange: onChangeBlock
-        )
+        self.label = Text(title)
+        self._isOn = isOn
+        self.style = style
+        self.color = color
+        self.invertForeground = invertForeground
+        self.image = image
+        self.onChangeBlock = onChangeBlock
     }
+    
+    // MARK: Init - With LocalizedStringKey Label
     
     public init(
         _ titleKey: LocalizedStringKey,
@@ -78,16 +79,16 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         image: Image,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
-        self.init(
-            isOn: isOn,
-            style: style,
-            color: color,
-            invertForeground: invertForeground,
-            image: image,
-            label: { Text(titleKey) },
-            onChange: onChangeBlock
-        )
+        self.label = Text(titleKey)
+        self._isOn = isOn
+        self.style = style
+        self.color = color
+        self.invertForeground = invertForeground
+        self.image = image
+        self.onChangeBlock = onChangeBlock
     }
+    
+    // MARK: Init - With Label Closure
     
     public init(
         isOn: Binding<Bool>,
@@ -107,6 +108,9 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self.onChangeBlock = onChangeBlock
     }
     
+    // MARK: Init - With Label
+    
+    @_disfavoredOverload
     public init(
         isOn: Binding<Bool>,
         style: MacControlCenterCircleButtonStyle = .menu,

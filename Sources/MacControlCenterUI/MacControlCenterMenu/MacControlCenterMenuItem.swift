@@ -11,23 +11,3 @@ import SwiftUI
 /// Internal use only.
 /// It is not necessary to conform your views to this protocol unless you require custom view padding in a ``MacControlCenterMenu``.
 public protocol MacControlCenterMenuItem { }
-
-// MARK: - Geometry
-
-internal enum MenuGeometry {
-    static let menuItemStandardHoverForeColor = Color(NSColor.selectedMenuItemTextColor)
-    static let menuItemStandardHoverBackColor = Color(NSColor.selectedContentBackgroundColor)
-    
-    static let menuItemControlCenterHoverBackColor = Color(white: 0.4, opacity: 0.7)
-    
-    static let menuHorizontalContentInset: CGFloat = 14
-    static let menuHorizontalHighlightInset: CGFloat = 4
-    static let menuVerticalPadding: CGFloat = 1
-    static let menuItemPadding: CGFloat = 4
-    static let menuItemContentStandardHeight: CGFloat = 18
-    static let menuPadding: CGFloat = 6
-}
-
-internal enum MenuStyling {
-    static let headerFontSize: CGFloat = 13
-}
