@@ -107,6 +107,24 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self.onChangeBlock = onChangeBlock
     }
     
+    public init(
+        isOn: Binding<Bool>,
+        style: MacControlCenterCircleButtonStyle = .menu,
+        color: Color = Color(NSColor.controlAccentColor),
+        invertForeground: Bool = false,
+        image: Image,
+        label: Label,
+        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self._isOn = isOn
+        self.style = style
+        self.color = color
+        self.invertForeground = invertForeground
+        self.image = image
+        self.label = label
+        self.onChangeBlock = onChangeBlock
+    }
+    
     // MARK: Body
     
     public var body: some View {
