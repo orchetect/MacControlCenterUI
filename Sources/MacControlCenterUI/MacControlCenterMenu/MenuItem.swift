@@ -12,13 +12,19 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 internal struct MenuItem<Content: View>: View, MacControlCenterMenuItem {
+    public var verticalPadding: Bool
+    public var horizontalPadding: Bool
     public var content: Content
     
     // MARK: Init
     
     public init(
+        verticalPadding: Bool = true,
+        horizontalPadding: Bool = true,
         @ViewBuilder _ content: () -> Content
     ) {
+        self.verticalPadding = verticalPadding
+        self.horizontalPadding = horizontalPadding
         self.content = content()
     }
     
@@ -28,7 +34,9 @@ internal struct MenuItem<Content: View>: View, MacControlCenterMenuItem {
         VStack(alignment: .leading) {
             content
         }
-        .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
-        .padding([.top, .bottom], MenuGeometry.menuItemPadding)
+        .padding([.leading, .trailing],
+                 horizontalPadding ? MenuGeometry.menuHorizontalContentInset : 0)
+        .padding([.top, .bottom],
+                 verticalPadding ? MenuGeometry.menuItemPadding : 0)
     }
 }
