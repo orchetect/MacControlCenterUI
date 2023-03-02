@@ -30,6 +30,11 @@ struct MacControlCenterUIDemoApp: App {
     }
 }
 
+struct Output: Hashable, Identifiable {
+    let name: String
+    var id: String { name }
+}
+
 struct MenuView: View {
     @Binding var isMenuPresented: Bool
     
@@ -39,20 +44,34 @@ struct MenuView: View {
     @State private var volume: CGFloat = 0.75
     @State private var brightness: CGFloat = 0.5
     @State private var selectedItem: Int = 0
+    @State private var isOutputExpanded = true
+    @State private var outputSelection: Output.ID? = "Test 1"
+    
+    @State var outputs: [Output] = [
+        .init(name: "Test 1"),
+        .init(name: "Test 2"),
+        .init(name: "Test 3")
+    ]
     
     /// Based on macOS Control Center slider width
     let sliderWidth: CGFloat = 270
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
+            MenuHeader("Demo App") {
+                Text("1.0.0")
+                    .foregroundColor(.secondary)
+            }
+            
+            MenuSection("Display")
+            
             MacControlCenterSlider(
-                "Display",
                 value: $brightness,
                 image: .macControlCenterDisplayBrightness
             )
             .frame(minWidth: sliderWidth)
             
-            MacControlCenterPanel {
+            // MacControlCenterPanel {
                 HStack {
                     MacControlCenterCircleToggle(
                         isOn: $darkMode,
@@ -74,41 +93,33 @@ struct MenuView: View {
                         image: .macControlCenterDisplayBrightness
                     ) { Text("True Tone") }
                 }
-            }
+            // }
             
-            Divider()
+            MenuSection("Sound")
             
-            MacControlCenterVolumeSlider("Sound", value: $volume)
+            MacControlCenterVolumeSlider(value: $volume)
                 .frame(minWidth: sliderWidth)
             
-            ForEach(0...6, id: \.self) { num in
-                MacControlCenterCircleToggle(
-                    "Selectable Menu Item \(num)",
-                    isOn: .constant(selectedItem == num),
-                    image: .macControlCenterSpeaker
-                ) { _ in
-                    selectedItem = num
+            MenuCommand("Sound Settings...") {
+                showSettingsWindow()
+            }
+            
+            DisclosureMenuSection("Output", isExpanded: $isOutputExpanded) {
+                MenuRadioGroup(outputs, selection: $outputSelection) { item in
+                    Text(item.name)
                 }
             }
             
             Divider()
             
-            MacControlCenterCircleButton(
-                image: .macControlCenterAirplayVideo,
-                label: { Text("Command Button With a Really Long Name That will Get Truncated") }
-            ) {
-                isMenuPresented = false // dismiss the window
-                print("Button pressed.")
-            }
-            
-            Divider()
-            
-            MenuCommand("About") {
-                activateAppAndShowStandardAboutWindow()
+            MenuCommand {
+                showStandardAboutWindow()
+            } label: {
+                Text("About") // custom label view
             }
             
             MenuCommand("Settings...") {
-                activateAppAndShowSettingsWindow()
+                showSettingsWindow()
             }
             
             Divider()
@@ -125,8 +136,7 @@ struct MenuView: View {
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    func activateAppAndShowStandardAboutWindow() {
-        activateApp()
+    func showStandardAboutWindow() {
         NSApp.sendAction(
             #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
             to: nil,
@@ -134,8 +144,7 @@ struct MenuView: View {
         )
     }
     
-    func activateAppAndShowSettingsWindow() {
-        activateApp()
+    func showSettingsWindow() {
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
     
