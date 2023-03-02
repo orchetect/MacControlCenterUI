@@ -57,10 +57,10 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
     
     public var body: some View {
         ZStack {
-            RoundedRectangle(cornerSize: .init(width: 5, height: 5))
+            backgroundShape
                 .background(isHighlightedInternal ? visualEffect : nil)
-                .foregroundColor(style.backColor(hover: isHighlightedInternal) ?? .clear)
-                .clipShape(RoundedRectangle(cornerSize: .init(width: 5, height: 5)))
+                .foregroundColor(style.backColor(hover: isHighlightedInternal, for: colorScheme) ?? .clear)
+                .clipShape(backgroundShape)
                 .padding([.leading, .trailing], MenuGeometry.menuHorizontalHighlightInset)
             
             VStack(alignment: .leading) {
@@ -82,12 +82,16 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
     
     // MARK: Helpers
     
+    private var backgroundShape: some Shape {
+        RoundedRectangle(cornerSize: .init(width: 5, height: 5))
+    }
+    
     private var visualEffect: VisualEffect? {
         if colorScheme == .dark {
             return VisualEffect(
                 .underWindowBackground,
                 vibrancy: true,
-                blendingMode: .withinWindow
+                blendingMode: .behindWindow
             )
         } else {
             return VisualEffect(

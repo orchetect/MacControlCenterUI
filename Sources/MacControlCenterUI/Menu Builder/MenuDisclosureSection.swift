@@ -25,8 +25,8 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         _ label: S,
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
-    ) where S: StringProtocol, Label == Text{
-        self.label = MenuSectionStyling.stylized(Text(label))
+    ) where S: StringProtocol, Label == MenuSectionText {
+        self.label = MenuSectionText(text: Text(label))
         self._isExpanded = isExpanded
         self.content = content()
     }
@@ -35,8 +35,8 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         _ titleKey: LocalizedStringKey,
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
-    ) where Label == Text {
-        self.label = MenuSectionStyling.stylized(Text(titleKey))
+    ) where Label == MenuSectionText {
+        self.label = MenuSectionText(text: Text(titleKey))
         self._isExpanded = isExpanded
         self.content = content()
     }

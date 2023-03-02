@@ -25,20 +25,28 @@ public enum MenuCommandStyle {
 
 extension MenuCommandStyle {
     public func textColor(hover: Bool) -> Color? {
+        guard hover else { return nil }
+        
         switch self {
         case .menu:
-            return hover ? MenuGeometry.menuItemStandardHoverForeColor : nil
+            return MenuGeometry.menuItemStandardHoverForeColor
         case .controlCenter:
             return nil
         }
     }
     
-    public func backColor(hover: Bool) -> Color? {
+    public func backColor(hover: Bool, for colorScheme: ColorScheme) -> Color? {
+        guard hover else { return nil }
+        
         switch self {
         case .menu:
-            return hover ? MenuGeometry.menuItemStandardHoverBackColor : nil
+            return MenuGeometry.menuItemStandardHoverBackColor
         case .controlCenter:
-            return hover ? MenuGeometry.menuItemControlCenterHoverBackColor : nil
+            if colorScheme == .dark {
+                return Color(white: 0.3, opacity: 0.4)
+            } else {
+                return Color(white: 0.9, opacity: 0.2)
+            }
         }
     }
 }

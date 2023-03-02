@@ -13,20 +13,22 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuSection<Label: View>: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
     public var label: Label
     
     // MARK: Init
     
     public init<S>(
         _ label: S
-    ) where S: StringProtocol, Label == Text{
-        self.label = MenuSectionStyling.stylized(Text(label))
+    ) where S: StringProtocol, Label == MenuSectionText {
+        self.label = MenuSectionText(text: Text(label))
     }
     
     public init(
         _ titleKey: LocalizedStringKey
-    ) where Label == Text {
-        self.label = MenuSectionStyling.stylized(Text(titleKey))
+    ) where Label == MenuSectionText {
+        self.label = MenuSectionText(text: Text(titleKey))
     }
     
     public init(
@@ -43,10 +45,18 @@ public struct MenuSection<Label: View>: View {
     }
 }
 
-enum MenuSectionStyling {
-    static func stylized(_ text: Text) -> Text {
+public struct MenuSectionText: View {
+    @Environment(\.colorScheme) private var colorScheme
+    
+    public let text: Text
+    
+    public var body: some View {
         text
-            .font(.system(size: MenuStyling.headerFontSize, weight: .bold))
-            .foregroundColor(Color(white: 1).opacity(0.6))
+            .font(.system(size: MenuStyling.headerFontSize, weight: .semibold))
+            .foregroundColor(
+                colorScheme == .dark
+                    ? Color(white: 1).opacity(0.6)
+                    : Color(white: 0).opacity(0.7)
+            )
     }
 }
