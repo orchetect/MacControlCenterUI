@@ -6,9 +6,9 @@
 
 
 
-A suite of SwiftUI views that mimic the look and feel of controls used in **macOS Control Center** (introduced in Big Sur).
+A **menu builder** and **suite of SwiftUI controls** that mimic the feel of **macOS Control Center** menus.
 
-Careful attention has been paid to **reproducing small details**, such as the slider knob gradually fading as it approaches the image overlay, and the sound slider image overlay changing between muted, low, medium, and high volume symbols to match macOS's Control Center behavior.
+Integrates seamlessly with Swift's new `MenuBarExtra`.
 
 Both **Dark** and **Light Mode** are fully supported.
 
