@@ -1,5 +1,5 @@
 //
-//  MenuDisclosureSection.swift
+//  DisclosureMenuSection.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -12,7 +12,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuDisclosureSection<Label: View, Content: View>: View, MacControlCenterMenuItem {
+public struct DisclosureMenuSection<Label: View, Content: View>: View, MacControlCenterMenuItem {
     public var label: Label
     @Binding public var isExpanded: Bool
     public var content: Content
