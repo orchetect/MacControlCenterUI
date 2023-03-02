@@ -1,6 +1,6 @@
 //
 //  MenuCommand.swift
-//  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 

@@ -1,6 +1,6 @@
 //
 //  MenuBarExtraIDEnvironmentKey.swift
-//  MenuBarExtraAccess • https://github.com/orchetect/MenuBarExtraAccess
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
