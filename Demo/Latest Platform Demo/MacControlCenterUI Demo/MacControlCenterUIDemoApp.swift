@@ -25,8 +25,8 @@ struct MacControlCenterUIDemoApp: App {
         MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
             MenuView(isMenuPresented: $isMenuPresented)
         }
-        .menuBarExtraStyle(.window)
-        .menuBarExtraAccess(isPresented: $isMenuPresented)
+        .menuBarExtraStyle(.window) // required for menu builder
+        .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
     }
 }
 
