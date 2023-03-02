@@ -56,10 +56,6 @@ public struct MacControlCenterMenu: View {
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
     
-    // MARK: Environment
-    
-    @Environment(\.colorScheme) private var colorScheme
-    
     // MARK: Init
     
     /// Useful for building a custom `MenuBarExtra` menu when using `.menuBarExtraStyle(.window)`.
@@ -86,35 +82,14 @@ public struct MacControlCenterMenu: View {
     // MARK: Body
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            unwrapContent
+        MenuBody(content: content) { item in
+            item
+                .environment(\.menuBarExtraIsPresented, $menuBarExtraIsPresented)
         }
         .padding([.top, .bottom], MenuGeometry.menuPadding)
         .background(VisualEffect.popoverWindow())
         //.introspectMenuBarExtraWindow { menuBarExtraWindow in
         //
         //}
-    }
-    
-    // MARK: Helpers
-    
-    private var unwrapContent: some View {
-        ForEach(content.indices, id: \.self) {
-            convertView(content[$0])
-                .environment(\.menuBarExtraIsPresented, $menuBarExtraIsPresented)
-        }
-    }
-    
-    private func convertView(_ view: any View) -> AnyView {
-        switch view {
-        case is (any MacControlCenterMenuItem):
-            return AnyView(view)
-            
-        default:
-            let wrappedView = MenuItem {
-                AnyView(view)
-            }
-            return AnyView(wrappedView)
-        }
     }
 }
