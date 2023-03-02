@@ -89,7 +89,7 @@ public struct MacControlCenterMenu: View {
         VStack(alignment: .leading, spacing: 0) {
             unwrapContent
         }
-        .padding([.top, .bottom], menuPadding)
+        .padding([.top, .bottom], MenuGeometry.menuPadding)
         .background(VisualEffect.popoverWindow())
         //.introspectMenuBarExtraWindow { menuBarExtraWindow in
         //

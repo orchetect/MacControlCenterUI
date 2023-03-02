@@ -28,7 +28,7 @@ internal struct MenuItem<Content: View>: View, MacControlCenterMenuItem {
         VStack(alignment: .leading) {
             content
         }
-        .padding([.leading, .trailing], menuHorizontalContentInset)
-        .padding([.top, .bottom], menuItemPadding)
+        .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
+        .padding([.top, .bottom], MenuGeometry.menuItemPadding)
     }
 }

@@ -72,7 +72,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         ZStack {
             RoundedRectangle(cornerSize: .init(width: 5, height: 5))
                 .fill(style.backColor(hover: mouseIsHovering) ?? .clear)
-                .padding([.leading, .trailing], menuHorizontalHighlightInset)
+                .padding([.leading, .trailing], MenuGeometry.menuHorizontalHighlightInset)
             
             VStack(alignment: .leading) {
                 HStack {
@@ -81,9 +81,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
                     Spacer()
                 }
             }
-            .padding([.leading, .trailing], menuHorizontalContentInset)
+            .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
-        .frame(height: menuItemContentStandardHeight + menuItemPadding)
+        .frame(height: MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding)
         .onHover { state in
             if mouseIsHovering != state {
                 mouseIsHovering = state

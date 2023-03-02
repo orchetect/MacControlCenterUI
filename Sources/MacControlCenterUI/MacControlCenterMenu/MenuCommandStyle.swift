@@ -27,7 +27,7 @@ extension MenuCommandStyle {
     public func textColor(hover: Bool) -> Color? {
         switch self {
         case .menu:
-            return hover ? menuItemStandardHoverForeColor : nil
+            return hover ? MenuGeometry.menuItemStandardHoverForeColor : nil
         case .controlCenter:
             return nil
         }
@@ -36,9 +36,9 @@ extension MenuCommandStyle {
     public func backColor(hover: Bool) -> Color? {
         switch self {
         case .menu:
-            return hover ? menuItemStandardHoverBackColor : nil
+            return hover ? MenuGeometry.menuItemStandardHoverBackColor : nil
         case .controlCenter:
-            return hover ? menuItemControlCenterHoverBackColor : nil
+            return hover ? MenuGeometry.menuItemControlCenterHoverBackColor : nil
         }
     }
 }
