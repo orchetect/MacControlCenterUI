@@ -18,8 +18,7 @@ let package = Package(
     targets: [
         .target(
             name: "MacControlCenterUI",
-            dependencies: ["MenuBarExtraAccess"],
-            resources: [.process("Assets")]
+            dependencies: ["MenuBarExtraAccess"]
         ),
         .testTarget(
             name: "MacControlCenterUITests",
