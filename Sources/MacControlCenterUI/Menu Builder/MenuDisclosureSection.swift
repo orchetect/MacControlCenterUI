@@ -54,34 +54,31 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
     // MARK: Body
     
     public var body: some View {
-        MenuItem {
+        MenuBody {
             Divider()
         }
+        HighlightingMenuItem(
+            style: .controlCenter,
+            height: 20,
+            isHighlighted: $isHighlighted
+        ) {
+            HStack {
+                label
+                Spacer()
+                Text(">")
+                    .foregroundColor(.primary)
+            }
+        }
+        .onTapGesture {
+            //withAnimation {
+            isExpanded.toggle()
+            //}
+        }
         
-        MenuItem(verticalPadding: true, horizontalPadding: false) {
-            HighlightingMenuItem(
-                style: .controlCenter,
-                height: 20,
-                isHighlighted: $isHighlighted
-            ) {
-                HStack {
-                    label
-                    Spacer()
-                    Text(">")
-                        .foregroundColor(.primary)
-                }
-            }
-            .onTapGesture {
-                //withAnimation {
-                isExpanded.toggle()
-                //}
-            }
-            
-            if isExpanded {
-                //withAnimation {
-                content
-                //}
-            }
+        if isExpanded {
+            //withAnimation {
+            content
+            //}
         }
     }
     
