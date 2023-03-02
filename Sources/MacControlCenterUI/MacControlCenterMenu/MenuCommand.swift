@@ -69,7 +69,11 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        HighlightingMenuItem(style: style, isHighlighted: $isHighlighted) {
+        HighlightingMenuItem(
+            style: style,
+            height: MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding,
+            isHighlighted: $isHighlighted
+        ) {
             HStack {
                 label
                     .foregroundColor(style.textColor(hover: isHighlighted))

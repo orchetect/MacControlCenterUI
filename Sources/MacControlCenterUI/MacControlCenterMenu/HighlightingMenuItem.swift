@@ -13,18 +13,21 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuItem {
-    public var content: Content
     public var style: MenuCommandStyle = .controlCenter
+    public var height: CGFloat
+    public var content: Content
     @Binding public var isHighlighted: Bool
     
     // MARK: Init
     
     public init(
         style: MenuCommandStyle = .controlCenter,
+        height: CGFloat,
         isHighlighted: Binding<Bool>,
         @ViewBuilder _ content: () -> Content
     ) {
         self.style = style
+        self.height = height
         self._isHighlighted = isHighlighted
         self.content = content()
     }
@@ -42,7 +45,7 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
             }
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
-        .frame(height: MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding)
+        .frame(minHeight: height)
         .onHover { state in
             if isHighlighted != state {
                 isHighlighted = state
