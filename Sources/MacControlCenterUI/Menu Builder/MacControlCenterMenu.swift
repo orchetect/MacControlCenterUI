@@ -88,7 +88,7 @@ public struct MacControlCenterMenu: View {
         }
         .padding([.top, .bottom], MenuGeometry.menuPadding)
         .background(VisualEffect.popoverWindow())
-        //.introspectMenuBarExtraWindow { menuBarExtraWindow in
+        //.introspectMenuBarExtraWindow { window in
         //
         //}
     }

@@ -94,6 +94,7 @@ struct MenuView: View {
                     ) { Text("True Tone") }
                 }
             // }
+                .frame(height: 80)
             
             MenuSection("Sound")
             

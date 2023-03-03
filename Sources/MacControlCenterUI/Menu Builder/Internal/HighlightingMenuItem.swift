@@ -68,7 +68,7 @@ internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuI
             }
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
-        .frame(minHeight: height)
+        .frame(height: height)
         .onHover { state in
             if isHighlightedInternal != state {
                 isHighlightedInternal = state

@@ -79,19 +79,29 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
             withAnimation(.spring()) {
                 isExpanded.toggle()
             }
+            height = isExpanded ? nil : 0
+            minHeight = isExpanded ? 0 : nil
+            
+            DispatchQueue.main.async {
+                minHeight = nil
+            }
         }
         
         conditionalContent
+            .frame(maxWidth: .infinity)
+            .frame(height: height)
+            .frame(minHeight: minHeight)
     }
+    
+    @State private var height: CGFloat?
+    @State private var minHeight: CGFloat?
     
     @ViewBuilder
     private var conditionalContent: some View {
         if isExpanded {
-            //withAnimation {
             content
-            //}
         } else {
-            EmptyView()
+            Spacer(minLength: 0)
         }
     }
 }
