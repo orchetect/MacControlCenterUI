@@ -18,6 +18,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     @Binding public var isOn: Bool
     public var image: Image?
     public var color: Color
+    public var offColor: Color?
     public var invertForeground: Bool
     public var label: Label?
     public var onChangeBlock: (Bool) -> Void
@@ -37,6 +38,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         isOn: Binding<Bool>,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
@@ -44,6 +46,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.style = style
         self.color = color
+        self.offColor = offColor
         self.invertForeground = invertForeground
         self.image = image
         self.label = nil
@@ -57,6 +60,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         isOn: Binding<Bool>,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
@@ -65,6 +69,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.style = style
         self.color = color
+        self.offColor = offColor
         self.invertForeground = invertForeground
         self.image = image
         self.onChangeBlock = onChangeBlock
@@ -77,6 +82,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         isOn: Binding<Bool>,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
@@ -85,6 +91,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.style = style
         self.color = color
+        self.offColor = offColor
         self.invertForeground = invertForeground
         self.image = image
         self.onChangeBlock = onChangeBlock
@@ -96,6 +103,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         isOn: Binding<Bool>,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         @ViewBuilder label: @escaping () -> Label,
@@ -104,6 +112,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.style = style
         self.color = color
+        self.offColor = offColor
         self.invertForeground = invertForeground
         self.image = image
         self.label = label()
@@ -117,6 +126,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         isOn: Binding<Bool>,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         label: Label,
@@ -125,6 +135,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.style = style
         self.color = color
+        self.offColor = offColor
         self.invertForeground = invertForeground
         self.image = image
         self.label = label
@@ -263,6 +274,9 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         case true:
             return color
         case false:
+            // return custom color if supplied
+            if let offColor { return offColor }
+            
             switch colorScheme {
             case .dark:
                 return Color(NSColor.controlColor) //.opacity(0.8)

@@ -31,6 +31,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     public init(
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         action actionBlock: @escaping () -> Void
@@ -47,6 +48,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
         _ title: S,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         @ViewBuilder label: @escaping () -> Label,
@@ -66,6 +68,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
         _ titleKey: LocalizedStringKey,
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         action actionBlock: @escaping () -> Void
@@ -83,6 +86,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     public init(
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
+        offColor: Color? = nil,
         invertForeground: Bool = false,
         image: Image? = nil,
         @ViewBuilder label: @escaping () -> Label,

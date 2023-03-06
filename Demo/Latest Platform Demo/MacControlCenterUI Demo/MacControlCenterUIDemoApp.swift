@@ -46,6 +46,7 @@ struct MenuView: View {
     @State private var selectedItem: Int = 0
     @State private var isOutputExpanded = true
     @State private var outputSelection: Output.ID? = "Test 1"
+    @State private var testPlain = false
     
     @State var outputs: [Output] = [
         .init(name: "Test 1"),
@@ -109,6 +110,17 @@ struct MenuView: View {
                 MenuRadioGroup(outputs, selection: $outputSelection) { item in
                     Text(item.name)
                 }
+            }
+            
+            Divider()
+            
+            MacControlCenterCircleToggle(
+                isOn: $testPlain,
+                style: .menu,
+                color: .red,
+                offColor: .red.opacity(0.2)
+            ) {
+                Text("Custom Colors with No Image")
             }
             
             Divider()
