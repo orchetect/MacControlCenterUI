@@ -81,13 +81,13 @@ public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem
                     .frame(width: 10, height: 10)
                     .foregroundColor(.primary)
                     .rotationEffect(isExpanded ? .degrees(90) : .zero)
-                    .animation(.default, value: isExpanded)
+//                    .animation(.default, value: isExpanded)
             }
         }
         .onTapGesture {
-            withAnimation(.spring()) {
+//            withAnimation(.spring()) {
                 isExpanded.toggle()
-            }
+//            }
             
             // below is some jank magic to make the window not freak out too much
             height = isExpanded ? nil : 0
@@ -97,19 +97,20 @@ public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem
             }
         }
         
-        conditionalContent
+        // do not remove the view using if { } otherwise it loses state
+        MenuBody(content: content)
+            .frame(minHeight: minHeight)
             .frame(maxWidth: .infinity)
             .frame(height: height)
-            .frame(minHeight: minHeight)
+            .opacity(isExpanded ? 1 : 0)
+        
+            .onAppear {
+                if !isExpanded {
+                    height = 0
+                }
+            }
     }
     
     @State private var height: CGFloat?
     @State private var minHeight: CGFloat?
-    
-    @ViewBuilder
-    private var conditionalContent: some View {
-        // do not remove the view using if { } otherwise it loses state
-        MenuBody(content: content)
-            .opacity(isExpanded ? 1 : 0)
-    }
 }

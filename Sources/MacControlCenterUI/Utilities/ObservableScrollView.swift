@@ -39,7 +39,10 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
         ScrollView(axes, showsIndicators: showsIndicators) {
             VStack(spacing: 0) {
                 GeometryReader { geometry in
-                    Color.clear.environment(\.scrollOffset, geometry.frame(in: .named(coordSpace)).origin)
+                    Color.clear.preference(
+                        key: ScrollOffsetPreferenceKey.self,
+                        value: geometry.frame(in: .named(coordSpace)).origin
+                    )
                 }
                 .frame(width: 0, height: 0)
                 
@@ -68,19 +71,14 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
             }
         }
         .coordinateSpace(name: coordSpace)
-        ._onEnvironmentChange(\.scrollOffset) { newValue in
-            offset = newValue
+        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
+            offset = value
         }
     }
 }
 
-fileprivate struct ScrollOffsetKey: EnvironmentKey {
+private struct ScrollOffsetPreferenceKey: PreferenceKey {
     static var defaultValue: CGPoint = .zero
-}
-
-extension EnvironmentValues {
-    fileprivate var scrollOffset: CGPoint {
-        get { self[ScrollOffsetKey.self] }
-        set { self[ScrollOffsetKey.self] = newValue }
-    }
+    
+    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
 }
