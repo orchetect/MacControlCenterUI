@@ -12,7 +12,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-internal struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuItem {
+public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuItem {
     // MARK: Public Properties
     
     public var style: MenuCommandStyle = .controlCenter
