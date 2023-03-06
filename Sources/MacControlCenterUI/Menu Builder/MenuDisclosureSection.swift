@@ -75,7 +75,7 @@ public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem
             HStack {
                 label
                 Spacer()
-                Image(systemName: /* isExpanded ? "chevron.down" : */ "chevron.right")
+                Image(systemName: "chevron.right")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 10, height: 10)
@@ -101,6 +101,10 @@ public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem
             .frame(maxWidth: .infinity)
             .frame(height: height)
             .frame(minHeight: minHeight)
+        
+        if !isExpanded {
+            Spacer(minLength: 0)
+        }
     }
     
     @State private var height: CGFloat?
@@ -108,10 +112,8 @@ public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem
     
     @ViewBuilder
     private var conditionalContent: some View {
-        if isExpanded {
-            MenuBody(content: content)
-        } else {
-            Spacer(minLength: 0)
-        }
+        // do not remove the view using if { } otherwise it loses state
+        MenuBody(content: content)
+            .opacity(isExpanded ? 1 : 0)
     }
 }
