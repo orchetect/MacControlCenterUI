@@ -30,7 +30,7 @@ struct MacControlCenterUIDemoApp: App {
     }
 }
 
-struct Output: Hashable, Identifiable {
+struct AudioDevice: Hashable, Identifiable {
     let name: String
     var id: String { name }
 }
@@ -45,13 +45,23 @@ struct MenuView: View {
     @State private var brightness: CGFloat = 0.5
     @State private var selectedItem: Int = 0
     @State private var isOutputExpanded = true
-    @State private var outputSelection: Output.ID? = "Test 1"
+    @State private var inputSelection: AudioDevice.ID? = "Test In 1"
+    @State private var outputSelection: AudioDevice.ID? = nil
     @State private var testPlain = false
     
-    @State var outputs: [Output] = [
-        .init(name: "Test 1"),
-        .init(name: "Test 2"),
-        .init(name: "Test 3")
+    @State var inputs: [AudioDevice] = [
+        .init(name: "Test In 1"),
+        .init(name: "Test In 2"),
+        .init(name: "Test In 3")
+    ]
+    
+    @State var outputs: [AudioDevice] = [
+        .init(name: "Test Out 1"),
+        .init(name: "Test Out 2"),
+        .init(name: "Test Out 3"),
+        .init(name: "Test Out 4"),
+        .init(name: "Test Out 5"),
+        .init(name: "Test Out 6")
     ]
     
     /// Based on macOS Control Center slider width
@@ -106,9 +116,17 @@ struct MenuView: View {
                 showSettingsWindow()
             }
             
+            MenuSection("Input")
+            
+            MenuRadioGroup(inputs, selection: $inputSelection) { item in
+                Text(item.name)
+            }
+            
             DisclosureMenuSection("Output", isExpanded: $isOutputExpanded) {
-                MenuRadioGroup(outputs, selection: $outputSelection) { item in
-                    Text(item.name)
+                MenuScrollView(maxHeight: 130) {
+                    MenuRadioGroup(outputs, selection: $outputSelection) { item in
+                        Text(item.name)
+                    }
                 }
             }
             
