@@ -79,9 +79,10 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
             withAnimation(.spring()) {
                 isExpanded.toggle()
             }
+            
+            // below is some jank magic to make the window not freak out too much
             height = isExpanded ? nil : 0
             minHeight = isExpanded ? 0 : nil
-            
             DispatchQueue.main.async {
                 minHeight = nil
             }

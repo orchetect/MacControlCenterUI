@@ -16,16 +16,21 @@ internal struct MenuBody: View, MacControlCenterMenuItem {
     // MARK: Public Properties
     
     public var content: [any View]
+    
+    /// Item context applied to each top-level view in `content`.
     public var itemContext: ((_ item: any View) -> any View)?
     
     // MARK: Init
     
+    /// Init with content.
     public init(
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
         self.content = content()
     }
     
+    /// Init with content.
+    /// Item context applied to each top-level view in `content`.
     public init(
         content: [any View],
         itemContext: @escaping (_ item: any View) -> any View
