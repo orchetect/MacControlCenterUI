@@ -60,7 +60,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     public init(
         @ViewBuilder _ label: () -> Label,
         @ViewBuilder trailingContent: @escaping () -> TrailingContent
-    ) where TrailingContent == EmptyView {
+    ) {
         self.label = label()
         self.trailingContent = trailingContent()
     }
