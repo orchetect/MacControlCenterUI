@@ -10,8 +10,8 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuScrollView<Content: View>: View, MacControlCenterMenuItem {
-    public var content: Content
+public struct MenuScrollView: View, MacControlCenterMenuItem {
+    public var content: [any View]
     public var maxHeight: CGFloat
     
     @State private var scrollPosition: CGPoint = .zero
@@ -19,7 +19,7 @@ public struct MenuScrollView<Content: View>: View, MacControlCenterMenuItem {
     
     public init(
         maxHeight: CGFloat = 300,
-        content: () -> Content
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
         self.maxHeight = maxHeight.clamped(to: 0...)
         self.content = content()
@@ -28,9 +28,7 @@ public struct MenuScrollView<Content: View>: View, MacControlCenterMenuItem {
     public var body: some View {
         ZStack {
             ObservableScrollView(.vertical, offset: $scrollPosition) {
-                MenuBody {
-                    content
-                }
+                MenuBody(content: content)
             } contentSizeBlock: { newSize in
                 contentSize = newSize
             }

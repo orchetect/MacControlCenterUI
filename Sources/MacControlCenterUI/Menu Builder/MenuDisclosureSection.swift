@@ -12,11 +12,11 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct DisclosureMenuSection<Label: View, Content: View>: View, MacControlCenterMenuItem {
+public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem {
     public var label: Label
     public var divider: Bool
     @Binding public var isExpanded: Bool
-    public var content: Content
+    public var content: [any View]
     
     @State private var isHighlighted = false
     
@@ -26,7 +26,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         _ label: S,
         divider: Bool = true,
         isExpanded: Binding<Bool>,
-        @ViewBuilder content: @escaping () -> Content
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) where S: StringProtocol, Label == MenuSectionText {
         self.label = MenuSectionText(text: Text(label))
         self.divider = divider
@@ -38,7 +38,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         _ titleKey: LocalizedStringKey,
         divider: Bool = true,
         isExpanded: Binding<Bool>,
-        @ViewBuilder content: @escaping () -> Content
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) where Label == MenuSectionText {
         self.label = MenuSectionText(text: Text(titleKey))
         self.divider = divider
@@ -50,7 +50,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
         divider: Bool = true,
         isExpanded: Binding<Bool>,
         @ViewBuilder _ label: () -> Label,
-        @ViewBuilder content: @escaping () -> Content
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
         self.divider = divider
         self._isExpanded = isExpanded
@@ -109,7 +109,7 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
     @ViewBuilder
     private var conditionalContent: some View {
         if isExpanded {
-            content
+            MenuBody(content: content)
         } else {
             Spacer(minLength: 0)
         }

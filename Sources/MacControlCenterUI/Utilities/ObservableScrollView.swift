@@ -46,7 +46,9 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
                 
                 ScrollViewReader { readerProxy in
                     ZStack {
-                        content
+                        VStack {
+                            content
+                        }
                             .scaleEffect(scaling)
                             .gesture(
                                 MagnificationGesture()

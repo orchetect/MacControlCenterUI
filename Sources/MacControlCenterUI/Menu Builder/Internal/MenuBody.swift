@@ -33,7 +33,7 @@ internal struct MenuBody: View, MacControlCenterMenuItem {
     /// Item context applied to each top-level view in `content`.
     public init(
         content: [any View],
-        itemContext: @escaping (_ item: any View) -> any View
+        itemContext: ((_ item: any View) -> any View)? = nil
     ) {
         self.content = content
         self.itemContext = itemContext
@@ -63,7 +63,6 @@ internal struct MenuBody: View, MacControlCenterMenuItem {
         
         switch view {
         case is (any MacControlCenterMenuItem):
-            
             return AnyView(viewWithContext)
             
         default:
