@@ -59,7 +59,6 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
                 .frame(height: 5)
             }
         }
-        .frame(minHeight: min(maxHeight, contentSize.height))
-        .frame(maxHeight: maxHeight)
+        .frame(height: min(maxHeight, contentSize.height))
     }
 }

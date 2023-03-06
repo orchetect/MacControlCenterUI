@@ -49,15 +49,15 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
                         VStack {
                             content
                         }
-                            .scaleEffect(scaling)
-                            .gesture(
-                                MagnificationGesture()
-                                    .onChanged { value in
-                                        withAnimation {
-                                            scaling = value.magnitude
-                                        }
+                        .scaleEffect(scaling)
+                        .gesture(
+                            MagnificationGesture()
+                                .onChanged { value in
+                                    withAnimation {
+                                        scaling = value.magnitude
                                     }
-                            )
+                                }
+                        )
                         GeometryReader { geometry in
                             Color.clear.onChange(of: geometry.size) { newValue in
                                 contentSizeBlock?(newValue)
