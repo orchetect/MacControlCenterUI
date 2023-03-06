@@ -6,6 +6,8 @@
 
 import SwiftUI
 
+/// macOS Control Center-style circle toggle control.
+/// For the momentary button variant, use ``MacControlCenterCircleButton`.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
@@ -14,7 +16,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     // MARK: Public Properties
     
     @Binding public var isOn: Bool
-    public var image: Image
+    public var image: Image?
     public var color: Color
     public var invertForeground: Bool
     public var label: Label?
@@ -36,7 +38,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
         self._isOn = isOn
@@ -56,7 +58,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
         self.label = Text(title)
@@ -76,7 +78,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
         self.label = Text(titleKey)
@@ -95,7 +97,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         @ViewBuilder label: @escaping () -> Label,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) {
@@ -116,7 +118,7 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         label: Label,
         onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
     ) {
@@ -205,11 +207,13 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
             Circle()
                 .background(visualEffect)
                 .foregroundColor(buttonBackColor)
-            image
-                .resizable()
-                .scaledToFit()
-                .padding(style.imagePadding)
-                .foregroundColor(buttonForeColor)
+            if let image {
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .padding(style.imagePadding)
+                    .foregroundColor(buttonForeColor)
+            }
             
             if isMouseDown {
                 if colorScheme == .dark {

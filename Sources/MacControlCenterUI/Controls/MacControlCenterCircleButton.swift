@@ -6,6 +6,8 @@
 
 import SwiftUI
 
+/// macOS Control Center-style circle toggle button.
+/// For the dual state toggle variant, use ``MacControlCenterCircleToggle``.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
@@ -13,7 +15,7 @@ import SwiftUI
 public struct MacControlCenterCircleButton<Label: View>: View {
     // MARK: Public Properties
     
-    public var image: Image
+    public var image: Image?
     public var color: Color
     public var invertForeground: Bool
     public var label: Label?
@@ -30,7 +32,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         action actionBlock: @escaping () -> Void
     ) where Label == EmptyView {
         self.style = style
@@ -46,7 +48,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
@@ -65,7 +67,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         action actionBlock: @escaping () -> Void
     ) where Label == Text {
         self.init(
@@ -82,7 +84,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
         style: MacControlCenterCircleButtonStyle = .menu,
         color: Color = Color(NSColor.controlAccentColor),
         invertForeground: Bool = false,
-        image: Image,
+        image: Image? = nil,
         @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) {

@@ -6,6 +6,7 @@
 
 import Foundation
 
+/// Style used for ``MacControlCenterCircleToggle`` and ``MacControlCenterCircleButton``.
 public enum MacControlCenterCircleButtonStyle {
     /// Standard Control Center Menu item size with trailing label.
     case menu
