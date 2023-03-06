@@ -9,7 +9,7 @@ import SwiftUI
 // idea from https://swiftwithmajid.com/2020/09/24/mastering-scrollview-in-swiftui/
 
 /// ScrollView that provides bindable scale and scroll offset.
-struct ObservableScrollView<Content: View>: View {
+struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
     let axes: Axis.Set
     let showsIndicators: Bool
     @Binding var offset: CGPoint
