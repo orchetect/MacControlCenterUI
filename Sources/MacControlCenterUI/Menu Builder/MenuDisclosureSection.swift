@@ -101,10 +101,6 @@ public struct DisclosureMenuSection<Label: View>: View, MacControlCenterMenuItem
             .frame(maxWidth: .infinity)
             .frame(height: height)
             .frame(minHeight: minHeight)
-        
-        if !isExpanded {
-            Spacer(minLength: 0)
-        }
     }
     
     @State private var height: CGFloat?
