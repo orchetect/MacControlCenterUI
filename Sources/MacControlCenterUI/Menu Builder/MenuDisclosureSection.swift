@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-/// Disclosure section ``MacControlCenterMenu`` menu entry with section label.
+/// Disclosure section for ``MacControlCenterMenu`` menu entry with section label.
 /// Used to hide or show optional content in a menu, akin to a submenu.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
@@ -14,6 +14,7 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct DisclosureMenuSection<Label: View, Content: View>: View, MacControlCenterMenuItem {
     public var label: Label
+    public var divider: Bool
     @Binding public var isExpanded: Bool
     public var content: Content
     
@@ -23,29 +24,35 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
     
     public init<S>(
         _ label: S,
+        divider: Bool = true,
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) where S: StringProtocol, Label == MenuSectionText {
         self.label = MenuSectionText(text: Text(label))
+        self.divider = divider
         self._isExpanded = isExpanded
         self.content = content()
     }
     
     public init(
         _ titleKey: LocalizedStringKey,
+        divider: Bool = true,
         isExpanded: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) where Label == MenuSectionText {
         self.label = MenuSectionText(text: Text(titleKey))
+        self.divider = divider
         self._isExpanded = isExpanded
         self.content = content()
     }
     
     public init(
+        divider: Bool = true,
         isExpanded: Binding<Bool>,
         @ViewBuilder _ label: () -> Label,
         @ViewBuilder content: @escaping () -> Content
     ) {
+        self.divider = divider
         self._isExpanded = isExpanded
         self.label = label()
         self.content = content()
@@ -54,8 +61,10 @@ public struct DisclosureMenuSection<Label: View, Content: View>: View, MacContro
     // MARK: Body
     
     public var body: some View {
-        MenuBody {
-            Divider()
+        if divider {
+            MenuBody {
+                Divider()
+            }
         }
         
         HighlightingMenuItem(

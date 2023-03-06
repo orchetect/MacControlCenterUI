@@ -16,31 +16,38 @@ public struct MenuSection<Label: View>: View {
     @Environment(\.colorScheme) private var colorScheme
     
     public var label: Label
+    public var divider: Bool
     
     // MARK: Init
     
     public init<S>(
-        _ label: S
+        _ label: S,
+        divider: Bool = true
     ) where S: StringProtocol, Label == MenuSectionText {
         self.label = MenuSectionText(text: Text(label))
+        self.divider = divider
     }
     
     public init(
-        _ titleKey: LocalizedStringKey
+        _ titleKey: LocalizedStringKey,
+        divider: Bool = true
     ) where Label == MenuSectionText {
         self.label = MenuSectionText(text: Text(titleKey))
+        self.divider = divider
     }
     
     public init(
+        divider: Bool = true,
         @ViewBuilder _ label: () -> Label
     ) {
         self.label = label()
+        self.divider = divider
     }
     
     // MARK: Body
     
     public var body: some View {
-        Divider()
+        if divider { Divider() }
         label
     }
 }
