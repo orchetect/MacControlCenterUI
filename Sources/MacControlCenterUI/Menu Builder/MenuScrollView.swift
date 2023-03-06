@@ -15,7 +15,7 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
     public var maxHeight: CGFloat
     
     @State private var scrollPosition: CGPoint = .zero
-    @State private var contentSize: CGSize = .zero
+    @State private var contentHeight: CGFloat = .zero
     
     public init(
         maxHeight: CGFloat = 300,
@@ -27,10 +27,12 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
     
     public var body: some View {
         ZStack {
-            ObservableScrollView(.vertical, offset: $scrollPosition) {
+            ObservableScrollView(
+                .vertical,
+                offset: $scrollPosition,
+                contentHeight: $contentHeight
+            ) {
                 MenuBody(content: content)
-            } contentSizeBlock: { newSize in
-                contentSize = newSize
             }
             
             VStack(spacing: 0) {
@@ -48,7 +50,7 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
                 Spacer()
                 
                 Group {
-                    if scrollPosition.y > maxHeight - contentSize.height {
+                    if scrollPosition.y > maxHeight - contentHeight {
                         Image(systemName: "chevron.compact.down")
                             .foregroundColor(.secondary)
                             .frame(maxWidth: .infinity)
@@ -59,6 +61,6 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
                 .frame(height: 5)
             }
         }
-        .frame(height: min(maxHeight, contentSize.height))
+        .frame(height: min(maxHeight, contentHeight))
     }
 }

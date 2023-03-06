@@ -15,32 +15,31 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
     @Binding var offset: CGPoint
     @Binding var scaling: CGFloat
     let content: Content
-    let contentSizeBlock: ((_ size: CGSize) -> Void)?
+    @Binding var contentHeight: CGFloat
+    
+    private let coordSpace = UUID().uuidString
     
     init(
         _ axes: Axis.Set = .vertical,
         showsIndicators: Bool = true,
         offset: Binding<CGPoint> = .constant(.zero),
         scaling: Binding<CGFloat> = .constant(1.0),
-        @ViewBuilder content: () -> Content,
-        contentSizeBlock: ((_ size: CGSize) -> Void)? = nil
+        contentHeight: Binding<CGFloat>,
+        @ViewBuilder content: () -> Content
     ) {
         self.axes = axes
         self.showsIndicators = showsIndicators
         self._offset = offset
         self._scaling = scaling
         self.content = content()
-        self.contentSizeBlock = contentSizeBlock
+        self._contentHeight = contentHeight
     }
     
     var body: some View {
         ScrollView(axes, showsIndicators: showsIndicators) {
             VStack(spacing: 0) {
                 GeometryReader { geometry in
-                    Color.clear.preference(
-                        key: ScrollOffsetPreferenceKey.self,
-                        value: geometry.frame(in: .named("scrollView")).origin
-                    )
+                    Color.clear.environment(\.scrollOffset, geometry.frame(in: .named(coordSpace)).origin)
                 }
                 .frame(width: 0, height: 0)
                 
@@ -60,22 +59,28 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
                         )
                         GeometryReader { geometry in
                             Color.clear.onChange(of: geometry.size) { newValue in
-                                contentSizeBlock?(newValue)
+                                guard newValue.height > 0 else { return }
+                                contentHeight = newValue.height
                             }
                         }
                     }
                 }
             }
         }
-        .coordinateSpace(name: "scrollView")
-        .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-            offset = value
+        .coordinateSpace(name: coordSpace)
+        ._onEnvironmentChange(\.scrollOffset) { newValue in
+            offset = newValue
         }
     }
 }
 
-private struct ScrollOffsetPreferenceKey: PreferenceKey {
+fileprivate struct ScrollOffsetKey: EnvironmentKey {
     static var defaultValue: CGPoint = .zero
-    
-    static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
+}
+
+extension EnvironmentValues {
+    fileprivate var scrollOffset: CGPoint {
+        get { self[ScrollOffsetKey.self] }
+        set { self[ScrollOffsetKey.self] = newValue }
+    }
 }
