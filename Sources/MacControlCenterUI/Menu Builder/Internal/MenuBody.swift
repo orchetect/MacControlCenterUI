@@ -66,7 +66,7 @@ internal struct MenuBody: View, MacControlCenterMenuItem {
             return AnyView(viewWithContext)
             
         default:
-            let wrappedView = MenuItem {
+            let wrappedView = PaddedMenuItem {
                 AnyView(viewWithContext)
             }
             return AnyView(wrappedView)

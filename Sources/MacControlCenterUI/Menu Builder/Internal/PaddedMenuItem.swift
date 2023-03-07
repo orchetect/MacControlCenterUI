@@ -1,5 +1,5 @@
 //
-//  MenuItem.swift
+//  PaddedMenuItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -11,7 +11,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-internal struct MenuItem<Content: View>: View, MacControlCenterMenuItem {
+internal struct PaddedMenuItem<Content: View>: View, MacControlCenterMenuItem {
     public var verticalPadding: Bool
     public var horizontalPadding: Bool
     public var content: Content
