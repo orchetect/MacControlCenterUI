@@ -150,35 +150,35 @@ struct MenuView: View {
             
             MenuSection("Input")
             
-            MenuList(inputs, selection: $inputSelection) { item, isSelected in
-                CircleToggleMenuStateItem(image: item.image) { item in
-                    Text(item.name)
-                }
-            }
-            
-            MenuDisclosureSection("Wi-Fi Network") {
-                MenuScrollView(maxHeight: 130) {
-                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
-                        CircleToggleMenuStateItem(image: item.image) { item in
-                            Text(item.name)
-                        }
-                    }
-                }
-            }
-            
-            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
-                MenuScrollView(maxHeight: 130) {
-                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
+//            MenuList(inputs, selection: $inputSelection) { item, isSelected in
+//                CircleToggleMenuStateItem(image: item.image) { item in
+//                    Text(item.name)
+//                }
+//            }
+//
+//            MenuDisclosureSection("Wi-Fi Network") {
+//                MenuScrollView(maxHeight: 130) {
+//                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
+//                        CircleToggleMenuStateItem(image: item.image) { item in
+//                            Text(item.name)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
+//                MenuScrollView(maxHeight: 130) {
+//                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
 //                        MenuDisclosureGroup(initiallyExpanded: false, labelHeight: 30) {
-                            CircleToggleMenuStateItem(image: item.image) { item in
-                                Text(item.name)
-                            }
+//                            CircleToggleMenuStateItem(image: item.image) { item in
+//                                Text(item.name)
+//                            }
 //                        } content: {
 //                            Text("Additional settings or menu selections")
 //                        }
-                    }
-                }
-            }
+//                    }
+//                }
+//            }
             
             MenuDisclosureSection("Shapes", initiallyExpanded: false) {
                 MenuCommand("Test") { }
@@ -219,12 +219,7 @@ struct MenuView: View {
             
             Divider()
             
-            MacControlCenterCircleToggle(
-                isOn: $testPlain,
-                style: .menu,
-                color: .red,
-                offColor: .red.opacity(0.2)
-            ) {
+            MenuToggle(isOn: $testPlain) {
                 Text("Custom Colors with No Image")
             }
             
@@ -291,7 +286,7 @@ struct ContentView: View {
         }
         .padding()
         .frame(minWidth: 500, minHeight: 350)
-        .background(VisualEffect.nonvibrant())
+        .background(VisualEffect.nonVibrant())
     }
 }
 
