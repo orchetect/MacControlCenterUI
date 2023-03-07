@@ -1,5 +1,5 @@
 //
-//  MacControlCenterCircleButton.swift
+//  MenuCircleButton.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -7,16 +7,16 @@
 import SwiftUI
 
 /// macOS Control Center-style circle toggle button.
-/// For the dual state toggle variant, use ``MacControlCenterCircleToggle``.
+/// For the dual state toggle variant, use ``MenuCircleToggle``.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacControlCenterCircleButton<Label: View>: View {
+public struct MenuCircleButton<Label: View>: View {
     // MARK: Public Properties
     
-    public var controlSize: MacControlCenterCircleButtonSize
-    public var style: MacControlCenterCircleButtonStyle
+    public var controlSize: MenuCircleButtonSize
+    public var style: MenuCircleButtonStyle
     public var label: Label?
     public var actionBlock: () -> Void
     
@@ -27,8 +27,8 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     // MARK: Init
     
     public init(
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         action actionBlock: @escaping () -> Void
     ) where Label == EmptyView {
         self.controlSize = controlSize
@@ -39,8 +39,8 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     
     public init<S>(
         _ title: S,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
@@ -54,8 +54,8 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     
     public init(
         _ titleKey: LocalizedStringKey,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         action actionBlock: @escaping () -> Void
     ) where Label == Text {
         self.init(
@@ -67,8 +67,8 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     }
     
     public init(
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) {
@@ -81,7 +81,7 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     // MARK: Body
     
     public var body: some View {
-        MacControlCenterCircleToggle(
+        MenuCircleToggle(
             isOn: .constant(false),
             controlSize: controlSize,
             style: style,

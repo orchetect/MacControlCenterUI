@@ -1,5 +1,5 @@
 //
-//  MacControlCenterSlider.swift
+//  MenuSlider.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -10,8 +10,8 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacControlCenterSlider<Label, SliderImage>: View
-where Label: View, SliderImage: MacControlCenterSliderImage
+public struct MenuSlider<Label, SliderImage>: View
+where Label: View, SliderImage: MenuSliderImage
 {
     // MARK: Public Properties
     
@@ -335,7 +335,7 @@ where Label: View, SliderImage: MacControlCenterSliderImage
     }
 }
 
-public struct StaticSliderImage: MacControlCenterSliderImage {
+public struct StaticSliderImage: MenuSliderImage {
     private let img: Image
     
     public init(_ img: Image) {
@@ -349,7 +349,7 @@ public struct StaticSliderImage: MacControlCenterSliderImage {
     public func image(
         for value: CGFloat,
         oldValue: CGFloat?
-    ) -> MacControlCenterSliderImageUpdate? {
+    ) -> MenuSliderImageUpdate? {
         nil
     }
 }

@@ -22,7 +22,7 @@ import MenuBarExtraAccess
 ///     var body: some Scene {
 ///         MenuBarExtra("MyApp") {
 ///             MacControlCenterMenu(isPresented: $isMenuPresented) {
-///                 MacControlCenterSlider("Amount", value: $val)
+///                 MenuSlider("Amount", value: $val)
 ///                 // using MenuCommand will auto-dismiss the popup window
 ///                 MenuCommand("Command 1") {
 ///                     print("Command 1 pressed")

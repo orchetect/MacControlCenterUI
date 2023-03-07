@@ -1,13 +1,13 @@
 //
-//  MacControlCenterCircleButtonStyle.swift
+//  MenuCircleButtonStyle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
 
-/// Style for ``MacControlCenterCircleToggle`` and ``MacControlCenterCircleButton``.
-public struct MacControlCenterCircleButtonStyle {
+/// Style for ``MenuCircleToggle`` and ``MenuCircleButton``.
+public struct MenuCircleButtonStyle {
     public var image: Image?
     public var offImage: Image?
     public var imagePadding: CGFloat
@@ -49,7 +49,7 @@ public struct MacControlCenterCircleButtonStyle {
 
 // MARK: - Convenience Methods
 
-extension MacControlCenterCircleButtonStyle {
+extension MenuCircleButtonStyle {
     public var hasColor: Bool {
         if color == nil || color == .clear { return false }
         return true
@@ -66,21 +66,21 @@ extension MacControlCenterCircleButtonStyle {
 
 // MARK: - Static Constructors
 
-extension MacControlCenterCircleButtonStyle {
+extension MenuCircleButtonStyle {
     public static func standard(image: Image) -> Self {
-        MacControlCenterCircleButtonStyle(
+        MenuCircleButtonStyle(
             image: image
         )
     }
     
     public static func standard(systemImage: String) -> Self {
-        MacControlCenterCircleButtonStyle(
+        MenuCircleButtonStyle(
             image: Image(systemName: systemImage)
         )
     }
     
     public static func checkmark() -> Self {
-        MacControlCenterCircleButtonStyle(
+        MenuCircleButtonStyle(
             image: Image(systemName: "checkmark"),
             offImage: nil,
             imagePadding: 2,

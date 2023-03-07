@@ -1,13 +1,13 @@
 //
-//  MacControlCenterCircleButtonSize.swift
+//  MenuCircleButtonSize.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
-/// Control size for ``MacControlCenterCircleToggle`` and ``MacControlCenterCircleButton``.
-public enum MacControlCenterCircleButtonSize {
+/// Control size for ``MenuCircleToggle`` and ``MenuCircleButton``.
+public enum MenuCircleButtonSize {
     /// Standard Control Center Menu item size with trailing label.
     case menu
     

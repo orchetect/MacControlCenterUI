@@ -1,24 +1,24 @@
 //
-//  MacControlCenterSliderImage.swift
+//  MenuSliderImage.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
 
-public protocol MacControlCenterSliderImage {
+public protocol MenuSliderImage {
     /// Return an image if the image is static.
     func staticImage() -> Image?
     
     /// Return an image conditionally based on slider value.
     func image(for value: CGFloat, oldValue: CGFloat?, force: Bool)
-        -> MacControlCenterSliderImageUpdate?
+        -> MenuSliderImageUpdate?
     
     /// Transform the image.
     func transform(image: Image, for value: CGFloat) -> AnyView?
 }
 
-extension MacControlCenterSliderImage {
+extension MenuSliderImage {
     // Default implementation.
     public func staticImage() -> Image? {
         nil
@@ -29,7 +29,7 @@ extension MacControlCenterSliderImage {
         for value: CGFloat,
         oldValue: CGFloat?,
         force: Bool
-    ) -> MacControlCenterSliderImageUpdate? {
+    ) -> MenuSliderImageUpdate? {
         nil
     }
     
@@ -39,7 +39,7 @@ extension MacControlCenterSliderImage {
     }
 }
 
-extension MacControlCenterSliderImage {
+extension MenuSliderImage {
     /// Convenience method to test if a value has newly entered a given value range.
     public func newlyEntered(
         value: CGFloat,
@@ -55,8 +55,8 @@ extension MacControlCenterSliderImage {
 
 // MARK: Types
 
-/// Type returned by ``MacControlCenterSliderImageProtocol/image(for:oldValue:force:)-3y6w9``.
-public enum MacControlCenterSliderImageUpdate {
+/// Type returned by ``MenuSliderImageProtocol/image(for:oldValue:force:)-3y6w9``.
+public enum MenuSliderImageUpdate {
     case noChange
     case newImage(Image)
 }

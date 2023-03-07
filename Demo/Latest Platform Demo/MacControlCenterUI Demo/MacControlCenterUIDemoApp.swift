@@ -115,15 +115,15 @@ struct MenuView: View {
             
             MenuSection("Display")
             
-            MacControlCenterSlider(
+            MenuSlider(
                 value: $brightness,
                 image: .macControlCenterDisplayBrightness
             )
             .frame(minWidth: sliderWidth)
             
-            // MacControlCenterPanel {
+            // MenuPanel {
                 HStack {
-                    MacControlCenterCircleToggle(
+                    MenuCircleToggle(
                         isOn: $darkMode,
                         controlSize: .prominent,
                         style: .init(
@@ -132,7 +132,7 @@ struct MenuView: View {
                             invertForeground: true
                         )
                     ) { Text("Dark Mode") }
-                    MacControlCenterCircleToggle(
+                    MenuCircleToggle(
                         isOn: $nightShift,
                         controlSize: .prominent,
                         style: .init(
@@ -140,7 +140,7 @@ struct MenuView: View {
                             color: .orange
                         )
                     ) { Text("Night Shift") }
-                    MacControlCenterCircleToggle(
+                    MenuCircleToggle(
                         isOn: $trueTone,
                         controlSize: .prominent,
                         style: .init(
@@ -154,7 +154,7 @@ struct MenuView: View {
             
             MenuSection("Sound")
             
-            MacControlCenterVolumeSlider(value: $volume)
+            MenuVolumeSlider(value: $volume)
                 .frame(minWidth: sliderWidth)
             
             MenuCommand("Sound Settings...") {

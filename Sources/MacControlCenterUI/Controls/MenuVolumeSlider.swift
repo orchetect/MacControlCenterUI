@@ -1,5 +1,5 @@
 //
-//  MacControlCenterVolumeSlider.swift
+//  MenuVolumeSlider.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -10,7 +10,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacControlCenterVolumeSlider<Label: View>: View {
+public struct MenuVolumeSlider<Label: View>: View {
     @Binding public var value: CGFloat
     public var label: Label?
     
@@ -50,13 +50,13 @@ public struct MacControlCenterVolumeSlider<Label: View>: View {
     
     public var body: some View {
         if let label = label {
-            MacControlCenterSlider(
+            MenuSlider(
                 value: $value,
                 label: { label },
                 image: VolumeSliderIcon()
             )
         } else {
-            MacControlCenterSlider(
+            MenuSlider(
                 value: $value,
                 image: VolumeSliderIcon()
             )
@@ -64,13 +64,13 @@ public struct MacControlCenterVolumeSlider<Label: View>: View {
     }
 }
 
-extension MacControlCenterVolumeSlider {
-    private struct VolumeSliderIcon: MacControlCenterSliderImage {
+extension MenuVolumeSlider {
+    private struct VolumeSliderIcon: MenuSliderImage {
         func image(
             for value: CGFloat,
             oldValue: CGFloat?,
             force: Bool = false
-        ) -> MacControlCenterSliderImageUpdate? {
+        ) -> MenuSliderImageUpdate? {
             if newlyEntered(value: value, oldValue: oldValue, in: Level.off.range, force: force) {
                 return .newImage(Level.off.image)
             }

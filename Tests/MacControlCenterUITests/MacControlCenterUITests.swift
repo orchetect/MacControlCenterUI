@@ -7,7 +7,7 @@
 import XCTest
 @testable import MacControlCenterUI
 
-final class MacControlCenterSliderTests: XCTestCase {
+final class MenuSliderTests: XCTestCase {
     func testEmpty() throws {
         // No unit tests (yet).
     }

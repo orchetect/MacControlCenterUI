@@ -1,5 +1,5 @@
 //
-//  MacControlCenterCircleToggle.swift
+//  MenuCircleToggle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -7,16 +7,16 @@
 import SwiftUI
 
 /// macOS Control Center-style circle toggle control.
-/// For the momentary button variant, use ``MacControlCenterCircleButton`.
+/// For the momentary button variant, use ``MenuCircleButton`.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MacControlCenterCircleToggle<Label: View>: View {
+public struct MenuCircleToggle<Label: View>: View {
     // MARK: Public Properties
     
     @Binding public var isOn: Bool
-    public var style: MacControlCenterCircleButtonStyle
+    public var style: MenuCircleButtonStyle
     public var label: Label?
     public var onClickBlock: (Bool) -> Void
     
@@ -27,14 +27,14 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     // MARK: Private State
     
     @State private var isMouseDown: Bool = false
-    private var controlSize: MacControlCenterCircleButtonSize
+    private var controlSize: MenuCircleButtonSize
     
     // MARK: Init - No Label
     
     public init(
         isOn: Binding<Bool>,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
         self._isOn = isOn
@@ -49,8 +49,8 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     public init<S>(
         _ title: S,
         isOn: Binding<Bool>,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
         self.label = Text(title)
@@ -65,8 +65,8 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool>,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
         self.label = Text(titleKey)
@@ -80,8 +80,8 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     
     public init(
         isOn: Binding<Bool>,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
@@ -97,8 +97,8 @@ public struct MacControlCenterCircleToggle<Label: View>: View {
     @_disfavoredOverload
     public init(
         isOn: Binding<Bool>,
-        controlSize: MacControlCenterCircleButtonSize = .menu,
-        style: MacControlCenterCircleButtonStyle,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
         label: Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {

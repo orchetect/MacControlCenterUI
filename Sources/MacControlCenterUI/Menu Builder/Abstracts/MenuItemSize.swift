@@ -29,7 +29,7 @@ extension MenuItemSize {
         case .standardTextOnly:
             return MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding
         case .controlCenterIconItem:
-            return MacControlCenterCircleButtonSize.menu.size + MenuGeometry.menuItemPadding
+            return MenuCircleButtonSize.menu.size + MenuGeometry.menuItemPadding
         case .controlCenterSection:
             return 20
         case .custom(let value):

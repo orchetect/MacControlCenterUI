@@ -19,9 +19,9 @@ struct ContentView: View {
     let sliderWidth: CGFloat = 270
     
     var body: some View {
-        MacControlCenterPanel {
-            MacControlCenterPanel {
-                MacControlCenterSlider(
+        MenuPanel {
+            MenuPanel {
+                MenuSlider(
                     "Display",
                     value: $brightnessLevel,
                     image: .macControlCenterDisplayBrightness
@@ -37,8 +37,8 @@ struct ContentView: View {
             
             Spacer().frame(height: 20)
             
-            MacControlCenterPanel {
-                MacControlCenterVolumeSlider("Sound", value: $volumeLevel)
+            MenuPanel {
+                MenuVolumeSlider("Sound", value: $volumeLevel)
                     .frame(minWidth: sliderWidth)
             }
             .frame(height: 64)
@@ -50,9 +50,9 @@ struct ContentView: View {
             
             Spacer().frame(height: 20)
             
-            MacControlCenterPanel {
+            MenuPanel {
                 HStack {
-                    MacControlCenterCircleToggle(
+                    MenuCircleToggle(
                         "Toggle Button",
                         isOn: $button1State,
                         image: .macControlCenterSpeaker
@@ -62,7 +62,7 @@ struct ContentView: View {
                 }
                 
                 HStack {
-                    MacControlCenterCircleToggle(
+                    MenuCircleToggle(
                         "Toggle Button (White)",
                         isOn: $button2State,
                         color: .white,
@@ -74,7 +74,7 @@ struct ContentView: View {
                 }
                 
                 HStack {
-                    MacControlCenterCircleToggle(
+                    MenuCircleToggle(
                         "Toggle Button (Orange)",
                         isOn: $button3State,
                         color: .orange,
@@ -86,7 +86,7 @@ struct ContentView: View {
                 
                 HStack {
                     HStack {
-                        MacControlCenterCircleToggle(
+                        MenuCircleToggle(
                             isOn: $button4State,
                             image: .macControlCenterSpeaker
                         )
@@ -98,7 +98,7 @@ struct ContentView: View {
                 
                 HStack {
                     HStack {
-                        MacControlCenterCircleToggle(
+                        MenuCircleToggle(
                             isOn: .constant(true),
                             image: .macControlCenterSpeaker
                         ) {
@@ -114,7 +114,7 @@ struct ContentView: View {
                 
                 HStack {
                     HStack {
-                        MacControlCenterCircleToggle(
+                        MenuCircleToggle(
                             isOn: .constant(false),
                             image: .macControlCenterSpeaker
                         ) {

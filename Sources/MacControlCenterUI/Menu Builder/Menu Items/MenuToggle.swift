@@ -14,7 +14,7 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListStateItem {
     @Binding public var isOn: Bool
-    public var style: MacControlCenterCircleButtonStyle
+    public var style: MenuCircleButtonStyle
     public var label: Label?
     public var onClickBlock: (Bool) -> Void
     
@@ -22,7 +22,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     
     public init(
         isOn: Binding<Bool> = .constant(false),
-        style: MacControlCenterCircleButtonStyle,
+        style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
         self._isOn = isOn
@@ -47,7 +47,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     public init<S>(
         _ title: S,
         isOn: Binding<Bool> = .constant(false),
-        style: MacControlCenterCircleButtonStyle,
+        style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
         self.label = Text(title)
@@ -73,7 +73,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool> = .constant(false),
-        style: MacControlCenterCircleButtonStyle,
+        style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
         self.label = Text(titleKey)
@@ -98,7 +98,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     
     public init(
         isOn: Binding<Bool> = .constant(false),
-        style: MacControlCenterCircleButtonStyle,
+        style: MenuCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
@@ -125,7 +125,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     @_disfavoredOverload
     public init(
         isOn: Binding<Bool> = .constant(false),
-        style: MacControlCenterCircleButtonStyle,
+        style: MenuCircleButtonStyle,
         label: Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
@@ -152,7 +152,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     
     public var body: some View {
         HighlightingMenuItem(height: .controlCenterIconItem) {
-            MacControlCenterCircleToggle(
+            MenuCircleToggle(
                 isOn: $isOn,
                 controlSize: .menu,
                 style: style,
