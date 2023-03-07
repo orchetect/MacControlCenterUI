@@ -31,7 +31,9 @@ public struct FullWidthMenuItem<Content: View>: View, MacControlCenterMenuItem {
         VStack(alignment: .leading) {
             content
         }
-        .padding([.top, .bottom],
-                 verticalPadding ? MenuGeometry.menuItemPadding : 0)
+        .padding(
+            [.top, .bottom],
+            verticalPadding ? MenuGeometry.menuItemPadding : 0
+        )
     }
 }
