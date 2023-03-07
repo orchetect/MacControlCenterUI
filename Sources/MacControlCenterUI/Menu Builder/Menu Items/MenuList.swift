@@ -1,5 +1,5 @@
 //
-//  MenuRadioGroup.swift
+//  MenuList.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
@@ -7,16 +7,12 @@
 import AppKit
 import SwiftUI
 
-/// ``MacControlCenterMenu`` radio group.
-/// Use ``MenuRadioGroupRow`` to define row content and metadata.
-///
-/// Menu hover colorization can be set using the ``menuCommandStyle(_:)`` view modifier:
-///  `menu` style (highlight color) or `commandCenter` style (translucent gray).
+/// ``MacControlCenterMenu`` list allowing for a item selection.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuRadioGroup<Data: RandomAccessCollection, Content: MenuStateItem>: View,
+public struct MenuList<Data: RandomAccessCollection, Content: MenuStateItem>: View,
     MacControlCenterMenuItem
     where Data.Element: Hashable, Data.Element: Identifiable,
           Content.Data == Data, Content.Data.Element == Data.Element
