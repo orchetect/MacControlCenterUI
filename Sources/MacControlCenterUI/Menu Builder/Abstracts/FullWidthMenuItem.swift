@@ -7,6 +7,7 @@
 import SwiftUI
 
 /// Generic full-width ``MacControlCenterMenu`` menu item abstract.
+/// Utility for when you need to escape the automatic padding that ``MacControlCenterMenu`` applies.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

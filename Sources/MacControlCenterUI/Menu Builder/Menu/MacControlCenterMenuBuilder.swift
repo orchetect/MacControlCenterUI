@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+/// Menu result builder used in ``MacControlCenterMenu``.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
