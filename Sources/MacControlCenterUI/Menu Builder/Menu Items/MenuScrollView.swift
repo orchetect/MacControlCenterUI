@@ -6,6 +6,7 @@
 
 import SwiftUI
 
+/// ``MacControlCenterMenu`` scroll view with with automatic sizing and custom scroll indicators.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

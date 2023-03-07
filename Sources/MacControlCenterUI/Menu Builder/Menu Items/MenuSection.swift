@@ -6,8 +6,9 @@
 
 import SwiftUI
 
-/// Header ``MacControlCenterMenu`` menu entry with section label.
-/// Typically used as the first item in a menu to enable an entire menu's functionality.
+/// ``MacControlCenterMenu`` section label menu item with optional divider.
+/// Typically macOS Control Center menus have a divider prior to each section to cleanly divide up
+/// the interface.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

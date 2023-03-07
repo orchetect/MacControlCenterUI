@@ -7,7 +7,7 @@
 import AppKit
 import SwiftUI
 
-/// ``MacControlCenterMenu`` menu entry that acts like a traditional `NSMenuItem` that highlights
+/// ``MacControlCenterMenu`` menu item that acts like a traditional `NSMenuItem` that highlights
 /// when moused over and is clickable with a custom action closure.
 ///
 /// Menu hover colorization can be set using the ``menuCommandStyle(_:)`` view modifier:

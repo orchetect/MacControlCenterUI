@@ -7,7 +7,7 @@
 import AppKit
 import SwiftUI
 
-/// ``MacControlCenterMenu`` list allowing for a item selection.
+/// ``MacControlCenterMenu`` menu item list allowing for item selection.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

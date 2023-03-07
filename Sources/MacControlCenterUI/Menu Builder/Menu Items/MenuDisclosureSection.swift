@@ -6,8 +6,8 @@
 
 import SwiftUI
 
-/// Disclosure section for ``MacControlCenterMenu`` menu entry with section label.
-/// Used to hide or show optional content in a menu, akin to a submenu.
+/// ``MacControlCenterMenu`` disclosure group menu item with section label.
+/// Used to hide or show optional content in a menu, but using a section as the button.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

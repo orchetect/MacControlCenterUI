@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-/// Disclosure section ``MacControlCenterMenu`` menu item.
+/// ``MacControlCenterMenu`` disclosure group menu item.
 /// Used to hide or show optional content in a menu.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
