@@ -65,9 +65,11 @@ struct ContentView: View {
                     MenuCircleToggle(
                         "Toggle Button (White)",
                         isOn: $button2State,
-                        color: .white,
-                        invertForeground: true,
-                        image: .macControlCenterSpeaker
+                        style: .init(
+                            image: .macControlCenterSpeaker,
+                            color: .white,
+                            invertForeground: true
+                        )
                     )
                     Spacer()
                     Toggle("On", isOn: $button2State)
@@ -77,8 +79,10 @@ struct ContentView: View {
                     MenuCircleToggle(
                         "Toggle Button (Orange)",
                         isOn: $button3State,
-                        color: .orange,
-                        image: .macControlCenterDisplayBrightness
+                        style: .init(
+                            image: .macControlCenterDisplayBrightness,
+                            color: .orange
+                        )
                     )
                     Spacer()
                     Toggle("On", isOn: $button3State)
@@ -103,7 +107,7 @@ struct ContentView: View {
                             image: .macControlCenterSpeaker
                         ) {
                             Text("Button")
-                        } onChange: { _ in
+                        } onClick: { _ in
                             print("Clicked.")
                             NSSound.beep()
                         }
@@ -119,7 +123,7 @@ struct ContentView: View {
                             image: .macControlCenterSpeaker
                         ) {
                             Text("Button")
-                        } onChange: { _ in
+                        } onClick: { _ in
                             print("Clicked.")
                             NSSound.beep()
                         }
