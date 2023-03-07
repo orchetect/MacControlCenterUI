@@ -156,7 +156,7 @@ struct MenuView: View {
                 }
             }
             
-            DisclosureMenuSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
+            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 130) {
                     MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
                         CircleToggleMenuStateItem(image: item.image) { item in
@@ -168,24 +168,37 @@ struct MenuView: View {
             
             MenuSection("Shapes")
             
-            MenuList(shapes) { item in
-                CustomMenuStateItem { item in
-                    HStack {
-                        item.image
-                            .resizable()
-                            .scaledToFit()
-                            .foregroundColor(item.imageColor?.opacity(0.8))
-                            .frame(width: 24, height: 24)
-                        Text(item.name)
-                        Spacer()
-                    }
-                    .frame(height: 30)
-                    .onTapGesture {
-                        isMenuPresented = false // manually dismiss window
-                        print("\(item.name) pressed.")
-                    }
-                }
-            }
+//            MenuList(shapes) { item in
+//                MenuCommand {
+//                    print("\(item.name) pressed.")
+//                } label: {
+//                    HStack {
+//                        item.image
+//                            .resizable()
+//                            .scaledToFit()
+//                            .foregroundColor(item.imageColor?.opacity(0.8))
+//                            .frame(width: 24, height: 24)
+//                        Text(item.name)
+//                        Spacer()
+//                    }
+//                }
+//                CustomMenuStateItem { item in
+//                    HStack {
+//                        item.image
+//                            .resizable()
+//                            .scaledToFit()
+//                            .foregroundColor(item.imageColor?.opacity(0.8))
+//                            .frame(width: 24, height: 24)
+//                        Text(item.name)
+//                        Spacer()
+//                    }
+//                    .frame(height: 30)
+//                    .onTapGesture {
+//                        isMenuPresented = false // manually dismiss window
+//                        print("\(item.name) pressed.")
+//                    }
+//                }
+//            }
             
             Divider()
             

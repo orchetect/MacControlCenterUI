@@ -18,7 +18,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     @Binding public var isOn: Bool
     @Binding public var isPressed: Bool
     public let content: () -> Content
-    public var onChangeBlock: (Bool) -> Void
+    public var onChangeBlock: (_ state: Bool) -> Void
     
     @State public var isHighlighted: Bool = false
     
@@ -28,7 +28,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
         isOn: Binding<Bool>,
         isPressed: Binding<Bool>,
         @ViewBuilder _ content: @escaping () -> Content,
-        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+        onChange onChangeBlock: @escaping (_ state: Bool) -> Void = { _ in }
     ) {
         self.style = style
         self.height = height
@@ -63,5 +63,6 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
                     }
             )
         }
+        .frame(height: height)
     }
 }
