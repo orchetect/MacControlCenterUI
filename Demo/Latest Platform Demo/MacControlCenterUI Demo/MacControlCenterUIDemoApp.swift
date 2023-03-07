@@ -33,6 +33,7 @@ struct MacControlCenterUIDemoApp: App {
 struct MenuEntry: Hashable, Identifiable {
     let name: String
     let image: Image
+    let imageColor: Color?
     
     // Identifiable
     var id: String { name }
@@ -42,14 +43,16 @@ struct MenuEntry: Hashable, Identifiable {
         hasher.combine(id)
     }
     
-    init(name: String, image: Image) {
+    init(name: String, image: Image, imageColor: Color? = nil) {
         self.name = name
         self.image = image
+        self.imageColor = imageColor
     }
     
-    init(name: String, systemImage: String) {
+    init(name: String, systemImage: String, imageColor: Color? = nil) {
         self.name = name
         self.image = Image(systemName: systemImage)
+        self.imageColor = imageColor
     }
 }
 
@@ -65,6 +68,7 @@ struct MenuView: View {
     @State private var isWiFiExpanded = true
     @State private var inputSelection: MenuEntry.ID? = "MacBook Pro Microphone"
     @State private var wifiSelection: MenuEntry.ID? = nil
+    @State private var shapeSelection: MenuEntry.ID? = nil
     @State private var testPlain = false
     
     @State var inputs: [MenuEntry] = [
@@ -74,7 +78,7 @@ struct MenuView: View {
     ]
     
     static func randomWiFiImage() -> Image {
-        Image(systemName: "wifi", variableValue: Double.random(in: 0.2...1.0))
+        Image(systemName: "wifi", variableValue: Double.random(in: 0.2...1.0)) // random signal strength
     }
     
     @State var wifiNetworks: [MenuEntry] = [
@@ -84,6 +88,12 @@ struct MenuView: View {
         .init(name: "Lord Of The Pings", image: Self.randomWiFiImage()),
         .init(name: "Hide Yo Kids Hide Yo Wi-Fi", image: Self.randomWiFiImage()),
         .init(name: "DLINK45892", image: Self.randomWiFiImage())
+    ]
+    
+    @State var shapes: [MenuEntry] = [
+        .init(name: "Circle", systemImage: "circle.fill", imageColor: .green),
+        .init(name: "Square", systemImage: "square.fill", imageColor: .orange),
+        .init(name: "Triangle", systemImage: "triangle.fill", imageColor: .purple)
     ]
     
     /// Based on macOS Control Center slider width
@@ -141,7 +151,7 @@ struct MenuView: View {
             MenuSection("Input")
             
             MenuRadioGroup(inputs, selection: $inputSelection) { item in
-                MenuRadioGroupRow(image: item.image) { item in
+                MenuRadioGroupCircleToggleRow(image: item.image) { item in
                     Text(item.name)
                 }
             }
@@ -149,9 +159,30 @@ struct MenuView: View {
             DisclosureMenuSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 130) {
                     MenuRadioGroup(wifiNetworks, selection: $wifiSelection) { item in
-                        MenuRadioGroupRow(image: item.image) { item in
+                        MenuRadioGroupCircleToggleRow(image: item.image) { item in
                             Text(item.name)
                         }
+                    }
+                }
+            }
+            
+            MenuSection("Shapes")
+            
+            MenuRadioGroup(shapes, selection: $shapeSelection) { item in
+                MenuRadioGroupCustomRow { item in
+                    HStack {
+                        item.image
+                            .resizable()
+                            .scaledToFit()
+                            .foregroundColor(item.imageColor)
+                            .frame(width: 24, height: 24)
+                        Text(item.name)
+                        Spacer()
+                    }
+                    .frame(height: 30)
+                    .onTapGesture {
+                        isMenuPresented = false // manually dismiss window
+                        print("\(item.name) pressed.")
                     }
                 }
             }

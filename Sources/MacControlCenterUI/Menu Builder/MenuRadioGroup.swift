@@ -16,18 +16,19 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuRadioGroup<Data: RandomAccessCollection, Content: View>: View,
+public struct MenuRadioGroup<Data: RandomAccessCollection, Content: MenuRadioGroupRow>: View,
     MacControlCenterMenuItem
-    where Data.Element: Hashable, Data.Element: Identifiable
+    where Data.Element: Hashable, Data.Element: Identifiable,
+          Content.Data == Data, Content.Data.Element == Data.Element
 {
     public let data: Data
     @Binding public var selection: Data.Element.ID?
-    public let content: (Data.Element) -> MenuRadioGroupRow<Data, Content>
+    public let content: (Data.Element) -> Content
     
     public init(
         _ data: Data,
         selection: Binding<Data.Element.ID?>,
-        content: @escaping (Data.Element) -> MenuRadioGroupRow<Data, Content>
+        content: @escaping (Data.Element) -> Content
     ) {
         self.data = data
         self._selection = selection
@@ -40,20 +41,7 @@ public struct MenuRadioGroup<Data: RandomAccessCollection, Content: View>: View,
                 style: .controlCenter,
                 height: contentHeight
             ) {
-                let metadata = content(item)
-                HStack {
-                    MacControlCenterCircleToggle(
-                        isOn: .constant(selection == item.id),
-                        style: .menu,
-                        invertForeground: metadata.invertForeground,
-                        image: metadata.image(item)
-                    ) { state in
-                        selection = selection == item.id ? nil : item.id
-                    }
-                    
-                    metadata.content(item)
-                    Spacer(minLength: 0)
-                }
+                content(item).rowBody(for: item, selection: $selection)
             }
         }
     }
@@ -65,18 +53,39 @@ public struct MenuRadioGroup<Data: RandomAccessCollection, Content: View>: View,
     }
 }
 
-/// Row item used in ``MenuRadioGroup``.
-public struct MenuRadioGroupRow<Data: RandomAccessCollection, Content: View>
+public protocol MenuRadioGroupRow where Data.Element: Hashable, Data.Element: Identifiable {
+    associatedtype Data: RandomAccessCollection
+    associatedtype Content: View
+    var invertForeground: Bool { get set }
+    var image: (_ item: Data.Element) -> Image? { get }
+    var content: (_ item: Data.Element) -> Content { get }
+    func rowBody(for time: Data.Element, selection: Binding<Data.Element.ID?>) -> AnyView
+}
+
+//extension MenuRadioGroupRow {
+//    /// Standard native macOS Control Center circle toggle style.
+//    public static func circleToggle(_ style: MenuRadioGroupCircleToggleRow) -> Self {
+//        style
+//    }
+//
+//    /// Custom style. Define your own view without using the circle toggle.
+//    public static func custom(_ style: MenuRadioGroupCustomRow) -> Self {
+//        style
+//    }
+//}
+
+/// Standard native macOS Control Center circle toggle style.
+public struct MenuRadioGroupCircleToggleRow<Data: RandomAccessCollection, Content: View>: MenuRadioGroupRow
 where Data.Element: Hashable, Data.Element: Identifiable
 {
-    public var image: (Data.Element) -> Image?
-    public var content: (Data.Element) -> Content
     public var invertForeground: Bool
+    public var image: (_ item: Data.Element) -> Image?
+    public var content: (_ item: Data.Element) -> Content
     
     public init(
         invertForeground: Bool = false,
-        image: @escaping (Data.Element) -> Image?,
-        content: @escaping (Data.Element) -> Content
+        image: @escaping (_ item: Data.Element) -> Image?,
+        @ViewBuilder content: @escaping (_ item: Data.Element) -> Content
     ) {
         self.invertForeground = invertForeground
         self.image = image
@@ -86,10 +95,53 @@ where Data.Element: Hashable, Data.Element: Identifiable
     public init(
         invertForeground: Bool = false,
         image: Image?,
-        content: @escaping (Data.Element) -> Content
+        content: @escaping (_ item: Data.Element) -> Content
     ) {
         self.invertForeground = invertForeground
         self.image = { _ in image }
         self.content = content
+    }
+    
+    public func rowBody(
+        for item: Data.Element,
+        selection: Binding<Data.Element.ID?>
+    ) -> AnyView {
+        AnyView(
+            HStack {
+                MacControlCenterCircleToggle(
+                    isOn: .constant(selection.wrappedValue == item.id),
+                    style: .menu,
+                    invertForeground: invertForeground,
+                    image: image(item)
+                ) { state in
+                    selection.wrappedValue = selection.wrappedValue == item.id ? nil : item.id
+                }
+                
+                content(item)
+                Spacer(minLength: 0)
+            }
+        )
+    }
+}
+
+/// Custom style. Define your own view without using the circle toggle.
+public struct MenuRadioGroupCustomRow<Data: RandomAccessCollection, Content: View>: MenuRadioGroupRow
+where Data.Element: Hashable, Data.Element: Identifiable
+{
+    public var invertForeground: Bool = false
+    public var image: (_ item: Data.Element) -> Image? = { _ in nil }
+    public var content: (_ item: Data.Element) -> Content
+    
+    public init(
+        @ViewBuilder _ content: @escaping (_ item: Data.Element) -> Content
+    ) {
+        self.content = content
+    }
+    
+    public func rowBody(
+        for item: Data.Element,
+        selection: Binding<Data.Element.ID?>
+    ) -> AnyView {
+        AnyView(content(item))
     }
 }
