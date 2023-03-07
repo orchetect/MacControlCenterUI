@@ -12,113 +12,140 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem {
+public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListStateItem {
     @Binding public var isOn: Bool
-    public var image: Image?
-    public var color: Color
-    public var offColor: Color?
-    public var invertForeground: Bool
+    public var style: MacControlCenterCircleButtonStyle
     public var label: Label?
-    public var onChangeBlock: (Bool) -> Void
+    public var onClickBlock: (Bool) -> Void
     
     // MARK: Init - No Label
     
     public init(
-        isOn: Binding<Bool>,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
-        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+        isOn: Binding<Bool> = .constant(false),
+        style: MacControlCenterCircleButtonStyle,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
         self._isOn = isOn
-        self.color = color
-        self.offColor = offColor
-        self.invertForeground = invertForeground
-        self.image = image
+        self.style = style
         self.label = nil
-        self.onChangeBlock = onChangeBlock
+        self.onClickBlock = onClickBlock
+    }
+    
+    public init(
+        isOn: Binding<Bool> = .constant(false),
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == EmptyView {
+        self._isOn = isOn
+        self.style = .init(image: image)
+        self.label = nil
+        self.onClickBlock = onClickBlock
     }
     
     // MARK: Init - With String Label
     
     public init<S>(
         _ title: S,
-        isOn: Binding<Bool>,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
-        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+        isOn: Binding<Bool> = .constant(false),
+        style: MacControlCenterCircleButtonStyle,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
         self.label = Text(title)
         self._isOn = isOn
-        self.color = color
-        self.offColor = offColor
-        self.invertForeground = invertForeground
-        self.image = image
-        self.onChangeBlock = onChangeBlock
+        self.style = style
+        self.onClickBlock = onClickBlock
+    }
+    
+    public init<S>(
+        _ title: S,
+        isOn: Binding<Bool> = .constant(false),
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where S: StringProtocol, Label == Text {
+        self.label = Text(title)
+        self._isOn = isOn
+        self.style = .init(image: image)
+        self.onClickBlock = onClickBlock
     }
     
     // MARK: Init - With LocalizedStringKey Label
     
     public init(
         _ titleKey: LocalizedStringKey,
-        isOn: Binding<Bool>,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
-        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+        isOn: Binding<Bool> = .constant(false),
+        style: MacControlCenterCircleButtonStyle,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
         self.label = Text(titleKey)
         self._isOn = isOn
-        self.color = color
-        self.offColor = offColor
-        self.invertForeground = invertForeground
-        self.image = image
-        self.onChangeBlock = onChangeBlock
+        self.style = style
+        self.onClickBlock = onClickBlock
+    }
+    
+    public init(
+        _ titleKey: LocalizedStringKey,
+        isOn: Binding<Bool> = .constant(false),
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == Text {
+        self.label = Text(titleKey)
+        self._isOn = isOn
+        self.style = .init(image: image)
+        self.onClickBlock = onClickBlock
     }
     
     // MARK: Init - With Label Closure
     
     public init(
-        isOn: Binding<Bool>,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
+        isOn: Binding<Bool> = .constant(false),
+        style: MacControlCenterCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
-        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
         self._isOn = isOn
-        self.color = color
-        self.offColor = offColor
-        self.invertForeground = invertForeground
-        self.image = image
+        self.style = style
         self.label = label()
-        self.onChangeBlock = onChangeBlock
+        self.onClickBlock = onClickBlock
+    }
+    
+    public init(
+        isOn: Binding<Bool> = .constant(false),
+        image: Image,
+        @ViewBuilder label: @escaping () -> Label,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self._isOn = isOn
+        self.style = .init(image: image)
+        self.label = label()
+        self.onClickBlock = onClickBlock
     }
     
     // MARK: Init - With Label
     
     @_disfavoredOverload
     public init(
-        isOn: Binding<Bool>,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
+        isOn: Binding<Bool> = .constant(false),
+        style: MacControlCenterCircleButtonStyle,
         label: Label,
-        onChange onChangeBlock: @escaping (Bool) -> Void = { _ in }
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
         self._isOn = isOn
-        self.color = color
-        self.offColor = offColor
-        self.invertForeground = invertForeground
-        self.image = image
+        self.style = style
         self.label = label
-        self.onChangeBlock = onChangeBlock
+        self.onClickBlock = onClickBlock
+    }
+    
+    @_disfavoredOverload
+    public init(
+        isOn: Binding<Bool> = .constant(false),
+        image: Image,
+        label: Label,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self._isOn = isOn
+        self.style = .init(image: image)
+        self.label = label
+        self.onClickBlock = onClickBlock
     }
     
     // MARK: Body
@@ -127,17 +154,27 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem {
         HighlightingMenuItem(height: .controlCenterIconItem) {
             MacControlCenterCircleToggle(
                 isOn: $isOn,
-                style: .menu,
-                color: color,
-                offColor: offColor,
-                invertForeground: invertForeground,
+                controlSize: .menu,
+                style: style,
                 label: {
                     label
                         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
                         .contentShape(Rectangle())
                 },
-                onChange: onChangeBlock
+                onClick: { state in
+                    onClickBlock(state)
+                }
             )
         }
+    }
+    
+    // MARK: MenuListStateItem
+    
+    public mutating func setState(state: Bool) {
+        _isOn = .constant(state)
+    }
+    
+    public mutating func setItemClicked(_ block: @escaping () -> Void) {
+        onClickBlock = { _ in block() }
     }
 }

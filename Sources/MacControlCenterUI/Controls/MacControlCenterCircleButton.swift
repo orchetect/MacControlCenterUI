@@ -15,50 +15,38 @@ import SwiftUI
 public struct MacControlCenterCircleButton<Label: View>: View {
     // MARK: Public Properties
     
-    public var image: Image?
-    public var color: Color
-    public var invertForeground: Bool
+    public var controlSize: MacControlCenterCircleButtonSize
+    public var style: MacControlCenterCircleButtonStyle
     public var label: Label?
     public var actionBlock: () -> Void
     
     // MARK: Private State
     
     @State private var isMouseDown: Bool = false
-    private var style: MacControlCenterCircleButtonStyle
     
     // MARK: Init
     
     public init(
-        style: MacControlCenterCircleButtonStyle = .menu,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
+        controlSize: MacControlCenterCircleButtonSize = .menu,
+        style: MacControlCenterCircleButtonStyle,
         action actionBlock: @escaping () -> Void
     ) where Label == EmptyView {
+        self.controlSize = controlSize
         self.style = style
-        self.color = color
-        self.invertForeground = invertForeground
-        self.image = image
         self.label = nil
         self.actionBlock = actionBlock
     }
     
     public init<S>(
         _ title: S,
-        style: MacControlCenterCircleButtonStyle = .menu,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
+        controlSize: MacControlCenterCircleButtonSize = .menu,
+        style: MacControlCenterCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
         self.init(
+            controlSize: controlSize,
             style: style,
-            color: color,
-            invertForeground: invertForeground,
-            image: image,
             label: { Text(title) },
             action: actionBlock
         )
@@ -66,36 +54,26 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     
     public init(
         _ titleKey: LocalizedStringKey,
-        style: MacControlCenterCircleButtonStyle = .menu,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
+        controlSize: MacControlCenterCircleButtonSize = .menu,
+        style: MacControlCenterCircleButtonStyle,
         action actionBlock: @escaping () -> Void
     ) where Label == Text {
         self.init(
+            controlSize: controlSize,
             style: style,
-            color: color,
-            invertForeground: invertForeground,
-            image: image,
             label: { Text(titleKey) },
             action: actionBlock
         )
     }
     
     public init(
-        style: MacControlCenterCircleButtonStyle = .menu,
-        color: Color = Color(NSColor.controlAccentColor),
-        offColor: Color? = nil,
-        invertForeground: Bool = false,
-        image: Image? = nil,
+        controlSize: MacControlCenterCircleButtonSize = .menu,
+        style: MacControlCenterCircleButtonStyle,
         @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) {
+        self.controlSize = controlSize
         self.style = style
-        self.color = color
-        self.invertForeground = invertForeground
-        self.image = image
         self.label = label()
         self.actionBlock = actionBlock
     }
@@ -105,10 +83,8 @@ public struct MacControlCenterCircleButton<Label: View>: View {
     public var body: some View {
         MacControlCenterCircleToggle(
             isOn: .constant(false),
+            controlSize: controlSize,
             style: style,
-            color: color,
-            invertForeground: invertForeground,
-            image: image,
             label: label
         ) { _ in
             actionBlock()

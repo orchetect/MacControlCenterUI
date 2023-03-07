@@ -66,15 +66,16 @@ struct MenuView: View {
     @State private var brightness: CGFloat = 0.5
     @State private var selectedItem: Int = 0
     @State private var isWiFiExpanded = true
-    @State private var inputSelection: MenuEntry.ID? = "MacBook Pro Microphone"
+    @State private var audioOutputSelection: MenuEntry.ID? = "MacBook Pro Microphone"
     @State private var wifiSelection: MenuEntry.ID? = nil
     @State private var shapeSelection: MenuEntry.ID? = nil
     @State private var testPlain = false
     
-    @State var inputs: [MenuEntry] = [
-        .init(name: "MacBook Pro Microphone", systemImage: "speaker.wave.2.fill"),
+    @State var audioOutputs: [MenuEntry] = [
+        .init(name: "MacBook Pro Speakers", systemImage: "laptopcomputer"),
         .init(name: "Display Audio", systemImage: "speaker.wave.2.fill"),
-        .init(name: "Tim's AirPods Pro", systemImage: "speaker.wave.2.fill")
+        .init(name: "Tim's AirPods Max", systemImage: "airpodsmax"),
+        .init(name: "AppleTV", systemImage: "appletv.fill")
     ]
     
     static func randomWiFiImage() -> Image {
@@ -118,22 +119,28 @@ struct MenuView: View {
                 HStack {
                     MacControlCenterCircleToggle(
                         isOn: $darkMode,
-                        style: .prominent,
-                        color: .white,
-                        invertForeground: true,
-                        image: .macControlCenterAirplayVideo
+                        controlSize: .prominent,
+                        style: .init(
+                            image: .macControlCenterAirplayVideo,
+                            color: .white,
+                            invertForeground: true
+                        )
                     ) { Text("Dark Mode") }
                     MacControlCenterCircleToggle(
                         isOn: $nightShift,
-                        style: .prominent,
-                        color: .orange,
-                        image: .macControlCenterDisplayBrightness
+                        controlSize: .prominent,
+                        style: .init(
+                            image: .macControlCenterDisplayBrightness,
+                            color: .orange
+                        )
                     ) { Text("Night Shift") }
                     MacControlCenterCircleToggle(
                         isOn: $trueTone,
-                        style: .prominent,
-                        color: .blue,
-                        image: .macControlCenterDisplayBrightness
+                        controlSize: .prominent,
+                        style: .init(
+                            image: .macControlCenterDisplayBrightness,
+                            color: .blue
+                        )
                     ) { Text("True Tone") }
                 }
             // }
@@ -150,40 +157,59 @@ struct MenuView: View {
             
             MenuSection("Input")
             
-//            MenuList(inputs, selection: $inputSelection) { item, isSelected in
-//                CircleToggleMenuStateItem(image: item.image) { item in
-//                    Text(item.name)
-//                }
-//            }
-//
-//            MenuDisclosureSection("Wi-Fi Network") {
-//                MenuScrollView(maxHeight: 130) {
-//                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
-//                        CircleToggleMenuStateItem(image: item.image) { item in
-//                            Text(item.name)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
-//                MenuScrollView(maxHeight: 130) {
-//                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
-//                        MenuDisclosureGroup(initiallyExpanded: false, labelHeight: 30) {
-//                            CircleToggleMenuStateItem(image: item.image) { item in
-//                                Text(item.name)
-//                            }
-//                        } content: {
-//                            Text("Additional settings or menu selections")
-//                        }
-//                    }
-//                }
-//            }
+            MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
+                if item.name == "Tim's AirPods Max" {
+                    MenuDisclosureGroup(style: .menuItem, initiallyExpanded: false, labelHeight: .controlCenterIconItem) {
+                        MenuToggle(isOn: .constant(isSelected), image: item.image) {
+                            HStack {
+                                Text(item.name)
+                                Spacer()
+                                HStack(spacing: 2) {
+                                    Text("82%").foregroundColor(.secondary)
+                                    Image(systemName: "battery.75", variableValue: 0.82).foregroundColor(.secondary)
+                                }.frame(height: 10)
+                            }
+                        } onClick: { _ in itemClicked() }
+                    } content: {
+                        let airPodsOptions: [MenuEntry] = [
+                            .init(name: "Off", systemImage: "person.fill"),
+                            .init(name: "Noise Cancellation", systemImage: "person.fill"),
+                            .init(name: "Transparency", systemImage: "person.fill")
+                        ]
+                        MenuList(airPodsOptions, selection: .constant("Off")) { item, isSelected, itemClicked in
+                            MenuToggle(
+                                isOn: .constant(isSelected),
+                                style: .checkmark()
+                            ) {
+                                HStack {
+                                    item.image
+                                    Text(item.name).font(.system(size: 12))
+                                    Spacer()
+                                }
+                            } onClick: { _ in itemClicked() }
+                        }
+                    }
+                } else {
+                     MenuToggle(isOn: .constant(isSelected), image: item.image) {
+                        Text(item.name)
+                    } onClick: { _ in itemClicked() }
+                }
+            }
+
+            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
+                MenuScrollView(maxHeight: 130) {
+                    MenuList(wifiNetworks, selection: $wifiSelection) { item in
+                        MenuToggle(image: item.image) {
+                            Text(item.name)
+                        }
+                    }
+                }
+            }
             
-            MenuDisclosureSection("Shapes", initiallyExpanded: false) {
-                MenuCommand("Test") { }
-                MenuCommand("Test") { }
-                MenuCommand("Test") { }
+//            MenuDisclosureSection("Shapes", initiallyExpanded: false) {
+//                MenuCommand("Test") { }
+//                MenuCommand("Test") { }
+//                MenuCommand("Test") { }
 //                MenuList(shapes) { item in
 //                    MenuCommand {
 //                        print("\(item.name) pressed.")
@@ -215,12 +241,15 @@ struct MenuView: View {
 //                        }
 //                    }
 //                }
-            }
+//            }
             
             Divider()
             
-            MenuToggle(isOn: $testPlain) {
-                Text("Custom Colors with No Image")
+            MenuToggle(
+                isOn: $testPlain,
+                style: .init(image: nil, color: .orange, offColor: .orange.opacity(0.2))
+            ) {
+                Text("Custom State Colors Without Image")
             }
             
             Divider()

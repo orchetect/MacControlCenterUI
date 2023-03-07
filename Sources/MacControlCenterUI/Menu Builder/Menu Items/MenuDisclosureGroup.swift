@@ -13,6 +13,7 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
+    public var style: MenuDisclosureGroupStyle
     public var labelHeight: MenuItemSize
     public var label: Label
     public var content: [any View]
@@ -25,11 +26,13 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Init - With Binding
     
     public init(
+        style: MenuDisclosureGroupStyle,
         isExpanded: Binding<Bool>,
         labelHeight: MenuItemSize,
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: () -> [any View]
     ) {
+        self.style = style
         self._isExpandedBinding = isExpanded
         self._isExpanded = State(initialValue: isExpanded.wrappedValue)
         self.labelHeight = labelHeight
@@ -40,11 +43,13 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Init - Without Binding
     
     public init(
+        style: MenuDisclosureGroupStyle,
         initiallyExpanded: Bool = true,
         labelHeight: MenuItemSize,
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: () -> [any View]
     ) {
+        self.style = style
         self._isExpandedBinding = .constant(initiallyExpanded)
         self._isExpanded = State(initialValue: initiallyExpanded)
         self.labelHeight = labelHeight
@@ -82,7 +87,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
         }
         
         // do not remove the view using if { } otherwise it loses state
-        MenuBody(content: content)
+        expandedContent
             .frame(minHeight: minContentHeight)
             .frame(maxWidth: .infinity)
             .frame(height: contentHeight)
@@ -104,4 +109,51 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     @State private var contentHeight: CGFloat?
     @State private var minContentHeight: CGFloat?
+    
+    @ViewBuilder
+    private var expandedContent: some View {
+        switch style {
+        case .section:
+            MenuBody(content: content)
+        case .menuItem:
+            FullWidthMenuItem {
+                VStack(spacing: 0) {
+                    Rectangle()
+                        .fill(.gray.opacity(0.5))
+                        .frame(height: 1)
+                    ZStack {
+                        Rectangle().fill(.gray.opacity(0.15))
+                        MenuBody(content: content)
+                    }
+                    Rectangle()
+                        .fill(.gray.opacity(0.7))
+                        .frame(height: 1)
+                }
+            }
+        }
+    }
 }
+
+public enum MenuDisclosureGroupStyle {
+    /// Section style: Expanded content body has no added background (transparent).
+    case section
+    
+    /// Menu item style: Expanded content body has a shaded background.
+    case menuItem
+}
+
+//extension MenuToggle {
+//    public func withDisclosureContent() -> MenuToggleDisclosureGroup<Self> {
+//        MenuDisclosureGroup(
+//            style: <#T##MenuDisclosureGroupStyle#>,
+//            initiallyExpanded: <#T##Bool#>,
+//            labelHeight: <#T##MenuItemSize#>,
+//            label: { self },
+//            content: <#T##() -> [View]#>
+//        )
+//    }
+//}
+//
+//public struct MenuToggleDisclosureGroup: View, MacControlCenterMenuItem, MenuListStateItem {
+//    
+//}
