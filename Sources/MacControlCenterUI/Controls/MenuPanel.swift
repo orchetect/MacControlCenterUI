@@ -13,7 +13,7 @@ import SwiftUI
 public struct MenuPanel<Content: View>: View {
     // MARK: Public Properties
     
-    public var shadow: Bool
+    public var hasShadow: Bool
     public var content: () -> Content
     
     // MARK: Environment
@@ -23,20 +23,20 @@ public struct MenuPanel<Content: View>: View {
     // MARK: Init
     
     public init(
-        shadow: Bool = true,
+        hasShadow: Bool = true,
         @ViewBuilder _ content: @escaping () -> Content
     ) {
-        self.shadow = shadow
+        self.hasShadow = hasShadow
         self.content = content
     }
     
     // MARK: Body
     
     public var body: some View {
-        let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.15)
+        let panelColor = Color(NSColor.windowBackgroundColor).opacity(0.25)
         
         ZStack(alignment: .top) {
-            if shadow {
+            if hasShadow {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.clear)
                     .shadow(color: Color(white: 0, opacity: 1), radius: 2)
