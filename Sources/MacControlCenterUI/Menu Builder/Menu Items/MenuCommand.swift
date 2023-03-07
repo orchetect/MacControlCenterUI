@@ -81,29 +81,40 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
             }
         }
         .onTapGesture {
-            blinkAndCallAction()
+            switch style {
+            case .menu:
+                // classic NSMenu-style menu commands still blink on click, as of Ventura
+                blinkThenCallAction()
+            case .controlCenter:
+                // Control Center menu commands don't blink because Apple is boring and hates charm
+                callAction()
+            }
         }
     }
     
     // MARK: Helpers
     
-    private func blinkAndCallAction() {
+    private func blinkThenCallAction() {
         DispatchQueue.main.asyncAfter(deadline: .now()) {
             isHighlighted = false
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             isHighlighted = true
         }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [activatesApp, dismissesMenu, action] in
-            if activatesApp {
-                NSApp.activate(ignoringOtherApps: true)
-            }
-            
-            if dismissesMenu {
-                menuBarExtraIsPresented.wrappedValue = false
-            }
-            
-            action()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { [self] in
+            callAction()
         }
+    }
+    
+    private func callAction() {
+        if activatesApp {
+            NSApp.activate(ignoringOtherApps: true)
+        }
+        
+        if dismissesMenu {
+            menuBarExtraIsPresented.wrappedValue = false
+        }
+        
+        action()
     }
 }
