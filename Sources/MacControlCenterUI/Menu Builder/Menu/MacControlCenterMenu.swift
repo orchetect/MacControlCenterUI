@@ -84,7 +84,7 @@ public struct MacControlCenterMenu: View {
     public var body: some View {
         MenuBody(content: content) { item in
             item
-                .environment(\.menuBarExtraIsPresented, $menuBarExtraIsPresented)
+                .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
         }
         .padding([.top, .bottom], MenuGeometry.menuPadding)
         .background(VisualEffect.popoverWindow())

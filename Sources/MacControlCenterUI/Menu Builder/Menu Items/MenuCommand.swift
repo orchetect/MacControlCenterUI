@@ -18,7 +18,7 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     @Environment(\.colorScheme) private var colorScheme
-    @Environment(\.menuBarExtraIsPresented) private var menuBarExtraIsPresented
+    @Environment(\.isMenuBarExtraPresented) private var menuBarExtraIsPresented
     
     public var label: Label
     public var action: (() -> Void)
