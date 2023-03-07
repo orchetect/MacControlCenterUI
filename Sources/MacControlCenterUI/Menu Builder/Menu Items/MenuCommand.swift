@@ -71,7 +71,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     public var body: some View {
         HighlightingMenuItem(
             style: style,
-            height: MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding,
+            height: .standardTextOnly,
             isHighlighted: $isHighlighted
         ) {
             HStack {

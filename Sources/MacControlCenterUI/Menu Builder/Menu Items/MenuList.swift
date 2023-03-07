@@ -12,10 +12,9 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuList<Data: RandomAccessCollection, Content: MenuStateItem>: View,
+public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
     MacControlCenterMenuItem
-    where Data.Element: Hashable, Data.Element: Identifiable,
-          Content.Data == Data, Content.Data.Element == Data.Element
+    where Data.Element: Hashable, Data.Element: Identifiable
 {
     public let data: Data
     @Binding public var selection: Data.Element.ID?
@@ -46,16 +45,10 @@ public struct MenuList<Data: RandomAccessCollection, Content: MenuStateItem>: Vi
         ForEach(data, id: \.id) { item in
             HighlightingMenuItem(
                 style: .controlCenter,
-                height: contentHeight
+                height: .controlCenterIconItem
             ) {
-                content(item, selection == item.id).body(for: item, selection: $selection)
+                content(item, selection == item.id)
             }
         }
-    }
-    
-    public var contentHeight: CGFloat {
-        MacControlCenterCircleButtonStyle.menu.size
-            + (MenuGeometry.menuVerticalPadding * 2)
-            + MenuGeometry.menuItemPadding
     }
 }

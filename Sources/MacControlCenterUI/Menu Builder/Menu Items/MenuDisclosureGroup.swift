@@ -13,7 +13,7 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
-    public var labelHeight: CGFloat
+    public var labelHeight: MenuItemSize
     public var label: Label
     public var content: [any View]
     @Binding public var isExpandedBinding: Bool
@@ -26,7 +26,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     public init(
         isExpanded: Binding<Bool>,
-        labelHeight: CGFloat,
+        labelHeight: MenuItemSize,
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: () -> [any View]
     ) {
@@ -41,7 +41,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     public init(
         initiallyExpanded: Bool = true,
-        labelHeight: CGFloat,
+        labelHeight: MenuItemSize,
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: () -> [any View]
     ) {

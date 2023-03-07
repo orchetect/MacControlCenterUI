@@ -16,7 +16,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     // MARK: Public Properties
     
     public var style: MenuCommandStyle
-    public var height: CGFloat
+    public var height: MenuItemSize
     public var content: Content
     @Binding public var isHighlighted: Bool
     
@@ -32,7 +32,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     
     public init(
         style: MenuCommandStyle = .controlCenter,
-        height: CGFloat,
+        height: MenuItemSize,
         isHighlighted: Binding<Bool>,
         @ViewBuilder _ content: () -> Content
     ) {
@@ -44,7 +44,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     
     public init(
         style: MenuCommandStyle = .controlCenter,
-        height: CGFloat,
+        height: MenuItemSize,
         isHighlighted: Bool = false,
         @ViewBuilder _ content: () -> Content
     ) {
@@ -69,7 +69,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             }
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
-        .frame(height: height)
+        .frame(height: height.boundsHeight)
         .onHover { state in
             if isHighlightedInternal != state {
                 isHighlightedInternal = state

@@ -114,14 +114,14 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         if let nonBindingInitiallyExpanded {
             MenuDisclosureGroup(
                 initiallyExpanded: nonBindingInitiallyExpanded,
-                labelHeight: 20,
+                labelHeight: .controlCenterSection,
                 label: { label },
                 content: content
             )
         } else {
             MenuDisclosureGroup(
                 isExpanded: $isExpanded,
-                labelHeight: 20,
+                labelHeight: .controlCenterSection,
                 label: { label },
                 content: content
             )

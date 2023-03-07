@@ -52,7 +52,7 @@ public struct VisualEffect: NSViewRepresentable {
 }
 
 extension VisualEffect {
-    public static func nonvibrant(mask: NSImage? = nil) -> Self {
+    public static func nonVibrant(mask: NSImage? = nil) -> Self {
         VisualEffect(
             .underWindowBackground,
             vibrancy: false,

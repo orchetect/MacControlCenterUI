@@ -14,7 +14,7 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMenuItem {
     public var style: MenuCommandStyle
-    public var height: CGFloat
+    public var height: MenuItemSize
     @Binding public var isOn: Bool
     @Binding public var isPressed: Bool
     public let content: () -> Content
@@ -24,7 +24,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     
     public init(
         style: MenuCommandStyle = .controlCenter,
-        height: CGFloat,
+        height: MenuItemSize,
         isOn: Binding<Bool>,
         isPressed: Binding<Bool>,
         @ViewBuilder _ content: @escaping () -> Content,
@@ -63,6 +63,6 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
                     }
             )
         }
-        .frame(height: height)
+        .frame(height: height.boundsHeight)
     }
 }

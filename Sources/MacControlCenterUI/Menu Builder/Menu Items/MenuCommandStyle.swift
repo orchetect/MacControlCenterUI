@@ -12,10 +12,10 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public enum MenuCommandStyle {
-    /// Standard menu style (highlight on mouse hover using accent color)
+    /// Standard menu style (highlight on mouse hover using accent color).
     case menu
     
-    /// Control Center style (highlight on mouse hover using translucent gray color)
+    /// Control Center style (highlight on mouse hover using translucent gray color).
     case controlCenter
 }
 
