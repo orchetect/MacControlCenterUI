@@ -44,6 +44,19 @@ public struct MenuCircleToggle<Label: View>: View {
         self.onClickBlock = onClickBlock
     }
     
+    public init(
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == EmptyView {
+        self._isOn = isOn
+        self.controlSize = controlSize
+        self.style = .init(image: image)
+        self.label = nil
+        self.onClickBlock = onClickBlock
+    }
+    
     // MARK: Init - With String Label
     
     public init<S>(
@@ -57,6 +70,20 @@ public struct MenuCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.controlSize = controlSize
         self.style = style
+        self.onClickBlock = onClickBlock
+    }
+    
+    public init<S>(
+        _ title: S,
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where S: StringProtocol, Label == Text {
+        self.label = Text(title)
+        self._isOn = isOn
+        self.controlSize = controlSize
+        self.style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
     
@@ -76,6 +103,20 @@ public struct MenuCircleToggle<Label: View>: View {
         self.onClickBlock = onClickBlock
     }
     
+    public init(
+        _ titleKey: LocalizedStringKey,
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == Text {
+        self.label = Text(titleKey)
+        self._isOn = isOn
+        self.controlSize = controlSize
+        self.style = .init(image: image)
+        self.onClickBlock = onClickBlock
+    }
+    
     // MARK: Init - With Label Closure
     
     public init(
@@ -88,6 +129,20 @@ public struct MenuCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.controlSize = controlSize
         self.style = style
+        self.label = label()
+        self.onClickBlock = onClickBlock
+    }
+    
+    public init(
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        image: Image,
+        @ViewBuilder label: @escaping () -> Label,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self._isOn = isOn
+        self.controlSize = controlSize
+        self.style = .init(image: image)
         self.label = label()
         self.onClickBlock = onClickBlock
     }
@@ -105,6 +160,21 @@ public struct MenuCircleToggle<Label: View>: View {
         self._isOn = isOn
         self.controlSize = controlSize
         self.style = style
+        self.label = label
+        self.onClickBlock = onClickBlock
+    }
+    
+    @_disfavoredOverload
+    public init(
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        image: Image,
+        label: Label,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) {
+        self._isOn = isOn
+        self.controlSize = controlSize
+        self.style = .init(image: image)
         self.label = label
         self.onClickBlock = onClickBlock
     }
