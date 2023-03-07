@@ -1,5 +1,5 @@
 //
-//  Exports.swift
+//  MacControlCenterUI.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
