@@ -15,7 +15,7 @@ import SwiftUI
 public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuItem {
     // MARK: Public Properties
     
-    public var style: MenuCommandStyle = .controlCenter
+    public var style: MenuCommandStyle
     public var height: CGFloat
     public var content: Content
     @Binding public var isHighlighted: Bool
