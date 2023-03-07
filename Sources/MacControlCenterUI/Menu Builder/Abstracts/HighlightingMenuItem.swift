@@ -44,12 +44,13 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     
     public init(
         style: MenuCommandStyle = .controlCenter,
+        staticState: Bool = false,
         height: CGFloat,
         @ViewBuilder _ content: () -> Content
     ) {
         self.style = style
         self.height = height
-        self._isHighlighted = .constant(false)
+        self._isHighlighted = .constant(staticState)
         self.content = content()
     }
     
