@@ -16,12 +16,13 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     public var labelHeight: CGFloat
     public var label: Label
     public var content: [any View]
-    @Binding public var isExpanded: Bool
+    @Binding public var isExpandedBinding: Bool
+    @State private var isExpanded: Bool
     
     @State private var isPressed: Bool = false
     @State private var isHighlighted = false
     
-    // MARK: Init
+    // MARK: Init - With Binding
     
     public init(
         isExpanded: Binding<Bool>,
@@ -29,7 +30,23 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: () -> [any View]
     ) {
-        self._isExpanded = isExpanded
+        self._isExpandedBinding = isExpanded
+        self._isExpanded = State(initialValue: isExpanded.wrappedValue)
+        self.labelHeight = labelHeight
+        self.label = label()
+        self.content = content()
+    }
+    
+    // MARK: Init - Without Binding
+    
+    public init(
+        initiallyExpanded: Bool = true,
+        labelHeight: CGFloat,
+        @ViewBuilder label: () -> Label,
+        @MacControlCenterMenuBuilder content: () -> [any View]
+    ) {
+        self._isExpandedBinding = .constant(initiallyExpanded)
+        self._isExpanded = State(initialValue: initiallyExpanded)
         self.labelHeight = labelHeight
         self.label = label()
         self.content = content()
@@ -75,6 +92,13 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                 if !isExpanded {
                     contentHeight = 0
                 }
+            }
+        
+            .onChange(of: isExpandedBinding) { newValue in
+                isExpanded = newValue
+            }
+            .onChange(of: isExpanded) { newValue in
+                isExpandedBinding = newValue
             }
     }
     

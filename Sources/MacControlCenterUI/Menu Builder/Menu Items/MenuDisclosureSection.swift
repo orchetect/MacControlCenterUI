@@ -18,9 +18,12 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
     @Binding public var isExpanded: Bool
     public var content: () -> [any View]
     
+    /// If non-nil, do not use binding.
+    internal var nonBindingInitiallyExpanded: Bool? = nil
+    
     @State private var isHighlighted = false
     
-    // MARK: Init
+    // MARK: Init - With Binding
     
     public init<S>(
         _ label: S,
@@ -58,6 +61,47 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         self.content = content
     }
     
+    // MARK: Init - Without Binding
+    
+    public init<S>(
+        _ label: S,
+        divider: Bool = true,
+        initiallyExpanded: Bool = true,
+        @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
+    ) where S: StringProtocol, Label == MenuSectionText {
+        self.label = MenuSectionText(text: Text(label))
+        self.divider = divider
+        self._isExpanded = .constant(false) // not used
+        self.nonBindingInitiallyExpanded = initiallyExpanded
+        self.content = content
+    }
+    
+    public init(
+        _ titleKey: LocalizedStringKey,
+        divider: Bool = true,
+        initiallyExpanded: Bool = true,
+        @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
+    ) where Label == MenuSectionText {
+        self.label = MenuSectionText(text: Text(titleKey))
+        self.divider = divider
+        self._isExpanded = .constant(false) // not used
+        self.nonBindingInitiallyExpanded = initiallyExpanded
+        self.content = content
+    }
+    
+    public init(
+        divider: Bool = true,
+        initiallyExpanded: Bool = true,
+        @ViewBuilder _ label: () -> Label,
+        @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
+    ) {
+        self.divider = divider
+        self._isExpanded = .constant(false) // not used
+        self.nonBindingInitiallyExpanded = initiallyExpanded
+        self.label = label()
+        self.content = content
+    }
+    
     // MARK: Body
     
     public var body: some View {
@@ -67,11 +111,20 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
             }
         }
         
-        MenuDisclosureGroup(
-            isExpanded: $isExpanded,
-            labelHeight: 20,
-            label: { label },
-            content: content
-        )
+        if let nonBindingInitiallyExpanded {
+            MenuDisclosureGroup(
+                initiallyExpanded: nonBindingInitiallyExpanded,
+                labelHeight: 20,
+                label: { label },
+                content: content
+            )
+        } else {
+            MenuDisclosureGroup(
+                isExpanded: $isExpanded,
+                labelHeight: 20,
+                label: { label },
+                content: content
+            )
+        }
     }
 }

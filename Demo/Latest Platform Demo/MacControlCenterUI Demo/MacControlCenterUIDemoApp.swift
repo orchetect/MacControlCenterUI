@@ -156,7 +156,7 @@ struct MenuView: View {
                 }
             }
             
-            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
+            MenuDisclosureSection("Wi-Fi Network") {
                 MenuScrollView(maxHeight: 130) {
                     MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
                         CircleToggleMenuStateItem(image: item.image) { item in
@@ -166,39 +166,56 @@ struct MenuView: View {
                 }
             }
             
-            MenuSection("Shapes")
+            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
+                MenuScrollView(maxHeight: 130) {
+                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
+//                        MenuDisclosureGroup(initiallyExpanded: false, labelHeight: 30) {
+                            CircleToggleMenuStateItem(image: item.image) { item in
+                                Text(item.name)
+                            }
+//                        } content: {
+//                            Text("Additional settings or menu selections")
+//                        }
+                    }
+                }
+            }
             
-//            MenuList(shapes) { item in
-//                MenuCommand {
-//                    print("\(item.name) pressed.")
-//                } label: {
-//                    HStack {
-//                        item.image
-//                            .resizable()
-//                            .scaledToFit()
-//                            .foregroundColor(item.imageColor?.opacity(0.8))
-//                            .frame(width: 24, height: 24)
-//                        Text(item.name)
-//                        Spacer()
-//                    }
-//                }
-//                CustomMenuStateItem { item in
-//                    HStack {
-//                        item.image
-//                            .resizable()
-//                            .scaledToFit()
-//                            .foregroundColor(item.imageColor?.opacity(0.8))
-//                            .frame(width: 24, height: 24)
-//                        Text(item.name)
-//                        Spacer()
-//                    }
-//                    .frame(height: 30)
-//                    .onTapGesture {
-//                        isMenuPresented = false // manually dismiss window
+            MenuDisclosureSection("Shapes", initiallyExpanded: false) {
+                MenuCommand("Test") { }
+                MenuCommand("Test") { }
+                MenuCommand("Test") { }
+//                MenuList(shapes) { item in
+//                    MenuCommand {
 //                        print("\(item.name) pressed.")
+//                    } label: {
+//                        HStack {
+//                            item.image
+//                                .resizable()
+//                                .scaledToFit()
+//                                .foregroundColor(item.imageColor?.opacity(0.8))
+//                                .frame(width: 24, height: 24)
+//                            Text(item.name)
+//                            Spacer()
+//                        }
+//                    }
+//                    CustomMenuStateItem { item in
+//                        HStack {
+//                            item.image
+//                                .resizable()
+//                                .scaledToFit()
+//                                .foregroundColor(item.imageColor?.opacity(0.8))
+//                                .frame(width: 24, height: 24)
+//                            Text(item.name)
+//                            Spacer()
+//                        }
+//                        .frame(height: 30)
+//                        .onTapGesture {
+//                            isMenuPresented = false // manually dismiss window
+//                            print("\(item.name) pressed.")
+//                        }
 //                    }
 //                }
-//            }
+            }
             
             Divider()
             

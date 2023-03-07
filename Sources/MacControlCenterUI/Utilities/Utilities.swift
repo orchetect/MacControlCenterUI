@@ -19,7 +19,7 @@ extension CGFloat {
     }
 }
 
-// MARK: Image Utils
+// MARK: - Image Utils
 
 class NoInsetHostingView<V>: NSHostingView<V> where V: View {
     override var safeAreaInsets: NSEdgeInsets {
