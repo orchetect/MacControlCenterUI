@@ -78,6 +78,12 @@ struct MenuView: View {
         .init(name: "AppleTV", systemImage: "appletv.fill")
     ]
     
+    let airPodsOptions: [MenuEntry] = [
+        .init(name: "Off", systemImage: "person.fill"),
+        .init(name: "Noise Cancellation", systemImage: "person.crop.circle.fill"),
+        .init(name: "Transparency", systemImage: "person.wave.2.fill")
+    ]
+    
     static func randomWiFiImage() -> Image {
         Image(systemName: "wifi", variableValue: Double.random(in: 0.2...1.0)) // random signal strength
     }
@@ -158,7 +164,7 @@ struct MenuView: View {
             MenuSection("Input")
             
             MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
-                if item.name == "Tim's AirPods Max" {
+                if item.name.contains("AirPods Max") {
                     MenuDisclosureGroup(style: .menuItem, initiallyExpanded: false, labelHeight: .controlCenterIconItem) {
                         MenuToggle(isOn: .constant(isSelected), image: item.image) {
                             HStack {
@@ -171,11 +177,6 @@ struct MenuView: View {
                             }
                         } onClick: { _ in itemClicked() }
                     } content: {
-                        let airPodsOptions: [MenuEntry] = [
-                            .init(name: "Off", systemImage: "person.fill"),
-                            .init(name: "Noise Cancellation", systemImage: "person.fill"),
-                            .init(name: "Transparency", systemImage: "person.fill")
-                        ]
                         MenuList(airPodsOptions, selection: .constant("Off")) { item, isSelected, itemClicked in
                             MenuToggle(
                                 isOn: .constant(isSelected),

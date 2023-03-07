@@ -121,10 +121,13 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                     Rectangle()
                         .fill(.gray.opacity(0.5))
                         .frame(height: 1)
+                    
                     ZStack {
                         Rectangle().fill(.gray.opacity(0.15))
                         MenuBody(content: content)
                     }
+                    .padding([.top, .bottom], 1)
+                    
                     Rectangle()
                         .fill(.gray.opacity(0.7))
                         .frame(height: 1)
