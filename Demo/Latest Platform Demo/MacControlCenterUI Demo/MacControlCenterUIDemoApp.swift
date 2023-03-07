@@ -30,9 +30,27 @@ struct MacControlCenterUIDemoApp: App {
     }
 }
 
-struct AudioDevice: Hashable, Identifiable {
+struct MenuEntry: Hashable, Identifiable {
     let name: String
+    let image: Image
+    
+    // Identifiable
     var id: String { name }
+    
+    // Hashable - custom since Image isn't Hashable
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    init(name: String, image: Image) {
+        self.name = name
+        self.image = image
+    }
+    
+    init(name: String, systemImage: String) {
+        self.name = name
+        self.image = Image(systemName: systemImage)
+    }
 }
 
 struct MenuView: View {
@@ -44,24 +62,28 @@ struct MenuView: View {
     @State private var volume: CGFloat = 0.75
     @State private var brightness: CGFloat = 0.5
     @State private var selectedItem: Int = 0
-    @State private var isOutputExpanded = true
-    @State private var inputSelection: AudioDevice.ID? = "Test In 1"
-    @State private var outputSelection: AudioDevice.ID? = nil
+    @State private var isWiFiExpanded = true
+    @State private var inputSelection: MenuEntry.ID? = "MacBook Pro Microphone"
+    @State private var wifiSelection: MenuEntry.ID? = nil
     @State private var testPlain = false
     
-    @State var inputs: [AudioDevice] = [
-        .init(name: "Test In 1"),
-        .init(name: "Test In 2"),
-        .init(name: "Test In 3")
+    @State var inputs: [MenuEntry] = [
+        .init(name: "MacBook Pro Microphone", systemImage: "speaker.wave.2.fill"),
+        .init(name: "Display Audio", systemImage: "speaker.wave.2.fill"),
+        .init(name: "Tim's AirPods Pro", systemImage: "speaker.wave.2.fill")
     ]
     
-    @State var outputs: [AudioDevice] = [
-        .init(name: "Test Out 1"),
-        .init(name: "Test Out 2"),
-        .init(name: "Test Out 3"),
-        .init(name: "Test Out 4"),
-        .init(name: "Test Out 5"),
-        .init(name: "Test Out 6")
+    static func randomWiFiImage() -> Image {
+        Image(systemName: "wifi", variableValue: Double.random(in: 0.2...1.0))
+    }
+    
+    @State var wifiNetworks: [MenuEntry] = [
+        .init(name: "Wi-Fi Art Thou Romeo", image: Self.randomWiFiImage()),
+        .init(name: "Drop It Like It's Hotspot", image: Self.randomWiFiImage()),
+        .init(name: "Panic At The Cisco", image: Self.randomWiFiImage()),
+        .init(name: "Lord Of The Pings", image: Self.randomWiFiImage()),
+        .init(name: "Hide Yo Kids Hide Yo Wi-Fi", image: Self.randomWiFiImage()),
+        .init(name: "DLINK45892", image: Self.randomWiFiImage())
     ]
     
     /// Based on macOS Control Center slider width
@@ -119,13 +141,17 @@ struct MenuView: View {
             MenuSection("Input")
             
             MenuRadioGroup(inputs, selection: $inputSelection) { item in
-                Text(item.name)
+                MenuRadioGroupRow(image: item.image) { item in
+                    Text(item.name)
+                }
             }
             
-            DisclosureMenuSection("Output", isExpanded: $isOutputExpanded) {
+            DisclosureMenuSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 130) {
-                    MenuRadioGroup(outputs, selection: $outputSelection) { item in
-                        Text(item.name)
+                    MenuRadioGroup(wifiNetworks, selection: $wifiSelection) { item in
+                        MenuRadioGroupRow(image: item.image) { item in
+                            Text(item.name)
+                        }
                     }
                 }
             }
