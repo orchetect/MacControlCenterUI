@@ -144,19 +144,3 @@ public enum MenuDisclosureGroupStyle {
     /// Menu item style: Expanded content body has a shaded background.
     case menuItem
 }
-
-//extension MenuToggle {
-//    public func withDisclosureContent() -> MenuToggleDisclosureGroup<Self> {
-//        MenuDisclosureGroup(
-//            style: <#T##MenuDisclosureGroupStyle#>,
-//            initiallyExpanded: <#T##Bool#>,
-//            labelHeight: <#T##MenuItemSize#>,
-//            label: { self },
-//            content: <#T##() -> [View]#>
-//        )
-//    }
-//}
-//
-//public struct MenuToggleDisclosureGroup: View, MacControlCenterMenuItem, MenuListStateItem {
-//    
-//}
