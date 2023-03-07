@@ -19,12 +19,23 @@ public struct MenuList<Data: RandomAccessCollection, Content: MenuStateItem>: Vi
 {
     public let data: Data
     @Binding public var selection: Data.Element.ID?
-    public let content: (Data.Element) -> Content
+    public let content: (_ item: Data.Element, _ isSelected: Bool) -> Content
     
+    /// List.
+    public init(
+        _ data: Data,
+        content: @escaping (_ item: Data.Element) -> Content
+    ) {
+        self.data = data
+        self._selection = .constant(nil)
+        self.content = { item, _ in content(item) }
+    }
+    
+    /// List with single item selection.
     public init(
         _ data: Data,
         selection: Binding<Data.Element.ID?>,
-        content: @escaping (Data.Element) -> Content
+        content: @escaping (_ item: Data.Element, _ isSelected: Bool) -> Content
     ) {
         self.data = data
         self._selection = selection
@@ -37,7 +48,7 @@ public struct MenuList<Data: RandomAccessCollection, Content: MenuStateItem>: Vi
                 style: .controlCenter,
                 height: contentHeight
             ) {
-                content(item).body(for: item, selection: $selection)
+                content(item, selection == item.id).body(for: item, selection: $selection)
             }
         }
     }

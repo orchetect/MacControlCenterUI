@@ -150,7 +150,7 @@ struct MenuView: View {
             
             MenuSection("Input")
             
-            MenuList(inputs, selection: $inputSelection) { item in
+            MenuList(inputs, selection: $inputSelection) { item, isSelected in
                 CircleToggleMenuStateItem(image: item.image) { item in
                     Text(item.name)
                 }
@@ -158,7 +158,7 @@ struct MenuView: View {
             
             DisclosureMenuSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 130) {
-                    MenuList(wifiNetworks, selection: $wifiSelection) { item in
+                    MenuList(wifiNetworks, selection: $wifiSelection) { item, isSelected in
                         CircleToggleMenuStateItem(image: item.image) { item in
                             Text(item.name)
                         }
@@ -168,13 +168,13 @@ struct MenuView: View {
             
             MenuSection("Shapes")
             
-            MenuList(shapes, selection: $shapeSelection) { item in
+            MenuList(shapes) { item in
                 CustomMenuStateItem { item in
                     HStack {
                         item.image
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(item.imageColor)
+                            .foregroundColor(item.imageColor?.opacity(0.8))
                             .frame(width: 24, height: 24)
                         Text(item.name)
                         Spacer()
