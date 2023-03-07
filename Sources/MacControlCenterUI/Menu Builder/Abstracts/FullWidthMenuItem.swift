@@ -6,7 +6,7 @@
 
 import SwiftUI
 
-/// Generic full-width ``MacControlCenterMenu`` menu entry to contain any arbitrary view.
+/// Generic full-width ``MacControlCenterMenu`` menu item abstract.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)

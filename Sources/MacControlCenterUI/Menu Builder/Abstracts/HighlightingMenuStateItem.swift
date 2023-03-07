@@ -6,8 +6,8 @@
 
 import SwiftUI
 
-/// Generic ``MacControlCenterMenu`` menu entry to contain any arbitrary state view that highlights
-/// the background when the mouse hovers.
+/// Generic ``MacControlCenterMenu`` menu item abstract that highlights the background when the
+/// mouse hovers and toggles state when clicked.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
