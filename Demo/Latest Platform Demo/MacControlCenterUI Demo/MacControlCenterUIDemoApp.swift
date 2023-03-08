@@ -162,7 +162,7 @@ struct MenuView: View {
                 showSettingsWindow()
             }
             
-            MenuSection("Input")
+            MenuSection("Output")
             
             MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
                 if item.name.contains("AirPods Max") {
@@ -172,9 +172,11 @@ struct MenuView: View {
                                 Text(item.name)
                                 Spacer()
                                 HStack(spacing: 2) {
-                                    Text("82%").foregroundColor(.secondary)
-                                    Image(systemName: "battery.75", variableValue: 0.82).foregroundColor(.secondary)
-                                }.frame(height: 10)
+                                    Text("82%")
+                                    Image(systemName: "battery.75", variableValue: 0.82)
+                                }
+                                .frame(height: 10)
+                                .opacity(0.7)
                                 Spacer().frame(width: 28)
                             }
                         } onClick: { _ in itemClicked() }
@@ -227,14 +229,14 @@ struct MenuView: View {
             //     }
             // }
             
-            Divider()
-            
-            MenuToggle(
-                isOn: $testPlain,
-                style: .init(image: nil, color: .orange, offColor: .orange.opacity(0.2))
-            ) {
-                Text("Custom State Colors Without Image")
-            }
+            // Divider()
+            // 
+            // MenuToggle(
+            //     isOn: $testPlain,
+            //     style: .init(image: nil, color: .orange, offColor: .orange.opacity(0.2))
+            // ) {
+            //     Text("Custom State Colors Without Image")
+            // }
             
             Divider()
             
