@@ -175,6 +175,7 @@ struct MenuView: View {
                                     Text("82%").foregroundColor(.secondary)
                                     Image(systemName: "battery.75", variableValue: 0.82).foregroundColor(.secondary)
                                 }.frame(height: 10)
+                                Spacer().frame(width: 28)
                             }
                         } onClick: { _ in itemClicked() }
                     } content: {
