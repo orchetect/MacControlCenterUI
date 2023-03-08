@@ -67,6 +67,7 @@ struct MenuView: View {
     @State private var selectedItem: Int = 0
     @State private var isWiFiExpanded = true
     @State private var audioOutputSelection: MenuEntry.ID? = "MacBook Pro Microphone"
+    @State private var airPodsOptionSelection: MenuEntry.ID? = "Off"
     @State private var wifiSelection: MenuEntry.ID? = nil
     @State private var shapeSelection: MenuEntry.ID? = nil
     @State private var testPlain = false
@@ -78,7 +79,7 @@ struct MenuView: View {
         .init(name: "AppleTV", systemImage: "appletv.fill")
     ]
     
-    let airPodsOptions: [MenuEntry] = [
+    @State var airPodsOptions: [MenuEntry] = [
         .init(name: "Off", systemImage: "person.fill"),
         .init(name: "Noise Cancellation", systemImage: "person.crop.circle.fill"),
         .init(name: "Transparency", systemImage: "person.wave.2.fill")
@@ -177,7 +178,7 @@ struct MenuView: View {
                             }
                         } onClick: { _ in itemClicked() }
                     } content: {
-                        MenuList(airPodsOptions, selection: .constant("Off")) { item, isSelected, itemClicked in
+                        MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
                             MenuToggle(
                                 isOn: .constant(isSelected),
                                 style: .checkmark()
