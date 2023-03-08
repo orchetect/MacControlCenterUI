@@ -200,7 +200,7 @@ struct MenuView: View {
             }
 
             MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
-                MenuScrollView(maxHeight: 130) {
+                MenuScrollView(maxHeight: 135) {
                     MenuList(wifiNetworks, selection: $wifiSelection) { item in
                         MenuToggle(image: item.image) {
                             Text(item.name)
@@ -209,42 +209,23 @@ struct MenuView: View {
                 }
             }
             
-//            MenuDisclosureSection("Shapes", initiallyExpanded: false) {
-//                MenuCommand("Test") { }
-//                MenuCommand("Test") { }
-//                MenuCommand("Test") { }
-//                MenuList(shapes) { item in
-//                    MenuCommand {
-//                        print("\(item.name) pressed.")
-//                    } label: {
-//                        HStack {
-//                            item.image
-//                                .resizable()
-//                                .scaledToFit()
-//                                .foregroundColor(item.imageColor?.opacity(0.8))
-//                                .frame(width: 24, height: 24)
-//                            Text(item.name)
-//                            Spacer()
-//                        }
-//                    }
-//                    CustomMenuStateItem { item in
-//                        HStack {
-//                            item.image
-//                                .resizable()
-//                                .scaledToFit()
-//                                .foregroundColor(item.imageColor?.opacity(0.8))
-//                                .frame(width: 24, height: 24)
-//                            Text(item.name)
-//                            Spacer()
-//                        }
-//                        .frame(height: 30)
-//                        .onTapGesture {
-//                            isMenuPresented = false // manually dismiss window
-//                            print("\(item.name) pressed.")
-//                        }
-//                    }
-//                }
-//            }
+            // MenuDisclosureSection("Shapes", initiallyExpanded: false) {
+            //     MenuList(shapes) { item in
+            //         MenuCommand {
+            //             print("\(item.name) pressed.")
+            //         } label: {
+            //             HStack {
+            //                 item.image
+            //                     .resizable()
+            //                     .scaledToFit()
+            //                     .foregroundColor(item.imageColor?.opacity(0.8))
+            //                     .padding(2)
+            //                 Text(item.name)
+            //                 Spacer()
+            //             }
+            //         }
+            //     }
+            // }
             
             Divider()
             
