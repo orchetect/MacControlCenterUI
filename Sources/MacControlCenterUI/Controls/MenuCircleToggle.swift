@@ -309,7 +309,7 @@ public struct MenuCircleToggle<Label: View>: View {
     }
     
     private var buttonBackColor: Color? {
-        style.color(forState: isOn)
+        style.color(forState: isOn, colorScheme: colorScheme)
     }
     
     private var buttonForeColor: Color {
