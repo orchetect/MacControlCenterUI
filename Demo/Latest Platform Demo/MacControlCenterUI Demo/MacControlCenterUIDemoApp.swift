@@ -118,7 +118,7 @@ struct MenuView: View {
             
             MenuSlider(
                 value: $brightness,
-                image: .macControlCenterDisplayBrightness
+                image: Image(systemName: "sun.max.fill")
             )
             .frame(minWidth: sliderWidth)
             
@@ -128,7 +128,7 @@ struct MenuView: View {
                         isOn: $darkMode,
                         controlSize: .prominent,
                         style: .init(
-                            image: .macControlCenterAirplayVideo,
+                            image: Image(systemName: "airplayvideo"),
                             color: .white,
                             invertForeground: true
                         )
@@ -137,7 +137,7 @@ struct MenuView: View {
                         isOn: $nightShift,
                         controlSize: .prominent,
                         style: .init(
-                            image: .macControlCenterDisplayBrightness,
+                            image: Image(systemName: "sun.max.fill"),
                             color: .orange
                         )
                     ) { Text("Night Shift") }
@@ -145,7 +145,7 @@ struct MenuView: View {
                         isOn: $trueTone,
                         controlSize: .prominent,
                         style: .init(
-                            image: .macControlCenterDisplayBrightness,
+                            image: Image(systemName: "sun.max.fill"),
                             color: .blue
                         )
                     ) { Text("True Tone") }

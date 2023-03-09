@@ -64,6 +64,8 @@ public struct MenuVolumeSlider<Label: View>: View {
     }
 }
 
+// MARK: - Custom MenuSliderImage
+
 extension MenuVolumeSlider {
     private struct VolumeSliderIcon: MenuSliderImage {
         func image(
@@ -162,12 +164,21 @@ extension MenuVolumeSlider {
             
             var image: Image {
                 switch self {
-                case .off: return .macControlCenterSoundSliderSpeakerOff
-                case .vol1: return .macControlCenterSoundSliderSpeakerVol1
-                case .vol2: return .macControlCenterSoundSliderSpeakerVol2
-                case .vol3: return .macControlCenterSoundSliderSpeakerVol3
+                case .off: return .speakerOff
+                case .vol1: return .speakerVol1
+                case .vol2: return .speakerVol2
+                case .vol3: return .speakerVol3
                 }
             }
         }
     }
+}
+
+// MARK: - Sound Slider Icon Stages
+
+extension Image {
+    fileprivate static let speakerOff: Self = Image(systemName: "speaker.slash.fill")
+    fileprivate static let speakerVol1: Self = Image(systemName: "speaker.wave.1.fill")
+    fileprivate static let speakerVol2: Self = Image(systemName: "speaker.wave.2.fill")
+    fileprivate static let speakerVol3: Self = Image(systemName: "speaker.wave.3.fill")
 }

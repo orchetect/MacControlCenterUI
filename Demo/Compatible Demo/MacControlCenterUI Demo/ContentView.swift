@@ -24,7 +24,7 @@ struct ContentView: View {
                 MenuSlider(
                     "Display",
                     value: $brightnessLevel,
-                    image: .macControlCenterDisplayBrightness
+                    image: Image(systemName: "sun.max.fill")
                 )
                 .frame(minWidth: sliderWidth)
             }
@@ -55,7 +55,7 @@ struct ContentView: View {
                     MenuCircleToggle(
                         "Toggle Button",
                         isOn: $button1State,
-                        image: .macControlCenterSpeaker
+                        image: Image(systemName: "speaker.wave.2.fill")
                     )
                     Spacer()
                     Toggle("On", isOn: $button1State)
@@ -66,7 +66,7 @@ struct ContentView: View {
                         "Toggle Button (White)",
                         isOn: $button2State,
                         style: .init(
-                            image: .macControlCenterSpeaker,
+                            image: Image(systemName: "speaker.wave.2.fill"),
                             color: .white,
                             invertForeground: true
                         )
@@ -80,7 +80,7 @@ struct ContentView: View {
                         "Toggle Button (Orange)",
                         isOn: $button3State,
                         style: .init(
-                            image: .macControlCenterDisplayBrightness,
+                            image: Image(systemName: "sun.max.fill"),
                             color: .orange
                         )
                     )
@@ -92,7 +92,7 @@ struct ContentView: View {
                     HStack {
                         MenuCircleToggle(
                             isOn: $button4State,
-                            image: .macControlCenterSpeaker
+                            image: Image(systemName: "speaker.wave.2.fill")
                         )
                         Text("Text Not Clickable")
                         Spacer()
@@ -104,7 +104,7 @@ struct ContentView: View {
                     HStack {
                         MenuCircleToggle(
                             isOn: .constant(true),
-                            image: .macControlCenterSpeaker
+                            image: Image(systemName: "speaker.wave.2.fill")
                         ) {
                             Text("Button")
                         } onClick: { _ in
@@ -120,7 +120,7 @@ struct ContentView: View {
                     HStack {
                         MenuCircleToggle(
                             isOn: .constant(false),
-                            image: .macControlCenterSpeaker
+                            image: Image(systemName: "speaker.wave.2.fill")
                         ) {
                             Text("Button")
                         } onClick: { _ in
