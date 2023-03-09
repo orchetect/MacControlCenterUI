@@ -166,7 +166,13 @@ struct MenuView: View {
             
             MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
                 if item.name.contains("AirPods Max") {
-                    MenuDisclosureGroup(style: .menuItem, initiallyExpanded: false, labelHeight: .controlCenterIconItem) {
+                    MenuDisclosureGroup(
+                        style: .menuItem,
+                        initiallyExpanded: false,
+                        labelHeight: .controlCenterIconItem,
+                        fullLabelToggle: false,
+                        toggleVisibility: .always
+                    ) {
                         MenuToggle(isOn: .constant(isSelected), image: item.image) {
                             HStack {
                                 Text(item.name)
@@ -177,7 +183,7 @@ struct MenuView: View {
                                 }
                                 .frame(height: 10)
                                 .opacity(0.7)
-                                Spacer().frame(width: 28)
+                                Spacer().frame(width: 28) // room for chevron
                             }
                         } onClick: { _ in itemClicked() }
                     } content: {
@@ -230,7 +236,7 @@ struct MenuView: View {
             // }
             
             // Divider()
-            // 
+            //
             // MenuToggle(
             //     isOn: $testPlain,
             //     style: .init(image: nil, color: .orange, offColor: .orange.opacity(0.2))
