@@ -19,8 +19,9 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     @Binding public var isPressed: Bool
     public let content: () -> Content
     public var onChangeBlock: (_ state: Bool) -> Void
+    @Binding public var isHighlighted: Bool
     
-    @State public var isHighlighted: Bool = false
+    @State public var isHighlightedInternal: Bool = false
     
     public init(
         style: MenuCommandStyle = .controlCenter,
@@ -36,6 +37,25 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
         self._isPressed = isPressed
         self.content = content
         self.onChangeBlock = onChangeBlock
+        self._isHighlighted = .constant(false)
+    }
+    
+    public init(
+        style: MenuCommandStyle = .controlCenter,
+        height: MenuItemSize,
+        isOn: Binding<Bool>,
+        isHighlighted: Binding<Bool>,
+        isPressed: Binding<Bool>,
+        @ViewBuilder _ content: @escaping () -> Content,
+        onChange onChangeBlock: @escaping (_ state: Bool) -> Void = { _ in }
+    ) {
+        self.style = style
+        self.height = height
+        self._isOn = isOn
+        self._isHighlighted = isHighlighted
+        self._isPressed = isPressed
+        self.content = content
+        self.onChangeBlock = onChangeBlock
     }
     
     public var body: some View {
@@ -43,7 +63,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
             HighlightingMenuItem(
                 style: style,
                 height: height,
-                isHighlighted: $isHighlighted
+                isHighlighted: $isHighlightedInternal
             ) {
                 content()
             }
@@ -64,5 +84,12 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
             )
         }
         .frame(height: height.boundsHeight)
+        
+        .onChange(of: isHighlighted) { newValue in
+            isHighlightedInternal = newValue
+        }
+        .onChange(of: isHighlightedInternal) { newValue in
+            isHighlighted = newValue
+        }
     }
 }
