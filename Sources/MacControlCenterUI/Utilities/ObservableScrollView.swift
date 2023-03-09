@@ -4,6 +4,7 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+import Combine
 import SwiftUI
 
 // idea from https://swiftwithmajid.com/2020/09/24/mastering-scrollview-in-swiftui/
@@ -61,10 +62,13 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
                                 }
                         )
                         GeometryReader { geometry in
-                            Color.clear.onChange(of: geometry.size) { newValue in
-                                guard newValue.height > 0 else { return }
-                                contentHeight = newValue.height
-                            }
+                            Color.clear
+                                .onReceive(Just(geometry.size)) { newValue in
+                                    // must use onReceive and not onChange, otherwise if the view is removed and reinserted,
+                                    // contentHeight's state will be reset to default (.zero)
+                                    guard newValue.height > 0 else { return }
+                                    contentHeight = newValue.height
+                                }
                         }
                     }
                 }

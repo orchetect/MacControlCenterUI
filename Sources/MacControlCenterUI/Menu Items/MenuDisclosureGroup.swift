@@ -70,25 +70,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        if fullLabelToggle {
-            highlightingButtonLabelContent
-        } else {
-            regularLabelContent
-        }
-        
-        // do not remove the view using if { } otherwise it loses state
-        expandedContent
-            .frame(minHeight: minContentHeight)
-            .frame(maxWidth: .infinity)
-            .frame(height: contentHeight)
-            .opacity(isExpanded ? 1 : 0)
-        
-            .onAppear {
-                if !isExpanded {
-                    contentHeight = 0
-                }
-            }
-        
+        viewBody
             .onChange(of: isExpandedBinding) { newValue in
                 isExpanded = newValue
             }
@@ -96,6 +78,22 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                 isExpandedBinding = newValue
             }
     }
+    
+    @ViewBuilder
+    public var viewBody: some View {
+        if fullLabelToggle {
+            highlightingButtonLabelContent
+        } else {
+            regularLabelContent
+        }
+        
+        if isExpanded {
+            expandedContent
+                .frame(maxWidth: .infinity)
+        }
+    }
+    
+    @State private var expandedContentSize: CGSize?
     
     private var highlightingButtonLabelContent: some View {
         HighlightingMenuStateItem(
@@ -110,8 +108,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                 Spacer()
                 chevron
             }
-        } onChange: { _ in
-            disclosureClicked()
         }
     }
     
@@ -126,7 +122,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                     .contentShape(Rectangle())
                     .onTapGesture {
                         isExpanded.toggle()
-                        disclosureClicked()
                     }
                 Spacer()
                     .frame(width: MenuGeometry.menuHorizontalContentInset)
@@ -149,18 +144,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             //.animation(.default, value: isExpanded)
         }
     }
-    
-    private func disclosureClicked() {
-        // below is some jank magic to make the window not freak out too much
-        contentHeight = isExpanded ? nil : 0
-        minContentHeight = isExpanded ? 0 : nil
-        DispatchQueue.main.async {
-            minContentHeight = nil
-        }
-    }
-    
-    @State private var contentHeight: CGFloat?
-    @State private var minContentHeight: CGFloat?
     
     @ViewBuilder
     private var expandedContent: some View {
