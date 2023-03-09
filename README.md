@@ -56,6 +56,10 @@ Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect]
 
 Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/MacControlCenterUI/blob/master/LICENSE) for details.
 
+## Sponsoring
+
+If you enjoy using MacControlCenterUI and want to contribute to open-source financially, GitHub sponsorship is much appreciated. Feedback and code contributions are also welcome.
+
 ## Contributions
 
-Contributions are welcome. Feel free to post an Issue to discuss.
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/MacControlCenterUI/discussions) first prior to new submitting PRs for features or modifications is encouraged.
