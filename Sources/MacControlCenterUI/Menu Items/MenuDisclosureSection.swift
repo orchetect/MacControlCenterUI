@@ -116,7 +116,8 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
                 style: .section,
                 initiallyExpanded: nonBindingInitiallyExpanded,
                 labelHeight: .controlCenterSection,
-                labelToggle: true,
+                fullLabelToggle: true,
+                toggleVisibility: .always,
                 label: { label },
                 content: content
             )
@@ -125,7 +126,8 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
                 style: .section,
                 isExpanded: $isExpanded,
                 labelHeight: .controlCenterSection,
-                labelToggle: true,
+                fullLabelToggle: true,
+                toggleVisibility: .always,
                 label: { label },
                 content: content
             )
