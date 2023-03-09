@@ -66,9 +66,9 @@ struct MenuView: View {
     @State private var brightness: CGFloat = 0.5
     @State private var selectedItem: Int = 0
     @State private var isWiFiExpanded = true
-    @State private var audioOutputSelection: MenuEntry.ID? = "MacBook Pro Microphone"
+    @State private var audioOutputSelection: MenuEntry.ID? = "Tim's AirPods Max"
     @State private var airPodsOptionSelection: MenuEntry.ID? = "Off"
-    @State private var wifiSelection: MenuEntry.ID? = nil
+    @State private var wifiSelection: MenuEntry.ID? = "Wi-Fi Art Thou Romeo"
     @State private var shapeSelection: MenuEntry.ID? = nil
     @State private var testPlain = false
     
