@@ -7,12 +7,13 @@
 import SwiftUI
 import MenuBarExtraAccess
 
-/// Internal menu body layout.
+/// Useful to add menu body padding imperatively within a view that conforms to
+/// ``MacControlCenterMenuItem``.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-internal struct MenuBody: View, MacControlCenterMenuItem {
+public struct MenuBody: View, MacControlCenterMenuItem {
     // MARK: Public Properties
     
     public var content: [any View]
@@ -45,9 +46,6 @@ internal struct MenuBody: View, MacControlCenterMenuItem {
         VStack(alignment: .leading, spacing: 0) {
             unwrapContent
         }
-        //.introspectMenuBarExtraWindow { menuBarExtraWindow in
-        //
-        //}
     }
     
     // MARK: Helpers
