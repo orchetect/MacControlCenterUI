@@ -14,14 +14,14 @@ public enum MenuCircleButtonSize {
     /// Prominent size with bottom edge label.
     case prominent
     
-    var size: CGFloat {
+    public var size: CGFloat {
         switch self {
         case .menu: return 26
         case .prominent: return 38
         }
     }
     
-    var imagePadding: CGFloat {
+    public var imagePadding: CGFloat {
         switch self {
         case .menu: return 5
         case .prominent: return 10
