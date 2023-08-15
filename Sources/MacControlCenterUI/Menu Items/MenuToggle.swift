@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import AppKit
 import SwiftUI
 
@@ -178,3 +180,5 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         onClickBlock = { _ in block() }
     }
 }
+
+#endif

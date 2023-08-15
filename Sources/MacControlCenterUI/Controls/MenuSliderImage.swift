@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 public protocol MenuSliderImage {
@@ -60,3 +62,5 @@ public enum MenuSliderImageUpdate {
     case noChange
     case newImage(Image)
 }
+
+#endif

@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// Menu result builder used in ``MacControlCenterMenu``.
@@ -41,3 +43,5 @@ public enum MacControlCenterMenuBuilder {
         [any View]()
     }
 }
+
+#endif

@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 internal enum MenuGeometry {
@@ -21,3 +23,5 @@ internal enum MenuGeometry {
 internal enum MenuStyling {
     static let headerFontSize: CGFloat = 13
 }
+
+#endif

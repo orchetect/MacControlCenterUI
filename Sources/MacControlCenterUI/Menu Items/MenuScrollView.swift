@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// ``MacControlCenterMenu`` scroll view with with automatic sizing and custom scroll indicators.
@@ -65,3 +67,5 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
         .frame(height: min(maxHeight, contentHeight))
     }
 }
+
+#endif

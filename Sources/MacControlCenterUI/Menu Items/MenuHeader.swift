@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// ``MacControlCenterMenu`` header label menu item with leading label content, optional trailing
@@ -91,3 +93,5 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
             .font(.system(size: MenuStyling.headerFontSize, weight: .bold))
     }
 }
+
+#endif

@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 import MenuBarExtraAccess
 
@@ -71,3 +73,5 @@ public struct MenuBody: View, MacControlCenterMenuItem {
         }
     }
 }
+
+#endif

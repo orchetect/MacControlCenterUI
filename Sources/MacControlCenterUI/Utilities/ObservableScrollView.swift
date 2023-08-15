@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import Combine
 import SwiftUI
 
@@ -86,3 +88,5 @@ private struct ScrollOffsetPreferenceKey: PreferenceKey {
     
     static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
 }
+
+#endif

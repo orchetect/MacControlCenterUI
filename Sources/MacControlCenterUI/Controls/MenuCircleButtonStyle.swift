@@ -4,6 +4,8 @@
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// Style for ``MenuCircleToggle`` and ``MenuCircleButton``.
@@ -91,3 +93,5 @@ extension MenuCircleButtonStyle {
         )
     }
 }
+
+#endif

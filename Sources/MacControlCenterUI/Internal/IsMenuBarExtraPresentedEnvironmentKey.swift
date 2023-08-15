@@ -4,6 +4,8 @@
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 extension EnvironmentValues {
@@ -17,3 +19,5 @@ extension EnvironmentValues {
 private struct IsMenuBarExtraPresentedEnvironmentKey: EnvironmentKey {
     static let defaultValue: Binding<Bool> = .constant(false)
 }
+
+#endif

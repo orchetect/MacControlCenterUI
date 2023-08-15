@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import AppKit
 import SwiftUI
 
@@ -118,3 +120,5 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         action()
     }
 }
+
+#endif

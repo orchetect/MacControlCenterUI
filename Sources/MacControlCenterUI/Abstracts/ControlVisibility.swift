@@ -1,9 +1,10 @@
 //
 //  ControlVisibility.swift
-//  
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
+//  © 2023 Steffan Andrews • Licensed under MIT License
 //
-//  Created by Steffan Andrews on 2023-03-09.
-//
+
+#if os(macOS)
 
 import Foundation
 
@@ -14,3 +15,5 @@ public enum ControlVisibility {
     /// Control is visible while the mouse hovers.
     case onHover
 }
+
+#endif

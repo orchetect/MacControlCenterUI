@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// Generic full-width ``MacControlCenterMenu`` menu item abstract.
@@ -38,3 +40,5 @@ public struct FullWidthMenuItem<Content: View>: View, MacControlCenterMenuItem {
         )
     }
 }
+
+#endif

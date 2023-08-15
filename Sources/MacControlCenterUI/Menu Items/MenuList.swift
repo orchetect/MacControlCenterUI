@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import AppKit
 import SwiftUI
 
@@ -73,3 +75,5 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
         selection = id
     }
 }
+
+#endif

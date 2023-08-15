@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 @available(macOS 10.15, *)
@@ -61,3 +63,5 @@ public struct MenuPanel<Content: View>: View {
         }
     }
 }
+
+#endif

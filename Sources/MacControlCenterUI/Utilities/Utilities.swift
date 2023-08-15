@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 extension CGFloat {
@@ -89,3 +91,5 @@ extension NSImage {
         unlockFocus()
     }
 }
+
+#endif

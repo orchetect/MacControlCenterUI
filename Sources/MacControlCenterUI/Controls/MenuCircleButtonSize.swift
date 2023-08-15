@@ -4,6 +4,8 @@
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import Foundation
 
 /// Control size for ``MenuCircleToggle`` and ``MenuCircleButton``.
@@ -28,3 +30,5 @@ public enum MenuCircleButtonSize {
         }
     }
 }
+
+#endif

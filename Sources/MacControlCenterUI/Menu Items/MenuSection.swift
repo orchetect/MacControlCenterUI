@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// ``MacControlCenterMenu`` section label menu item with optional divider.
@@ -68,3 +70,5 @@ public struct MenuSectionText: View {
             )
     }
 }
+
+#endif

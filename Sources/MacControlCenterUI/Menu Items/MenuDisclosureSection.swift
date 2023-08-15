@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// ``MacControlCenterMenu`` disclosure group menu item with section label.
@@ -134,3 +136,5 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         }
     }
 }
+
+#endif

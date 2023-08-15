@@ -4,6 +4,8 @@
 //  © 2023 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import Foundation
 
 /// ``MacControlCenterMenu`` menu item size.
@@ -47,3 +49,5 @@ extension MenuItemSize {
         }
     }
 }
+
+#endif

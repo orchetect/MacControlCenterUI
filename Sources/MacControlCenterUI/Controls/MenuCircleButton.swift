@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// macOS Control Center-style circle toggle button.
@@ -91,3 +93,5 @@ public struct MenuCircleButton<Label: View>: View {
         }
     }
 }
+
+#endif

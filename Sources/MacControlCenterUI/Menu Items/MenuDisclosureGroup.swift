@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// ``MacControlCenterMenu`` disclosure group menu item.
@@ -179,3 +181,5 @@ public enum MenuDisclosureGroupStyle {
     /// Menu item style: Expanded content body has a shaded background.
     case menuItem
 }
+
+#endif

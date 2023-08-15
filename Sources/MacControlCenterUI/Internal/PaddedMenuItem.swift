@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// Generic ``MacControlCenterMenu`` menu entry to contain any arbitrary view.
@@ -40,3 +42,5 @@ internal struct PaddedMenuItem<Content: View>: View, MacControlCenterMenuItem {
                  verticalPadding ? MenuGeometry.menuItemPadding : 0)
     }
 }
+
+#endif

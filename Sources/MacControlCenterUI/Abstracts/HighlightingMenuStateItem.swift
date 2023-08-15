@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 /// Generic ``MacControlCenterMenu`` menu item abstract that highlights the background when the
@@ -93,3 +95,5 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
         }
     }
 }
+
+#endif

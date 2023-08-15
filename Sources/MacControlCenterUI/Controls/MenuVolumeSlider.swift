@@ -4,6 +4,8 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import SwiftUI
 
 @available(macOS 10.15, *)
@@ -182,3 +184,5 @@ extension Image {
     fileprivate static let speakerVol2: Self = Image(systemName: "speaker.wave.2.fill")
     fileprivate static let speakerVol3: Self = Image(systemName: "speaker.wave.3.fill")
 }
+
+#endif
