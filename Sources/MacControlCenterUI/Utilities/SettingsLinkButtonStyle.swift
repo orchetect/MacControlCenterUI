@@ -23,6 +23,8 @@ struct SettingsLinkButtonStyle: PrimitiveButtonStyle {
     
     public func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .contentShape(Rectangle())
+            .allowsHitTesting(true)
             .onTapGesture {
                 preTapAction?()
                 configuration.trigger() // open Settings window

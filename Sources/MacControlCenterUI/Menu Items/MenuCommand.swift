@@ -128,6 +128,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
                     })
                     
                     commandBody
+                        .allowsHitTesting(false)
                 }
             } else {
                 commandBody
