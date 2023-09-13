@@ -159,7 +159,7 @@ struct MenuView: View {
                 .frame(minWidth: sliderWidth)
             
             MenuCommand("Sound Settings...") {
-                showSettingsWindow()
+                print("Sound Settings clicked")
             }
             
             MenuSection("Output")
@@ -252,9 +252,8 @@ struct MenuView: View {
                 Text("About") // custom label view
             }
             
-            MenuCommand("Settings...") {
-                showSettingsWindow()
-            }
+            // Implements SettingsLink in a way that is compatible with MacControlCenterUI
+            MenuSettingsCommand("Settings...")
             
             Divider()
             
@@ -270,16 +269,13 @@ struct MenuView: View {
         NSApp.activate(ignoringOtherApps: true)
     }
     
+    /// This still works on macOS 14 thankfully.
     func showStandardAboutWindow() {
         NSApp.sendAction(
             #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
             to: nil,
             from: nil
         )
-    }
-    
-    func showSettingsWindow() {
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
     
     func quit() {
