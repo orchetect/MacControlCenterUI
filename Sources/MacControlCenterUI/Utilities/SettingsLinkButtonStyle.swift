@@ -45,7 +45,7 @@ private struct SettingsLinkButtonStyleModifier: ViewModifier {
 }
 
 extension View {
-    /// Conveience to apply `SettingsLinkButtonStyle`.
+    /// Convenience to apply `SettingsLinkButtonStyle`.
     func settingsLinkButtonStyle(
         preTapAction: (() -> Void)? = nil,
         postTapAction: (() -> Void)? = nil
