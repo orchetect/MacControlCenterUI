@@ -4,11 +4,14 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+#if os(macOS)
+
 import Foundation
 import SwiftUI
 
 /// Allows calling code before and/or after user clicks a `SettingsLink` button/command.
-/// This is a necessary workaround, as it is simply not possible to attach a simultaneous gesture to `SettingsLink`.
+/// This is a necessary workaround, as it is simply not possible to attach a simultaneous gesture to
+/// `SettingsLink`.
 struct SettingsLinkButtonStyle: PrimitiveButtonStyle {
     public let preTapAction: (() -> Void)?
     public let postTapAction: (() -> Void)?
@@ -50,3 +53,5 @@ extension View {
         )
     }
 }
+
+#endif
