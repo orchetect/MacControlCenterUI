@@ -7,6 +7,7 @@
 import SwiftUI
 import MacControlCenterUI
 import MenuBarExtraAccess
+import SettingsAccess
 
 @main
 struct MacControlCenterUIDemoApp: App {
@@ -15,6 +16,7 @@ struct MacControlCenterUIDemoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(isMenuPresented: $isMenuPresented)
+                .openSettingsAccess() // SettingsAccess method to open Settings
         }
         .windowResizability(.contentSize)
         
@@ -24,6 +26,7 @@ struct MacControlCenterUIDemoApp: App {
         
         MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
             MenuView(isMenuPresented: $isMenuPresented)
+                .openSettingsAccess()
         }
         .menuBarExtraStyle(.window) // required for menu builder
         .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
@@ -57,6 +60,9 @@ struct MenuEntry: Hashable, Identifiable {
 }
 
 struct MenuView: View {
+    // SettingsAccess method to open Settings
+    @Environment(\.openSettings) var openSettings
+    
     @Binding var isMenuPresented: Bool
     
     @State private var darkMode: Bool = true
@@ -159,7 +165,7 @@ struct MenuView: View {
                 .frame(minWidth: sliderWidth)
             
             MenuCommand("Sound Settings...") {
-                showSettingsWindow()
+                print("Sound Settings clicked")
             }
             
             MenuSection("Output")
@@ -252,8 +258,11 @@ struct MenuView: View {
                 Text("About") // custom label view
             }
             
-            MenuCommand("Settings...") {
-                showSettingsWindow()
+            // An alternative way to open Settings without using SettingsLink
+            MenuCommand {
+                openSettings()
+            } label: {
+                Text("Settings...") // custom label view
             }
             
             Divider()
@@ -270,16 +279,13 @@ struct MenuView: View {
         NSApp.activate(ignoringOtherApps: true)
     }
     
+    /// This still works on macOS 14 thankfully.
     func showStandardAboutWindow() {
         NSApp.sendAction(
             #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
             to: nil,
             from: nil
         )
-    }
-    
-    func showSettingsWindow() {
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
     
     func quit() {
