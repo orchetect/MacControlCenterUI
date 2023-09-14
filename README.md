@@ -47,7 +47,7 @@ Supports macOS 11.0+ once compiled.
 ## Known Issues
 
 - Due to the lacklustre implementation of Apple's `MenuBarExtra`, it is currently not possible to get smooth window resize animations without a tremendous amount of work. For that reason, most MacControlCenterUI controls whose Control Center counterparts use animation will instead use safer static view size changes.
-- As of macOS 14, Apple has deprecated the old `NSApp.sendAction()` API for opening the Settings scene and introduced a new SwiftUI called [`SettingsLink`](https://developer.apple.com/documentation/swiftui/settingslink) that is the only means of opening the app's Settings scene. This is a wrapper around a SwiftUI Button that may be used in menus or windows. Since the Settings scene cannot be opened programmatically, MacControlCenterUI provides a custom menu command called `MenuSettingsCommand` that styles itself consistently with this library's `MenuCommand` and provides the same functionality as `SettingsLink` ([See Issue for Details](https://github.com/orchetect/MacControlCenterUI/issues/10)).
+- As an alternative to the very restrictive `SettingsLink` Apple introduced in macOS 14, it is recommended to use the [SettingsAccess](https://github.com/orchetect/SettingsAccess) package to programmatically open the Settings scene when using a window-based `MenuBarExtra`. This is demonstrated in the [Demo](Demo) project in this repo.
 
 ## Author
 
