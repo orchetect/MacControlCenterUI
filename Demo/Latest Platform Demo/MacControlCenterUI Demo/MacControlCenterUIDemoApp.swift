@@ -7,6 +7,7 @@
 import SwiftUI
 import MacControlCenterUI
 import MenuBarExtraAccess
+import SettingsAccess
 
 @main
 struct MacControlCenterUIDemoApp: App {
@@ -15,6 +16,7 @@ struct MacControlCenterUIDemoApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView(isMenuPresented: $isMenuPresented)
+                .openSettingsAccess() // SettingsAccess method to open Settings
         }
         .windowResizability(.contentSize)
         
@@ -24,6 +26,7 @@ struct MacControlCenterUIDemoApp: App {
         
         MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
             MenuView(isMenuPresented: $isMenuPresented)
+                .openSettingsAccess()
         }
         .menuBarExtraStyle(.window) // required for menu builder
         .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
@@ -57,6 +60,9 @@ struct MenuEntry: Hashable, Identifiable {
 }
 
 struct MenuView: View {
+    // SettingsAccess method to open Settings
+    @Environment(\.openSettings) var openSettings
+    
     @Binding var isMenuPresented: Bool
     
     @State private var darkMode: Bool = true
@@ -252,8 +258,12 @@ struct MenuView: View {
                 Text("About") // custom label view
             }
             
-            // Implements SettingsLink in a way that is compatible with MacControlCenterUI
-            MenuSettingsCommand("Settings...")
+            // An alternative way to open Settings without using SettingsLink
+            MenuCommand {
+                openSettings()
+            } label: {
+                Text("Settings...") // custom label view
+            }
             
             Divider()
             

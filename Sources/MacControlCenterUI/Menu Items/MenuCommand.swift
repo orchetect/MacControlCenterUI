@@ -28,7 +28,6 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     internal var dismissesMenu: Bool
     internal var style: MenuCommandStyle = .controlCenter
     @State private var isHighlighted: Bool = false
-    @State private var isSettingsLink: Bool = false
     
     // MARK: Init
     
@@ -69,45 +68,6 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.action = action
     }
     
-    // MARK: Init - SettingsLink Variant (used by MenuSettingsCommand)
-    
-    @_disfavoredOverload
-    internal init<S>(
-        settingsLink title: S,
-        activatesApp: Bool = true,
-        dismissesMenu: Bool = true
-    ) where S: StringProtocol, Label == Text {
-        self.label = Text(title)
-        self.activatesApp = activatesApp
-        self.dismissesMenu = dismissesMenu
-        self.action = { Self.showSettingsWindowLegacy() }
-        self._isSettingsLink = State(initialValue: true)
-    }
-    
-    internal init(
-        settingsLink title: LocalizedStringKey,
-        activatesApp: Bool = true,
-        dismissesMenu: Bool = true
-    ) where Label == Text {
-        self.label = Text(title)
-        self.activatesApp = activatesApp
-        self.dismissesMenu = dismissesMenu
-        self.action = { Self.showSettingsWindowLegacy() }
-        self._isSettingsLink = State(initialValue: true)
-    }
-    
-    internal init(
-        activatesApp: Bool = true,
-        dismissesMenu: Bool = true,
-        @ViewBuilder settingsLink: () -> Label
-    ) {
-        self.label = settingsLink()
-        self.activatesApp = activatesApp
-        self.dismissesMenu = dismissesMenu
-        self.action = { Self.showSettingsWindowLegacy() }
-        self._isSettingsLink = State(initialValue: true)
-    }
-    
     // MARK: Body
     
     public var body: some View {
@@ -116,27 +76,11 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
             height: .standardTextOnly,
             isHighlighted: $isHighlighted
         ) {
-            if isSettingsLink, #available(macOS 14, *) {
-                // we're forced to use SettingsLink on macOS Sonoma.
-                ZStack {
-                    SettingsLink {
-                        Text(verbatim: " ")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .settingsLinkButtonStyle(preTapAction: {
-                        userTapped()
-                    })
-                    
-                    commandBody
-                        .allowsHitTesting(false)
+            commandBody
+                .allowsHitTesting(true)
+                .onTapGesture {
+                    userTapped()
                 }
-            } else {
-                commandBody
-                    .allowsHitTesting(true)
-                    .onTapGesture {
-                        userTapped()
-                    }
-            }
         }
     }
     
@@ -179,17 +123,6 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         case .controlCenter:
             // Control Center menu commands don't blink because Apple is boring and hates charm
             go()
-        }
-    }
-    
-    // Use old API to open Settings scene on older macOS versions.
-    private static func showSettingsWindowLegacy() {
-        if #available(macOS 14, *) {
-            // sendAction methods are deprecated; must use SettingsLink View
-        } else if #available(macOS 13, *) {
-            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-        } else {
-            NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
         }
     }
 }

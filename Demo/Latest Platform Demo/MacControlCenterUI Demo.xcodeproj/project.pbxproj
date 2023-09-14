@@ -10,6 +10,7 @@
 		E212FC1B295167E4007E27BB /* MacControlCenterUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */; };
 		E212FC1F295167E5007E27BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E212FC1E295167E5007E27BB /* Assets.xcassets */; };
 		E250DCAF29530268009534D7 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E250DCAE29530268009534D7 /* MacControlCenterUI */; };
+		E25F2B442AB2B1500015FAEE /* SettingsAccess in Frameworks */ = {isa = PBXBuildFile; productRef = E25F2B432AB2B1500015FAEE /* SettingsAccess */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E250DCAF29530268009534D7 /* MacControlCenterUI in Frameworks */,
+				E25F2B442AB2B1500015FAEE /* SettingsAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +79,7 @@
 			name = "MacControlCenterUI Demo";
 			packageProductDependencies = (
 				E250DCAE29530268009534D7 /* MacControlCenterUI */,
+				E25F2B432AB2B1500015FAEE /* SettingsAccess */,
 			);
 			productName = "MacControlCenterSlider Demo";
 			productReference = E212FC17295167E4007E27BB /* MacControlCenterUI Demo.app */;
@@ -106,6 +109,9 @@
 				Base,
 			);
 			mainGroup = E212FC0E295167E4007E27BB;
+			packageReferences = (
+				E25F2B422AB2B1500015FAEE /* XCRemoteSwiftPackageReference "SettingsAccess" */,
+			);
 			productRefGroup = E212FC18295167E4007E27BB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -326,10 +332,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		E25F2B422AB2B1500015FAEE /* XCRemoteSwiftPackageReference "SettingsAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/orchetect/SettingsAccess";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		E250DCAE29530268009534D7 /* MacControlCenterUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MacControlCenterUI;
+		};
+		E25F2B432AB2B1500015FAEE /* SettingsAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E25F2B422AB2B1500015FAEE /* XCRemoteSwiftPackageReference "SettingsAccess" */;
+			productName = SettingsAccess;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
