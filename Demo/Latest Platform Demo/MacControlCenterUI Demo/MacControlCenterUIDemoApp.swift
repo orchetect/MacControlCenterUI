@@ -260,7 +260,7 @@ struct MenuView: View {
             
             // An alternative way to open Settings without using SettingsLink
             MenuCommand {
-                openSettings()
+                try? openSettings()
             } label: {
                 Text("Settings...") // custom label view
             }
