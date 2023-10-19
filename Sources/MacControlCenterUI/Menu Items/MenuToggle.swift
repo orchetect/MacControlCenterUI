@@ -46,6 +46,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     
     // MARK: Init - With String Label
     
+    @_disfavoredOverload
     public init<S>(
         _ title: S,
         isOn: Binding<Bool> = .constant(false),
@@ -58,6 +59,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.onClickBlock = onClickBlock
     }
     
+    @_disfavoredOverload
     public init<S>(
         _ title: S,
         isOn: Binding<Bool> = .constant(false),

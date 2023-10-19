@@ -24,6 +24,7 @@ public struct MenuVolumeSlider<Label: View>: View {
         _value = value
     }
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S,
         value: Binding<CGFloat>

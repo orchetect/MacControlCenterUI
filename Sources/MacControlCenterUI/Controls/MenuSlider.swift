@@ -48,6 +48,7 @@ where Label: View, SliderImage: MenuSliderImage
         sliderImage = StaticSliderImage(image())
     }
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S,
         value: Binding<CGFloat>,

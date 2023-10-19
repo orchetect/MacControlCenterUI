@@ -61,6 +61,7 @@ public struct MenuCircleToggle<Label: View>: View {
     
     // MARK: Init - With String Label
     
+    @_disfavoredOverload
     public init<S>(
         _ title: S,
         isOn: Binding<Bool>,
@@ -75,6 +76,7 @@ public struct MenuCircleToggle<Label: View>: View {
         self.onClickBlock = onClickBlock
     }
     
+    @_disfavoredOverload
     public init<S>(
         _ title: S,
         isOn: Binding<Bool>,

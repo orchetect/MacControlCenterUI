@@ -39,6 +39,7 @@ public struct MenuCircleButton<Label: View>: View {
         self.actionBlock = actionBlock
     }
     
+    @_disfavoredOverload
     public init<S>(
         _ title: S,
         controlSize: MenuCircleButtonSize = .menu,

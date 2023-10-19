@@ -27,6 +27,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
     
     // MARK: Init - With Binding
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S,
         divider: Bool = true,
@@ -65,6 +66,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
     
     // MARK: Init - Without Binding
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S,
         divider: Bool = true,

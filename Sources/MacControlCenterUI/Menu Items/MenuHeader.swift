@@ -21,6 +21,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     
     // MARK: Init without Trailing Content
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S
     ) where S: StringProtocol, Label == Text {
@@ -44,6 +45,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     
     // MARK: Init with Trailing Content
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S,
         @ViewBuilder trailingContent: @escaping () -> TrailingContent

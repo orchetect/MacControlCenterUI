@@ -23,6 +23,7 @@ public struct MenuSection<Label: View>: View {
     
     // MARK: Init
     
+    @_disfavoredOverload
     public init<S>(
         _ label: S,
         divider: Bool = true
