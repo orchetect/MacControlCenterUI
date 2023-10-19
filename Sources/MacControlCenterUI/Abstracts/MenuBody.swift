@@ -53,8 +53,9 @@ public struct MenuBody: View, MacControlCenterMenuItem {
     // MARK: Helpers
     
     private var unwrapContent: some View {
-        ForEach(content.indices, id: \.self) {
-            convertView(content[$0])
+        let capturedContent = content // prevent index out-of-bounds crashes if content changes while rendering?
+        return ForEach(capturedContent.indices, id: \.self) {
+            convertView(capturedContent[$0])
         }
     }
     
