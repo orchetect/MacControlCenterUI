@@ -60,8 +60,8 @@ struct MenuEntry: Hashable, Identifiable {
 }
 
 struct MenuView: View {
-    // SettingsAccess method to open Settings
-    @Environment(\.openSettings) var openSettings
+    // SettingsAccess method to open Settings with backwards-compatibility on older macOS versions
+    @Environment(\.openSettingsLegacy) var openSettingsLegacy
     
     @Binding var isMenuPresented: Bool
     
@@ -260,7 +260,7 @@ struct MenuView: View {
             
             // An alternative way to open Settings without using SettingsLink
             MenuCommand {
-                try? openSettings()
+                try? openSettingsLegacy()
             } label: {
                 Text("Settings...") // custom label view
             }
