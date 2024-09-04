@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E21039142C87FBE200265B99 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21039132C87FBE200265B99 /* ContentView.swift */; };
+		E21039162C87FC3D00265B99 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21039152C87FC3D00265B99 /* MockData.swift */; };
+		E21039182C87FC6900265B99 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21039172C87FC6900265B99 /* SettingsView.swift */; };
+		E210391A2C87FC8200265B99 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21039192C87FC8200265B99 /* MenuView.swift */; };
+		E210391C2C87FEF500265B99 /* MenuEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210391B2C87FEF500265B99 /* MenuEntry.swift */; };
 		E212FC1B295167E4007E27BB /* MacControlCenterUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */; };
 		E212FC1F295167E5007E27BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E212FC1E295167E5007E27BB /* Assets.xcassets */; };
 		E250DCAF29530268009534D7 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E250DCAE29530268009534D7 /* MacControlCenterUI */; };
@@ -14,6 +19,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E21039132C87FBE200265B99 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E21039152C87FC3D00265B99 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		E21039172C87FC6900265B99 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E21039192C87FC8200265B99 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
+		E210391B2C87FEF500265B99 /* MenuEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuEntry.swift; sourceTree = "<group>"; };
 		E212FC17295167E4007E27BB /* MacControlCenterUI Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MacControlCenterUI Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacControlCenterUIDemoApp.swift; sourceTree = "<group>"; };
 		E212FC1E295167E5007E27BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -55,6 +65,11 @@
 			isa = PBXGroup;
 			children = (
 				E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */,
+				E21039132C87FBE200265B99 /* ContentView.swift */,
+				E21039192C87FC8200265B99 /* MenuView.swift */,
+				E21039172C87FC6900265B99 /* SettingsView.swift */,
+				E210391B2C87FEF500265B99 /* MenuEntry.swift */,
+				E21039152C87FC3D00265B99 /* MockData.swift */,
 				E212FC1E295167E5007E27BB /* Assets.xcassets */,
 				E212FC23295167E5007E27BB /* MacControlCenterUIDemo.entitlements */,
 			);
@@ -137,6 +152,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E210391A2C87FC8200265B99 /* MenuView.swift in Sources */,
+				E21039162C87FC3D00265B99 /* MockData.swift in Sources */,
+				E21039182C87FC6900265B99 /* SettingsView.swift in Sources */,
+				E210391C2C87FEF500265B99 /* MenuEntry.swift in Sources */,
+				E21039142C87FBE200265B99 /* ContentView.swift in Sources */,
 				E212FC1B295167E4007E27BB /* MacControlCenterUIDemoApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
