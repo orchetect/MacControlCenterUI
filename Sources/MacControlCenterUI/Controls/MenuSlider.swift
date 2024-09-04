@@ -136,6 +136,7 @@ where Label: View, SliderImage: MenuSliderImage
             }
             dynamicImageBody
         }
+        .compositingGroup()
     }
     
     @ViewBuilder
