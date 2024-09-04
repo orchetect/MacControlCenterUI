@@ -32,3 +32,22 @@ struct MacControlCenterUIDemoApp: App {
         .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
     }
 }
+
+// MARK: App Lifecycle & Global
+
+func activateApp() {
+    NSApp.activate(ignoringOtherApps: true)
+}
+
+/// This still works on macOS 14 thankfully.
+func showStandardAboutWindow() {
+    NSApp.sendAction(
+        #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
+        to: nil,
+        from: nil
+    )
+}
+
+func quit() {
+    NSApp.terminate(nil)
+}

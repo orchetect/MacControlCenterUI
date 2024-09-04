@@ -12,6 +12,7 @@
 		E21039182C87FC6900265B99 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21039172C87FC6900265B99 /* SettingsView.swift */; };
 		E210391A2C87FC8200265B99 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21039192C87FC8200265B99 /* MenuView.swift */; };
 		E210391C2C87FEF500265B99 /* MenuEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210391B2C87FEF500265B99 /* MenuEntry.swift */; };
+		E210391E2C88016B00265B99 /* MenuModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210391D2C88016B00265B99 /* MenuModel.swift */; };
 		E212FC1B295167E4007E27BB /* MacControlCenterUIDemoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */; };
 		E212FC1F295167E5007E27BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E212FC1E295167E5007E27BB /* Assets.xcassets */; };
 		E250DCAF29530268009534D7 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E250DCAE29530268009534D7 /* MacControlCenterUI */; };
@@ -24,6 +25,7 @@
 		E21039172C87FC6900265B99 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E21039192C87FC8200265B99 /* MenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		E210391B2C87FEF500265B99 /* MenuEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuEntry.swift; sourceTree = "<group>"; };
+		E210391D2C88016B00265B99 /* MenuModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuModel.swift; sourceTree = "<group>"; };
 		E212FC17295167E4007E27BB /* MacControlCenterUI Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MacControlCenterUI Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E212FC1A295167E4007E27BB /* MacControlCenterUIDemoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacControlCenterUIDemoApp.swift; sourceTree = "<group>"; };
 		E212FC1E295167E5007E27BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -44,6 +46,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E210391F2C8805E400265B99 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E210391D2C88016B00265B99 /* MenuModel.swift */,
+				E210391B2C87FEF500265B99 /* MenuEntry.swift */,
+				E21039152C87FC3D00265B99 /* MockData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		E212FC0E295167E4007E27BB = {
 			isa = PBXGroup;
 			children = (
@@ -68,8 +80,7 @@
 				E21039132C87FBE200265B99 /* ContentView.swift */,
 				E21039192C87FC8200265B99 /* MenuView.swift */,
 				E21039172C87FC6900265B99 /* SettingsView.swift */,
-				E210391B2C87FEF500265B99 /* MenuEntry.swift */,
-				E21039152C87FC3D00265B99 /* MockData.swift */,
+				E210391F2C8805E400265B99 /* Model */,
 				E212FC1E295167E5007E27BB /* Assets.xcassets */,
 				E212FC23295167E5007E27BB /* MacControlCenterUIDemo.entitlements */,
 			);
@@ -152,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E210391E2C88016B00265B99 /* MenuModel.swift in Sources */,
 				E210391A2C87FC8200265B99 /* MenuView.swift in Sources */,
 				E21039162C87FC3D00265B99 /* MockData.swift in Sources */,
 				E21039182C87FC6900265B99 /* SettingsView.swift in Sources */,
