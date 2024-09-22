@@ -19,12 +19,7 @@ struct MenuView: View {
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
-            MenuHeader("Demo App") {
-                Text("1.0.0")
-                    .foregroundColor(.secondary)
-            }
-            
-            MenuSection("Display")
+            MenuSection("Display", divider: false)
             
             MenuSlider(
                 value: $model.brightness,
@@ -32,7 +27,34 @@ struct MenuView: View {
             )
             .frame(minWidth: MenuModel.sliderWidth)
             
-            circleButtons
+            HStack {
+                MenuCircleToggle(
+                    isOn: $model.darkMode,
+                    controlSize: .prominent,
+                    style: .init(
+                        image: Image(systemName: "airplayvideo"),
+                        color: .white,
+                        invertForeground: true
+                    )
+                ) { Text("Dark Mode") }
+                MenuCircleToggle(
+                    isOn: $model.nightShift,
+                    controlSize: .prominent,
+                    style: .init(
+                        image: Image(systemName: "sun.max.fill"),
+                        color: .orange
+                    )
+                ) { Text("Night Shift") }
+                MenuCircleToggle(
+                    isOn: $model.trueTone,
+                    controlSize: .prominent,
+                    style: .init(
+                        image: Image(systemName: "sun.max.fill"),
+                        color: .blue
+                    )
+                ) { Text("True Tone") }
+            }
+            .frame(height: 80)
             
             MenuSection("Sound")
             
@@ -45,9 +67,58 @@ struct MenuView: View {
             
             MenuSection("Output")
             
-            soundOutputMenuList
+            MenuList(model.audioOutputs, selection: $model.audioOutputSelection) { item, isSelected, itemClicked in
+                if item.name.contains("AirPods Max") {
+                    MenuDisclosureGroup(
+                        style: .menuItem,
+                        initiallyExpanded: false,
+                        labelHeight: .controlCenterIconItem,
+                        fullLabelToggle: false,
+                        toggleVisibility: .always
+                    ) {
+                        MenuToggle(isOn: .constant(isSelected), image: item.image) {
+                            HStack {
+                                Text(item.name)
+                                Spacer()
+                                HStack(spacing: 2) {
+                                    Text("82%")
+                                    Image(systemName: "battery.75", variableValue: 0.82)
+                                }
+                                .frame(height: 10)
+                                .opacity(0.7)
+                                Spacer().frame(width: 28) // room for chevron
+                            }
+                        } onClick: { _ in itemClicked() }
+                    } content: {
+                        MenuList(model.airPodsOptions, selection: $model.airPodsOptionSelection) { item, isSelected, itemClicked in
+                            MenuToggle(
+                                isOn: .constant(isSelected),
+                                style: .checkmark()
+                            ) {
+                                HStack {
+                                    item.image
+                                    Text(item.name).font(.system(size: 12))
+                                    Spacer()
+                                }
+                            } onClick: { _ in itemClicked() }
+                        }
+                    }
+                } else {
+                    MenuToggle(isOn: .constant(isSelected), image: item.image) {
+                        Text(item.name)
+                    } onClick: { _ in itemClicked() }
+                }
+            }
             
-            wiFiMenuList
+            MenuDisclosureSection("Wi-Fi Network", isExpanded: $model.isWiFiExpanded) {
+                MenuScrollView(maxHeight: 135) {
+                    MenuList(model.wiFiNetworks, selection: $model.wiFiSelection) { item in
+                        MenuToggle(image: item.image) {
+                            Text(item.name)
+                        }
+                    }
+                }
+            }
             
             Divider()
             
@@ -69,94 +140,6 @@ struct MenuView: View {
             
             MenuCommand("Quit") {
                 quit()
-            }
-        }
-    }
-    
-    var circleButtons: some View {
-        HStack {
-            MenuCircleToggle(
-                isOn: $model.darkMode,
-                controlSize: .prominent,
-                style: .init(
-                    image: Image(systemName: "airplayvideo"),
-                    color: .white,
-                    invertForeground: true
-                )
-            ) { Text("Dark Mode") }
-            MenuCircleToggle(
-                isOn: $model.nightShift,
-                controlSize: .prominent,
-                style: .init(
-                    image: Image(systemName: "sun.max.fill"),
-                    color: .orange
-                )
-            ) { Text("Night Shift") }
-            MenuCircleToggle(
-                isOn: $model.trueTone,
-                controlSize: .prominent,
-                style: .init(
-                    image: Image(systemName: "sun.max.fill"),
-                    color: .blue
-                )
-            ) { Text("True Tone") }
-        }
-        .frame(height: 80)
-    }
-    
-    var soundOutputMenuList: some View {
-        MenuList(model.audioOutputs, selection: $model.audioOutputSelection) { item, isSelected, itemClicked in
-            if item.name.contains("AirPods Max") {
-                MenuDisclosureGroup(
-                    style: .menuItem,
-                    initiallyExpanded: false,
-                    labelHeight: .controlCenterIconItem,
-                    fullLabelToggle: false,
-                    toggleVisibility: .always
-                ) {
-                    MenuToggle(isOn: .constant(isSelected), image: item.image) {
-                        HStack {
-                            Text(item.name)
-                            Spacer()
-                            HStack(spacing: 2) {
-                                Text("82%")
-                                Image(systemName: "battery.75", variableValue: 0.82)
-                            }
-                            .frame(height: 10)
-                            .opacity(0.7)
-                            Spacer().frame(width: 28) // room for chevron
-                        }
-                    } onClick: { _ in itemClicked() }
-                } content: {
-                    MenuList(model.airPodsOptions, selection: $model.airPodsOptionSelection) { item, isSelected, itemClicked in
-                        MenuToggle(
-                            isOn: .constant(isSelected),
-                            style: .checkmark()
-                        ) {
-                            HStack {
-                                item.image
-                                Text(item.name).font(.system(size: 12))
-                                Spacer()
-                            }
-                        } onClick: { _ in itemClicked() }
-                    }
-                }
-            } else {
-                MenuToggle(isOn: .constant(isSelected), image: item.image) {
-                    Text(item.name)
-                } onClick: { _ in itemClicked() }
-            }
-        }
-    }
-    
-    var wiFiMenuList: some View {
-        MenuDisclosureSection("Wi-Fi Network", isExpanded: $model.isWiFiExpanded) {
-            MenuScrollView(maxHeight: 135) {
-                MenuList(model.wiFiNetworks, selection: $model.wiFiSelection) { item in
-                    MenuToggle(image: item.image) {
-                        Text(item.name)
-                    }
-                }
             }
         }
     }
