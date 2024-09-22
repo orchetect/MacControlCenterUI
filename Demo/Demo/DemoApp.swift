@@ -1,5 +1,5 @@
 //
-//  MacControlCenterUIDemoApp.swift
+//  DemoApp.swift
 //  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
@@ -8,7 +8,7 @@ import SwiftUI
 import MacControlCenterUI
 
 @main
-struct MacControlCenterUIDemoApp: App {
+struct DemoApp: App {
     @State var isMenuPresented: Bool = false
     
     var body: some Scene {

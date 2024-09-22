@@ -47,9 +47,18 @@
             BlueprintIdentifier = "E212FC16295167E4007E27BB"
             BuildableName = "MacControlCenterUI Demo.app"
             BlueprintName = "MacControlCenterUI Demo"
-            ReferencedContainer = "container:MacControlCenterUI Demo.xcodeproj">
+            ReferencedContainer = "container:Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E212FC16295167E4007E27BB"
+            BuildableName = "MacControlCenterUI Demo.app"
+            BlueprintName = "MacControlCenterUI Demo"
+            ReferencedContainer = "container:MacControlCenterUI Demo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -67,6 +76,15 @@
             ReferencedContainer = "container:MacControlCenterUI Demo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E212FC16295167E4007E27BB"
+            BuildableName = "MacControlCenterUI Demo.app"
+            BlueprintName = "MacControlCenterUI Demo"
+            ReferencedContainer = "container:MacControlCenterUI Demo.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
