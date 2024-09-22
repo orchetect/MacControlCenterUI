@@ -7,29 +7,38 @@
 import SwiftUI
 import MacControlCenterUI
 import MenuBarExtraAccess
-import SettingsAccess
 
 struct MenuView: View {
-    // SettingsAccess method to open Settings with backwards-compatibility on older macOS versions
-    @Environment(\.openSettingsLegacy) var openSettingsLegacy
-    
-    @State private var model = MenuModel()
+    @Environment(\.openSettings) var openSettings
     
     @Binding var isMenuPresented: Bool
+    
+    @State private var darkMode: Bool = true
+    @State private var nightShift: Bool = true
+    @State private var trueTone: Bool = true
+    @State private var volume: CGFloat = 0.75
+    @State private var brightness: CGFloat = 0.5
+    @State private var audioOutputSelection: MenuEntry.ID? = MockData.audioOutputsDefault
+    @State private var airPodsOptionSelection: MenuEntry.ID? = MockData.airPodsOptionsDefault
+    @State private var isWiFiExpanded = true
+    @State private var wiFiSelection: MenuEntry.ID? = MockData.wiFiNetworksDefault
+    @State private var audioOutputs: [MenuEntry] = MockData.audioOutputs
+    @State private var airPodsOptions: [MenuEntry] = MockData.airPodsOptions
+    @State private var wiFiNetworks: [MenuEntry] = MockData.wiFiNetworks
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
             MenuSection("Display", divider: false)
             
             MenuSlider(
-                value: $model.brightness,
+                value: $brightness,
                 image: Image(systemName: "sun.max.fill")
             )
-            .frame(minWidth: MenuModel.sliderWidth)
+            .frame(minWidth: sliderWidth)
             
             HStack {
                 MenuCircleToggle(
-                    isOn: $model.darkMode,
+                    isOn: $darkMode,
                     controlSize: .prominent,
                     style: .init(
                         image: Image(systemName: "airplayvideo"),
@@ -38,7 +47,7 @@ struct MenuView: View {
                     )
                 ) { Text("Dark Mode") }
                 MenuCircleToggle(
-                    isOn: $model.nightShift,
+                    isOn: $nightShift,
                     controlSize: .prominent,
                     style: .init(
                         image: Image(systemName: "sun.max.fill"),
@@ -46,7 +55,7 @@ struct MenuView: View {
                     )
                 ) { Text("Night Shift") }
                 MenuCircleToggle(
-                    isOn: $model.trueTone,
+                    isOn: $trueTone,
                     controlSize: .prominent,
                     style: .init(
                         image: Image(systemName: "sun.max.fill"),
@@ -58,8 +67,8 @@ struct MenuView: View {
             
             MenuSection("Sound")
             
-            MenuVolumeSlider(value: $model.volume)
-                .frame(minWidth: MenuModel.sliderWidth)
+            MenuVolumeSlider(value: $volume)
+                .frame(minWidth: sliderWidth)
             
             MenuCommand("Sound Settings...") {
                 print("Sound Settings clicked")
@@ -67,7 +76,7 @@ struct MenuView: View {
             
             MenuSection("Output")
             
-            MenuList(model.audioOutputs, selection: $model.audioOutputSelection) { item, isSelected, itemClicked in
+            MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
                 if item.name.contains("AirPods Max") {
                     MenuDisclosureGroup(
                         style: .menuItem,
@@ -90,7 +99,7 @@ struct MenuView: View {
                             }
                         } onClick: { _ in itemClicked() }
                     } content: {
-                        MenuList(model.airPodsOptions, selection: $model.airPodsOptionSelection) { item, isSelected, itemClicked in
+                        MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
                             MenuToggle(
                                 isOn: .constant(isSelected),
                                 style: .checkmark()
@@ -110,9 +119,9 @@ struct MenuView: View {
                 }
             }
             
-            MenuDisclosureSection("Wi-Fi Network", isExpanded: $model.isWiFiExpanded) {
+            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 135) {
-                    MenuList(model.wiFiNetworks, selection: $model.wiFiSelection) { item in
+                    MenuList(wiFiNetworks, selection: $wiFiSelection) { item in
                         MenuToggle(image: item.image) {
                             Text(item.name)
                         }
@@ -128,10 +137,8 @@ struct MenuView: View {
                 Text("About") // custom label view
             }
             
-            // An alternative way to open Settings without using SettingsLink
-            // that is backwards compatible with older macOS versions.
             MenuCommand {
-                try? openSettingsLegacy()
+                openSettings()
             } label: {
                 Text("Settings...") // custom label view
             }

@@ -6,7 +6,6 @@
 
 import SwiftUI
 import MacControlCenterUI
-import SettingsAccess
 
 @main
 struct MacControlCenterUIDemoApp: App {
@@ -27,7 +26,6 @@ struct MacControlCenterUIDemoApp: App {
         
         MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
             MenuView(isMenuPresented: $isMenuPresented)
-                .openSettingsAccess()
         }
         .menuBarExtraStyle(.window) // required for menu builder
         .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
