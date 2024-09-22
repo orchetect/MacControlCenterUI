@@ -6,7 +6,6 @@
 
 import SwiftUI
 import MacControlCenterUI
-import MenuBarExtraAccess
 import SettingsAccess
 
 @main
@@ -15,10 +14,12 @@ struct MacControlCenterUIDemoApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(isMenuPresented: $isMenuPresented)
-                .openSettingsAccess() // SettingsAccess method to open Settings
+            ContentView()
         }
+        .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
+        .windowLevel(.floating)
+        .defaultPosition(.center)
         
         Settings {
             SettingsView()

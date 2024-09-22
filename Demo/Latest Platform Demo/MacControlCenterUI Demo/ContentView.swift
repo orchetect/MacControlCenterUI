@@ -8,8 +8,6 @@ import SwiftUI
 import MacControlCenterUI
 
 struct ContentView: View {
-    @Binding var isMenuPresented: Bool
-    
     var body: some View {
         VStack(spacing: 40) {
             Image(systemName: "message.fill")
@@ -17,13 +15,7 @@ struct ContentView: View {
                 .frame(width: 80, height: 80)
                 .foregroundColor(.secondary)
             
-            Text("Explore this menu bar button in the system status bar.")
-            
-            Text("Or toggle me:")
-            
-            Toggle("", isOn: $isMenuPresented)
-                .toggleStyle(.switch)
-                .labelsHidden()
+            Text("Open this menu bar button in the system menu bar.")
         }
         .padding()
         .frame(minWidth: 500, minHeight: 350)
