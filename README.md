@@ -27,7 +27,7 @@ Both **Dark** and **Light Mode** are fully supported.
    - In a Swift Package, add it to the Package.swift dependencies:
 
      ```swift
-     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.0.0")
+     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.1.0")
      ```
 
 2. Import the library:
@@ -47,7 +47,6 @@ Supports macOS 11.0+ once compiled.
 ## Known Issues
 
 - Due to the lacklustre implementation of Apple's `MenuBarExtra`, it is currently not possible to get smooth window resize animations without a tremendous amount of work. For that reason, most MacControlCenterUI controls whose Control Center counterparts use animation will instead use safer static view size changes.
-- As an alternative to the very restrictive `SettingsLink` Apple introduced in macOS 14, it is recommended to use the [SettingsAccess](https://github.com/orchetect/SettingsAccess) package to programmatically open the Settings scene when using a window-based `MenuBarExtra`. This is demonstrated in the [Demo](Demo) project in this repo.
 
 ## Author
 
