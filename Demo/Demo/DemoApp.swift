@@ -17,7 +17,6 @@ struct DemoApp: App {
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
-        .windowLevel(.floating)
         .defaultPosition(.center)
         
         Settings {
