@@ -1,6 +1,6 @@
 # Mac Control Center UI
 
-[![Platforms - macOS 11+](https://img.shields.io/badge/platforms-macOS%2011+-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.3-6](https://img.shields.io/badge/Swift-5.3–6-orange.svg?style=flat) [![Xcode 13-16](https://img.shields.io/badge/Xcode-13–16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
+[![Platforms - macOS 11+](https://img.shields.io/badge/platforms-macOS%2011+-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.3-6](https://img.shields.io/badge/Swift-5.3–6-orange.svg?style=flat) [![Xcode 14-16](https://img.shields.io/badge/Xcode-14–16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
 
 <img align="right" width="40%" src="Images/demo.png" alt="Example">
 
@@ -40,13 +40,13 @@ Both **Dark** and **Light Mode** are fully supported.
 
 ## Requirements
 
-Minimum requirements to compile: Xcode 13 on macOS 11 Big Sur or newer.
+Minimum requirements to compile: Xcode 14 on macOS 12.5 or newer.
 
 Supports macOS 11.0+ once compiled.
 
 ## Known Issues
 
-- Due to the lacklustre implementation of Apple's `MenuBarExtra`, it is currently not possible to get smooth window resize animations without a tremendous amount of work. For that reason, most MacControlCenterUI controls whose Control Center counterparts use animation will instead use safer static view size changes.
+- Due to the lacklustre implementation of window resize behavior in SwiftUI, it is currently not possible to get smooth window resize animations without a tremendous amount of work. For that reason, most MacControlCenterUI controls whose Control Center counterparts use animation will instead use safer static view size changes.
 
 ## Author
 
