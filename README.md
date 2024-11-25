@@ -1,6 +1,6 @@
 # Mac Control Center UI
 
-[![Platforms - macOS 11+](https://img.shields.io/badge/platforms-macOS%2011+-lightgrey.svg?style=flat)](https://developer.apple.com/swift) ![Swift 5.3-6](https://img.shields.io/badge/Swift-5.3–6-orange.svg?style=flat) [![Xcode 14-16](https://img.shields.io/badge/Xcode-14–16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
+[![Platforms | macOS 11](https://img.shields.io/badge/platforms-macOS%2011-blue.svg?style=flat)](https://developer.apple.com/swift) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FMacControlCenterUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/MacControlCenterUI) [![Xcode 14](https://img.shields.io/badge/Xcode-14-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
 
 <img align="right" width="40%" src="Images/demo.png" alt="Example">
 
