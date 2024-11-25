@@ -33,12 +33,12 @@ struct DemoApp: App {
 
 // MARK: App Lifecycle & Global
 
-func activateApp() {
+@MainActor func activateApp() {
     NSApp.activate(ignoringOtherApps: true)
 }
 
 /// This still works on macOS 14 thankfully.
-func showStandardAboutWindow() {
+@MainActor func showStandardAboutWindow() {
     NSApp.sendAction(
         #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
         to: nil,
@@ -46,6 +46,6 @@ func showStandardAboutWindow() {
     )
 }
 
-func quit() {
+@MainActor func quit() {
     NSApp.terminate(nil)
 }
