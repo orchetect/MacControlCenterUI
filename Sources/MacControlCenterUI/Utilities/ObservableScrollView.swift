@@ -84,7 +84,7 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
 }
 
 private struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGPoint = .zero
+    static let defaultValue: CGPoint = .zero
     
     static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
 }

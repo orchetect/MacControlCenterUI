@@ -9,7 +9,7 @@
 import Foundation
 
 /// Protocol to enable views to gain syntactic sugar when used within ``MenuList``.
-public protocol MenuListStateItem {
+@MainActor public protocol MenuListStateItem {
     mutating func setState(state: Bool)
     mutating func setItemClicked(_ block: @escaping () -> Void)
 }

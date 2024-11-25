@@ -12,6 +12,6 @@ import SwiftUI
 
 /// Internal use only.
 /// It is not necessary to conform your views to this protocol unless you require custom view padding in a ``MacControlCenterMenu``.
-public protocol MacControlCenterMenuItem { }
+@MainActor public protocol MacControlCenterMenuItem { }
 
 #endif
