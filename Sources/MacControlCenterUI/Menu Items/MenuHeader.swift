@@ -16,8 +16,14 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuHeader<Label: View, TrailingContent: View>: View {
+    // MARK: Public Properties
+    
     public var label: Label
     public var trailingContent: TrailingContent?
+    
+    // MARK: Environment
+    
+    @Environment(\.isEnabled) private var isEnabled
     
     // MARK: Init without Trailing Content
     
@@ -74,6 +80,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     
     public var body: some View {
         compose
+            .opacity(isEnabled ? 1.0 : 0.4)
             .frame(minHeight: MenuGeometry.menuItemContentStandardHeight)
     }
     

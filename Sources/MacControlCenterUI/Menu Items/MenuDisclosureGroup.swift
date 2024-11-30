@@ -15,6 +15,8 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
+    // MARK: Public Properties
+    
     public var style: MenuDisclosureGroupStyle
     public var labelHeight: MenuItemSize
     public var toggleVisibility: ControlVisibility
@@ -22,8 +24,14 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     public var fullLabelToggle: Bool
     public var content: [any View]
     @Binding public var isExpandedBinding: Bool
-    @State private var isExpanded: Bool
     
+    // MARK: Environment
+    
+    @Environment(\.isEnabled) private var isEnabled
+    
+    // MARK: Private State
+    
+    @State private var isExpanded: Bool
     @State private var isPressed: Bool = false
     @State private var isHighlighted = false
     
@@ -106,7 +114,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             isPressed: $isPressed
         ) {
             HStack {
-                label
+                labelFormatted
                 Spacer()
                 chevron
             }
@@ -116,13 +124,14 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     private var regularLabelContent: some View {
         ZStack {
             HStack {
-                label
+                labelFormatted
             }
             HStack(spacing: 0) {
                 Spacer()
                 chevron
                     .contentShape(Rectangle())
                     .onTapGesture {
+                        guard isEnabled else { return }
                         isExpanded.toggle()
                     }
                 Spacer()
@@ -130,8 +139,13 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             }
         }
         .onHover { state in
+            guard isEnabled else { return }
             isHighlighted = state
         }
+    }
+    
+    private var labelFormatted: some View {
+        label.opacity(isEnabled ? 1.0 : 0.4)
     }
     
     @ViewBuilder
@@ -143,6 +157,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                 .frame(width: 10, height: 10)
                 .foregroundColor(.primary)
                 .rotationEffect(isExpanded ? .degrees(90) : .zero)
+                .opacity(isEnabled ? 1.0 : 0.4)
             //.animation(.default, value: isExpanded)
         }
     }

@@ -25,6 +25,7 @@ public struct MenuCircleToggle<Label: View>: View {
     // MARK: Environment
     
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.isEnabled) private var isEnabled
     
     // MARK: Private State
     
@@ -199,13 +200,16 @@ public struct MenuCircleToggle<Label: View>: View {
         case .prominent:
             if label != nil {
                 hitTestBody
-                    .frame(minHeight: controlSize.size + 26,
-                           alignment: .top)
+                    .frame(
+                        minHeight: controlSize.size + 26,
+                        alignment: .top
+                    )
             } else {
                 hitTestBody
                     .frame( //width: style.size,
                         height: controlSize.size,
-                        alignment: .top)
+                        alignment: .top
+                    )
             }
         }
     }
@@ -218,10 +222,12 @@ public struct MenuCircleToggle<Label: View>: View {
                 .gesture(
                     DragGesture(minimumDistance: 0)
                         .onChanged { value in
+                            guard isEnabled else { return }
                             let hit = geometry.frame(in: .local).contains(value.location)
                             isMouseDown = hit
                         }
                         .onEnded { value in
+                            guard isEnabled else { return }
                             defer { isMouseDown = false }
                             if isMouseDown {
                                 isOn.toggle()
@@ -234,7 +240,7 @@ public struct MenuCircleToggle<Label: View>: View {
     
     @ViewBuilder
     private var buttonBody: some View {
-        if let label = label {
+        if let label = labelWithFormatting {
             switch controlSize {
             case .menu:
                 HStack {
@@ -251,6 +257,12 @@ public struct MenuCircleToggle<Label: View>: View {
         } else {
             circleBody
         }
+    }
+    
+    @ViewBuilder
+    private var labelWithFormatting: (some View)? {
+        label?
+            .foregroundColor(isEnabled ? Color.primary : .primary.opacity(0.5))
     }
     
     @ViewBuilder
@@ -313,34 +325,36 @@ public struct MenuCircleToggle<Label: View>: View {
     }
     
     private var buttonBackColor: Color? {
-        style.color(forState: isOn, colorScheme: colorScheme)
+        style.color(forState: isOn, isEnabled: isEnabled, colorScheme: colorScheme)
     }
     
     private var buttonForeColor: Color {
-        switch isOn {
+        let base: Color = switch isOn {
         case true:
             switch colorScheme {
             case .dark:
-                return style.invertForeground
+                style.invertForeground
                     ? Color(NSColor.textBackgroundColor)
                     : Color(NSColor.textColor)
             case .light:
-                return style.invertForeground
+                style.invertForeground
                     ? Color(NSColor.textColor)
                     : Color(NSColor.textBackgroundColor)
             @unknown default:
-                return Color(NSColor.textColor)
+                Color(NSColor.textColor)
             }
         case false:
             switch colorScheme {
             case .dark:
-                return Color(white: 0.85)
+                Color(white: 0.85)
             case .light:
-                return .black
+                .black
             @unknown default:
-                return Color(NSColor.selectedMenuItemTextColor)
+                Color(NSColor.selectedMenuItemTextColor)
             }
         }
+        
+        return isEnabled ? base : base.opacity(0.4)
     }
 }
 

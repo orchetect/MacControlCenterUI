@@ -16,10 +16,15 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuSection<Label: View>: View {
-    @Environment(\.colorScheme) private var colorScheme
+    // MARK: Public Properties
     
     public var label: Label
     public var divider: Bool
+    
+    // MARK: Environment
+    
+    @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.isEnabled) private var isEnabled
     
     // MARK: Init
     
@@ -52,23 +57,33 @@ public struct MenuSection<Label: View>: View {
     
     public var body: some View {
         if divider { Divider() }
+        
         label
+            .opacity(isEnabled ? 1.0 : 0.4)
     }
 }
 
+/// ``MacControlCenterMenu`` section text view.
+/// This view is not commonly used by itself. It is more typical to use ``MenuSection`` instead.
 public struct MenuSectionText: View {
-    @Environment(\.colorScheme) private var colorScheme
+    // MARK: Public Properties
     
     public let text: Text
+    
+    // MARK: Environment
+    
+    @Environment(\.colorScheme) private var colorScheme
     
     public var body: some View {
         text
             .font(.system(size: MenuStyling.headerFontSize, weight: .semibold))
-            .foregroundColor(
-                colorScheme == .dark
-                    ? Color(white: 1).opacity(0.6)
-                    : Color(white: 0).opacity(0.7)
-            )
+            .foregroundColor(foreColor)
+    }
+    
+    private var foreColor: Color {
+        colorScheme == .dark
+            ? Color(white: 1).opacity(0.6)
+            : Color(white: 0).opacity(0.7)
     }
 }
 

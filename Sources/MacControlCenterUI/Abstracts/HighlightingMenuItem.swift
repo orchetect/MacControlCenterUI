@@ -25,6 +25,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     // MARK: Environment
     
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.isEnabled) private var isEnabled
     
     // MARK: Private State
     
@@ -73,6 +74,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
         }
         .frame(height: height.boundsHeight)
         .onHover { state in
+            guard isEnabled else { return }
             if isHighlightedInternal != state {
                 isHighlightedInternal = state
                 isHighlighted = state

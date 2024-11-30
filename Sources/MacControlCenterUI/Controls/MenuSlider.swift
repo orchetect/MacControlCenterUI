@@ -25,6 +25,7 @@ where Label: View, SliderImage: MenuSliderImage
     // MARK: Environment
     
     @Environment(\.colorScheme) private var colorScheme
+    @Environment(\.isEnabled) private var isEnabled
     
     // MARK: Private State
     
@@ -137,6 +138,7 @@ where Label: View, SliderImage: MenuSliderImage
             dynamicImageBody
         }
         .compositingGroup()
+        .opacity(isEnabled ? 1.0 : 0.5)
     }
     
     @ViewBuilder

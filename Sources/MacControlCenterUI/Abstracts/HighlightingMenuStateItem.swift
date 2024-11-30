@@ -15,6 +15,8 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMenuItem {
+    // MARK: Public Properties
+    
     public var style: MenuCommandStyle
     public var height: MenuItemSize
     @Binding public var isOn: Bool
@@ -23,7 +25,13 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     public var onChangeBlock: (_ state: Bool) -> Void
     @Binding public var isHighlighted: Bool
     
-    @State public var isHighlightedInternal: Bool = false
+    // MARK: Environment
+    
+    @Environment(\.isEnabled) private var isEnabled
+    
+    // MARK: Private State
+    
+    @State private var isHighlightedInternal: Bool = false
     
     public init(
         style: MenuCommandStyle = .controlCenter,
@@ -73,10 +81,12 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
+                        guard isEnabled else { return }
                         let hit = geometry.frame(in: .local).contains(value.location)
                         isPressed = hit
                     }
                     .onEnded { value in
+                        guard isEnabled else { return }
                         defer { isPressed = false }
                         if isPressed {
                             isOn.toggle()

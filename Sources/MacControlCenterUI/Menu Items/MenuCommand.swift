@@ -19,8 +19,13 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
+    // MARK: Environment
+    
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isMenuBarExtraPresented) private var menuBarExtraIsPresented
+    @Environment(\.isEnabled) private var isEnabled
+    
+    // MARK: Private State
     
     private let label: Label
     private let action: () -> Void
@@ -77,8 +82,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
             isHighlighted: $isHighlighted
         ) {
             commandBody
-                .allowsHitTesting(true)
+                .allowsHitTesting(isEnabled)
                 .onTapGesture {
+                    guard isEnabled else { return }
                     userTapped()
                 }
         }
@@ -87,7 +93,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     private var commandBody: some View {
         HStack {
             label
-                .foregroundColor(style.textColor(hover: isHighlighted))
+                .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
             Spacer()
         }
         .contentShape(Rectangle())
