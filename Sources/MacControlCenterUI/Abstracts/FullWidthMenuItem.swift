@@ -42,9 +42,9 @@ public struct FullWidthMenuItem<Content: View>: View, MacControlCenterMenuItem {
 }
 
 extension View {
-    public func fullWidthMenuItem<Content>(
+    public func fullWidthMenuItem(
         verticalPadding: Bool = true
-    ) -> FullWidthMenuItem<Content> where Content == Self {
+    ) -> FullWidthMenuItem<Self> {
         FullWidthMenuItem(verticalPadding: verticalPadding) { self }
     }
 }
