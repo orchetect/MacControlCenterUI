@@ -38,7 +38,7 @@ extension MacControlCenterMenuItem {
     ///
     /// - Returns: A view that controls whether users can interact with this
     ///   view.
-    nonisolated public func disabled(_ disabled: Bool) -> some MacControlCenterMenuItem {
+    public func disabled(_ disabled: Bool) -> some MacControlCenterMenuItem {
         MacControlCenterMenuItemWrapper(
             content: selfAsView.disabled(disabled)
         )
