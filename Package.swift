@@ -10,7 +10,7 @@ let package = Package(
         .library(name: "MacControlCenterUI", targets: ["MacControlCenterUI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/orchetect/MenuBarExtraAccess", from: "1.1.2")
+        .package(url: "https://github.com/orchetect/MenuBarExtraAccess", from: "1.2.0")
     ],
     targets: [
         .target(name: "MacControlCenterUI", dependencies: ["MenuBarExtraAccess"])
