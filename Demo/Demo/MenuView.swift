@@ -13,6 +13,7 @@ struct MenuView: View {
     
     @Binding var isMenuPresented: Bool
     
+    @State private var isCommandsDisabled = false
     @State private var darkMode: Bool = true
     @State private var nightShift: Bool = true
     @State private var trueTone: Bool = true
@@ -34,6 +35,7 @@ struct MenuView: View {
                 value: $brightness,
                 image: Image(systemName: "sun.max.fill")
             )
+            .disabled(isCommandsDisabled)
             .frame(minWidth: sliderWidth)
             
             HStack {
@@ -45,7 +47,9 @@ struct MenuView: View {
                         color: .white,
                         invertForeground: true
                     )
-                ) { Text("Dark Mode") }
+                ) {
+                    Text("Dark Mode")
+                }
                 MenuCircleToggle(
                     isOn: $nightShift,
                     controlSize: .prominent,
@@ -53,7 +57,9 @@ struct MenuView: View {
                         image: Image(systemName: "sun.max.fill"),
                         color: .orange
                     )
-                ) { Text("Night Shift") }
+                ) {
+                    Text("Night Shift")
+                }
                 MenuCircleToggle(
                     isOn: $trueTone,
                     controlSize: .prominent,
@@ -61,7 +67,10 @@ struct MenuView: View {
                         image: Image(systemName: "sun.max.fill"),
                         color: .blue
                     )
-                ) { Text("True Tone") }
+                ) {
+                    Text("True Tone")
+                }
+                .disabled(isCommandsDisabled)
             }
             .frame(height: 80)
             
@@ -97,7 +106,9 @@ struct MenuView: View {
                                 .opacity(0.7)
                                 Spacer().frame(width: 28) // room for chevron
                             }
-                        } onClick: { _ in itemClicked() }
+                        } onClick: {
+                            _ in itemClicked()
+                        }
                     } content: {
                         MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
                             MenuToggle(
@@ -109,9 +120,12 @@ struct MenuView: View {
                                     Text(item.name).font(.system(size: 12))
                                     Spacer()
                                 }
-                            } onClick: { _ in itemClicked() }
+                            } onClick: {
+                                _ in itemClicked()
+                            }
                         }
                     }
+                    .disabled(isCommandsDisabled)
                 } else {
                     MenuToggle(isOn: .constant(isSelected), image: item.image) {
                         Text(item.name)
@@ -128,6 +142,16 @@ struct MenuView: View {
                     }
                 }
             }
+            .disabled(isCommandsDisabled)
+            
+            MenuSection("Debug")
+                .disabled(isCommandsDisabled)
+            
+            MenuCircleToggle(
+                "Disable Some Menu Items",
+                isOn: $isCommandsDisabled,
+                image: Image(systemName: "rectangle.slash")
+            )
             
             Divider()
             
@@ -136,6 +160,7 @@ struct MenuView: View {
             } label: {
                 Text("About") // custom label view
             }
+            .disabled(isCommandsDisabled)
             
             MenuCommand {
                 openSettings()
