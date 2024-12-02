@@ -115,8 +115,10 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
         ) {
             HStack {
                 labelFormatted
-                Spacer()
-                chevron
+                if isChevronVisible {
+                    Spacer()
+                    MenuDisclosureChevron(isExpanded: $isExpanded)
+                }
             }
         }
     }
@@ -128,12 +130,9 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             }
             HStack(spacing: 0) {
                 Spacer()
-                chevron
-                    .contentShape(Rectangle())
-                    .onTapGesture {
-                        guard isEnabled else { return }
-                        isExpanded.toggle()
-                    }
+                if isChevronVisible {
+                    MenuDisclosureChevron(isExpanded: $isExpanded)
+                }
                 Spacer()
                     .frame(width: MenuGeometry.menuHorizontalContentInset)
             }
@@ -148,18 +147,9 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
         label.opacity(isEnabled ? 1.0 : 0.4)
     }
     
-    @ViewBuilder
-    private var chevron: some View {
-        if isExpanded || isHighlighted || toggleVisibility == .always {
-            Image(systemName: "chevron.right")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 10, height: 10)
-                .foregroundColor(.primary)
-                .rotationEffect(isExpanded ? .degrees(90) : .zero)
-                .opacity(isEnabled ? 1.0 : 0.4)
-            //.animation(.default, value: isExpanded)
-        }
+    private var isChevronVisible: Bool {
+        guard toggleVisibility != .never else { return false }
+        return isExpanded || isHighlighted || toggleVisibility == .always
     }
     
     @ViewBuilder
