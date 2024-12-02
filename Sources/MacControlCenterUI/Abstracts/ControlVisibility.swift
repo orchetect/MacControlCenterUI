@@ -14,6 +14,9 @@ public enum ControlVisibility {
     
     /// Control is visible while the mouse hovers.
     case onHover
+    
+    /// Control is always hidden.
+    case never
 }
 
 #endif
