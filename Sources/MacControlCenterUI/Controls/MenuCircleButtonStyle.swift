@@ -27,9 +27,9 @@ public struct MenuCircleButtonStyle {
         invertForeground: Bool = false
     ) {
         self.image = image?.resizable()
+        self.offImage =  image?.resizable()
         self.dimOffImage = dimOffImage
         self.imagePadding = imagePadding
-        self.offImage =  image
         self.color = color
         self.offColor = offColor
         self.invertForeground = invertForeground
@@ -58,8 +58,15 @@ public struct MenuCircleButtonStyle {
 
 extension MenuCircleButtonStyle {
     public var hasColor: Bool {
-        if color == nil || color == .clear { return false }
-        return true
+        color != nil && color != .clear
+    }
+    
+    public var hasOffColor: Bool {
+        offColor != nil && offColor != .clear
+    }
+    
+    public func hasColor(forState state: Bool) -> Bool {
+        state ? hasColor : hasOffColor
     }
     
     public func color(forState state: Bool, isEnabled: Bool, colorScheme: ColorScheme) -> Color? {
