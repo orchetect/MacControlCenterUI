@@ -10,8 +10,11 @@ import SwiftUI
 import MenuBarExtraAccess
 
 /// macOS Control Center Menu view.
+///
 /// For menu-style items that highlight on mouse hover and execute code upon being clicked, use
 /// the specially-provided ``MenuCommand``.
+///
+/// Other custom Control Center-styled controls are available as well. See the Demo project for examples.
 ///
 /// Example Usage:
 ///
@@ -70,6 +73,7 @@ public struct MacControlCenterMenu: View {
     ///     command action blocks. This is often necessary since menubar items
     ///     can be accessed while the app is not in focus. This will allow
     ///     actions that open a window to bring the window (and app) to the front.
+    ///     Note that this setting only applies to ``MenuCommand`` instances within the menu.
     ///   - content: Menu item builder content.
     public init(
         isPresented: Binding<Bool>,
