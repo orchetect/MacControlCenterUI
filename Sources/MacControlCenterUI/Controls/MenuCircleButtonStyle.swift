@@ -118,7 +118,7 @@ extension MenuCircleButtonStyle {
         MenuCircleButtonStyle(
             image: image,
             offImage: image,
-            dimOffImage: true,
+            offImageDimAmount: 0.7,
             imagePadding: 0,
             color: nil,
             offColor: nil
