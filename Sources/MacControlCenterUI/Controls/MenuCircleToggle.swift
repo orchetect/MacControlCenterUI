@@ -273,14 +273,21 @@ public struct MenuCircleToggle<Label: View>: View {
                     .background(visualEffect)
                     .foregroundColor(buttonBackColor)
             }
-            if let image = style.image(forState: isOn) {
-                image
-                    // .resizable() // already applied in `MenuCircleButtonStyle`
-                    .scaledToFit()
-                    .foregroundColor(buttonForeColor)
-                    .opacity(imageOpacity)
-                    .padding(imagePadding)
+            Group {
+                if let image {
+                    image
+                        .foregroundColor(buttonForeColor)
+                        .opacity(imageOpacity)
+                    
+                    if !style.hasColor, isMouseDown {
+                        Rectangle()
+                            .foregroundColor(.black)
+                            .blendMode(.color)
+                            .opacity(0.5)
+                    }
+                }
             }
+            .padding(imagePadding)
             
             if isMouseDown, style.hasColor {
                 if colorScheme == .dark {
@@ -297,6 +304,12 @@ public struct MenuCircleToggle<Label: View>: View {
         .frame(width: controlSize.size, height: controlSize.size)
     }
     
+    private var image: (some View)? {
+        style.image(forState: isOn)?
+            // .resizable() // already applied in `MenuCircleButtonStyle`
+            .scaledToFit()
+    }
+    
     /// Adjust padding based on whether an image is present or not for the current toggle state.
     private var imagePadding: CGFloat {
         let circlePadding = style.hasColor
@@ -306,8 +319,18 @@ public struct MenuCircleToggle<Label: View>: View {
     }
     
     private var imageOpacity: CGFloat {
-        guard let dimAmount = style.offImageDimAmount else { return 1.0 }
-        return isOn ? 1.0 : 1.0 - dimAmount.clamped(to: 0.0 ... 1.0)
+        var amount: CGFloat = 1.0
+        
+        if !isOn, let dimAmount = style.offImageDimAmount {
+            let multiplier = 1.0 - dimAmount.clamped(to: 0.0 ... 1.0)
+            amount *= multiplier
+        }
+        
+        if !style.hasColor, isMouseDown {
+            amount *= 0.8
+        }
+        
+        return amount
     }
     
     // MARK: Helpers
