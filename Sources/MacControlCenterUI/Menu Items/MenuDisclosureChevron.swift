@@ -70,6 +70,9 @@ public struct MenuDisclosureChevron: View {
             .opacity(opacityValue)
             // .animation(.default, value: isExpanded) // avoid, causes side effects
         
+            .onAppear {
+                updateState()
+            }
             .onChange(of: isExpanded) { _ in
                 handleRotation()
             }
@@ -93,8 +96,12 @@ public struct MenuDisclosureChevron: View {
     
     private func handleRotation() {
         withAnimation {
-            rotationAngle = isExpanded ? .degrees(90) : .zero
+            updateState()
         }
+    }
+    
+    private func updateState() {
+        rotationAngle = isExpanded ? .degrees(90) : .zero
     }
     
     private var opacityValue: CGFloat {
