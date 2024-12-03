@@ -88,18 +88,21 @@ extension MenuCircleButtonStyle {
 // MARK: - Static Constructors
 
 extension MenuCircleButtonStyle {
+    /// Standard circle button style.
     public static func standard(image: Image) -> Self {
         MenuCircleButtonStyle(
             image: image
         )
     }
     
+    /// Standard circle button style.
     public static func standard(systemImage: String) -> Self {
         MenuCircleButtonStyle(
             image: Image(systemName: systemImage)
         )
     }
     
+    /// Checkmark button style suitable for options nested under a ``MenuDisclosureGroup``.
     public static func checkmark() -> Self {
         MenuCircleButtonStyle(
             image: Image(systemName: "checkmark"),
@@ -110,6 +113,7 @@ extension MenuCircleButtonStyle {
         )
     }
     
+    /// A full-size custom image button style without a circle background.
     public static func icon(_ image: Image) -> Self {
         MenuCircleButtonStyle(
             image: image,
