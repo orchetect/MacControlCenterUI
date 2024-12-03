@@ -91,7 +91,7 @@ struct MenuView: View {
                         style: .menuItem,
                         initiallyExpanded: false,
                         labelHeight: .controlCenterIconItem,
-                        toggleVisibility: .always,
+                        toggleVisibility: .always, // <-- try setting to .onHover!
                         label: {
                             MenuCircleToggle(isOn: .constant(isSelected), image: item.image) {
                                 HStack {
