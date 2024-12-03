@@ -91,6 +91,7 @@ public struct MacControlCenterMenu: View {
             // and prevents janky view animations
             Spacer().frame(minHeight: 0)
         }
+        .background(VisualEffect.popoverWindow())
     }
     
     @ViewBuilder
@@ -100,7 +101,6 @@ public struct MacControlCenterMenu: View {
                 .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
         }
         .padding([.top, .bottom], MenuGeometry.menuPadding)
-        .background(VisualEffect.popoverWindow())
     }
 }
 
