@@ -277,8 +277,9 @@ public struct MenuCircleToggle<Label: View>: View {
                 image
                     // .resizable() // already applied in `MenuCircleButtonStyle`
                     .scaledToFit()
-                    .padding(imagePadding)
                     .foregroundColor(buttonForeColor)
+                    .opacity(imageOpacity)
+                    .padding(imagePadding)
             }
             
             if isMouseDown, style.hasColor {
@@ -298,10 +299,15 @@ public struct MenuCircleToggle<Label: View>: View {
     
     /// Adjust padding based on whether an image is present or not for the current toggle state.
     private var imagePadding: CGFloat {
-        let circlePadding = style.hasColor//(forState: isOn)
+        let circlePadding = style.hasColor
                 ? controlSize.imagePadding
                 : 0.0
         return circlePadding + style.imagePadding
+    }
+    
+    private var imageOpacity: CGFloat {
+        guard let dimAmount = style.offImageDimAmount else { return 1.0 }
+        return isOn ? 1.0 : 1.0 - dimAmount.clamped(to: 0.0 ... 1.0)
     }
     
     // MARK: Helpers
