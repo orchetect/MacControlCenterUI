@@ -278,6 +278,7 @@ public struct MenuCircleToggle<Label: View>: View {
                     image
                         .foregroundColor(buttonForeColor)
                         .opacity(imageOpacity)
+                        .saturation(imageSaturation)
                     
                     if !style.hasColor, isMouseDown {
                         Rectangle()
@@ -330,7 +331,16 @@ public struct MenuCircleToggle<Label: View>: View {
             amount *= 0.8
         }
         
+        if !style.hasColor, !isEnabled {
+            amount *= 0.5
+        }
+        
         return amount
+    }
+    
+    private var imageSaturation: CGFloat {
+        guard !style.hasColor else { return 1.0 }
+        return isOn ? 1.0 : 0.0
     }
     
     // MARK: Helpers
