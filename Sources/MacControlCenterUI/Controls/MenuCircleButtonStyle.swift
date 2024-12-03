@@ -107,7 +107,7 @@ extension MenuCircleButtonStyle {
         MenuCircleButtonStyle(
             image: Image(systemName: "checkmark"),
             offImage: nil,
-            imagePadding: 2,
+            imagePadding: 7,
             color: nil,
             offColor: nil
         )
@@ -118,8 +118,8 @@ extension MenuCircleButtonStyle {
         MenuCircleButtonStyle(
             image: image,
             offImage: image,
-            offImageDimAmount: 0.7,
-            imagePadding: 0,
+            offImageDimAmount: 0.5,
+            imagePadding: -1,
             color: nil,
             offColor: nil
         )
