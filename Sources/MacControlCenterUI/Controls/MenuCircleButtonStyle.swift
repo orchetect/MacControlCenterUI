@@ -12,7 +12,7 @@ import SwiftUI
 public struct MenuCircleButtonStyle {
     public var image: Image?
     public var offImage: Image?
-    public var dimOffImage: Bool
+    public var offImageDimAmount: CGFloat?
     public var imagePadding: CGFloat
     public var color: Color?
     public var offColor: Color?
@@ -20,7 +20,7 @@ public struct MenuCircleButtonStyle {
     
     public init(
         image: Image?,
-        dimOffImage: Bool = false,
+        offImageDimAmount: CGFloat? = nil,
         imagePadding: CGFloat = 0,
         color: Color? = Color(NSColor.controlAccentColor),
         offColor: Color? = Color(NSColor.controlColor),
@@ -28,7 +28,7 @@ public struct MenuCircleButtonStyle {
     ) {
         self.image = image?.resizable()
         self.offImage =  image?.resizable()
-        self.dimOffImage = dimOffImage
+        self.offImageDimAmount = offImageDimAmount
         self.imagePadding = imagePadding
         self.color = color
         self.offColor = offColor
@@ -38,7 +38,7 @@ public struct MenuCircleButtonStyle {
     public init(
         image: Image?,
         offImage: Image?,
-        dimOffImage: Bool = false,
+        offImageDimAmount: CGFloat? = nil,
         imagePadding: CGFloat = 0,
         color: Color? = Color(NSColor.controlAccentColor),
         offColor: Color? = Color(NSColor.controlColor),
@@ -46,7 +46,7 @@ public struct MenuCircleButtonStyle {
     ) {
         self.image = image?.resizable()
         self.offImage = offImage?.resizable()
-        self.dimOffImage = dimOffImage
+        self.offImageDimAmount = offImageDimAmount
         self.imagePadding = imagePadding
         self.color = color
         self.offColor = offColor
