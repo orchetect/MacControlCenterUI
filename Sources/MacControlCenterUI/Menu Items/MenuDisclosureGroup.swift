@@ -91,15 +91,20 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     @ViewBuilder
     public var viewBody: some View {
-        if fullLabelToggle {
-            highlightingButtonLabelContent
-        } else {
-            regularLabelContent
+        Group {
+            if fullLabelToggle {
+                highlightingButtonLabelContent
+            } else {
+                regularLabelContent
+            }
         }
+        .animation(nil, value: isExpanded)
+        // .zIndex(2)
         
         if isExpanded {
             expandedContent
                 .frame(maxWidth: .infinity)
+                // .zIndex(1)
         }
     }
     
