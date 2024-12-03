@@ -62,15 +62,19 @@ extension MenuCircleButtonStyle {
         return true
     }
     
-    public func color(forState: Bool, isEnabled: Bool, colorScheme: ColorScheme) -> Color? {
-        let base: Color? = forState
+    public func color(forState state: Bool, isEnabled: Bool, colorScheme: ColorScheme) -> Color? {
+        let base: Color? = state
             ? color
             : colorScheme == .dark ? offColor : offColor?.opacity(0.2)
         return isEnabled ? base : base?.opacity(0.4)
     }
     
-    public func image(forState: Bool) -> Image? {
-        forState ? image : offImage
+    public func image(forState state: Bool) -> Image? {
+        state ? image : offImage
+    }
+    
+    public func hasImage(forState state: Bool) -> Bool {
+        state ? image != nil : offImage != nil
     }
 }
 
