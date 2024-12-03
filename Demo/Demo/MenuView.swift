@@ -87,44 +87,43 @@ struct MenuView: View {
             
             MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
                 if item.name.contains("AirPods Max") {
-                    MenuDisclosureGroup(
+                    HighlightingMenuDisclosureGroup(
                         style: .menuItem,
                         initiallyExpanded: false,
                         labelHeight: .controlCenterIconItem,
-                        fullLabelToggle: false,
-                        toggleVisibility: .always
-                    ) {
-                        MenuToggle(isOn: .constant(isSelected), image: item.image) {
-                            HStack {
-                                Text(item.name)
-                                Spacer()
-                                HStack(spacing: 2) {
-                                    Text("82%")
-                                    Image(systemName: "battery.75", variableValue: 0.82)
-                                }
-                                .frame(height: 10)
-                                .opacity(0.7)
-                                Spacer().frame(width: 28) // room for chevron
-                            }
-                        } onClick: {
-                            _ in itemClicked()
-                        }
-                    } content: {
-                        MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
-                            MenuToggle(
-                                isOn: .constant(isSelected),
-                                style: .checkmark()
-                            ) {
+                        toggleVisibility: .always,
+                        label: {
+                            MenuCircleToggle(isOn: .constant(isSelected), image: item.image) {
                                 HStack {
-                                    item.image
-                                    Text(item.name).font(.system(size: 12))
+                                    Text(item.name)
                                     Spacer()
+                                    HStack(spacing: 2) {
+                                        Text("82%")
+                                        Image(systemName: "battery.75", variableValue: 0.82)
+                                    }
+                                    .frame(height: 10)
+                                    .opacity(0.7)
                                 }
                             } onClick: {
                                 _ in itemClicked()
                             }
+                        }, content: {
+                            MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
+                                MenuToggle(
+                                    isOn: .constant(isSelected),
+                                    style: .checkmark()
+                                ) {
+                                    HStack {
+                                        item.image
+                                        Text(item.name).font(.system(size: 12))
+                                        Spacer()
+                                    }
+                                } onClick: {
+                                    _ in itemClicked()
+                                }
+                            }
                         }
-                    }
+                    )
                     .disabled(isCommandsDisabled)
                 } else {
                     MenuToggle(isOn: .constant(isSelected), image: item.image) {
