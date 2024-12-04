@@ -26,6 +26,9 @@ struct MenuView: View {
     @State private var audioOutputs: [MenuEntry] = MockData.audioOutputs
     @State private var airPodsOptions: [MenuEntry] = MockData.airPodsOptions
     @State private var wiFiNetworks: [MenuEntry] = MockData.wiFiNetworks
+    @State private var isSafariEnabled: Bool = true
+    @State private var isMusicEnabled: Bool = true
+    @State private var isXcodeEnabled: Bool = false
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
@@ -142,6 +145,12 @@ struct MenuView: View {
                 }
             }
             .disabled(isCommandsDisabled)
+            
+            MenuSection("Custom Icons")
+            MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
+            MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
+            MenuToggle("Xcode", isOn: $isXcodeEnabled, style: .icon(appIcon(for: "com.apple.dt.Xcode")))
+                .disabled(isCommandsDisabled)
             
             MenuSection("Debug")
                 .disabled(isCommandsDisabled)
