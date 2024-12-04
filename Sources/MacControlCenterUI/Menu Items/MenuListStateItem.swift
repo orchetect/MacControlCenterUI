@@ -1,7 +1,7 @@
 //
 //  MenuListStateItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2023 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)

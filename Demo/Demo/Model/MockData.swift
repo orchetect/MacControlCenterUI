@@ -1,6 +1,6 @@
 //
 //  MockData.swift
-//  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
@@ -37,6 +37,6 @@ enum MockData {
 extension Image {
     /// For purposes of demonstration, generate a WiFi image with a random signal strength.
     static func randomWiFiImage() -> Image {
-        Image(systemName: "wifi", variableValue: Double.random(in: 0.2...1.0))
+        Image(systemName: "wifi", variableValue: Double.random(in: 0.2 ... 1.0))
     }
 }

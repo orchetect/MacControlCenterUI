@@ -1,13 +1,13 @@
 //
 //  MacControlCenterMenu.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
 
-import SwiftUI
 import MenuBarExtraAccess
+import SwiftUI
 
 /// macOS Control Center Menu view.
 ///
@@ -80,7 +80,7 @@ public struct MacControlCenterMenu: View {
         activateAppOnCommandSelection: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
-        self._menuBarExtraIsPresented = isPresented
+        _menuBarExtraIsPresented = isPresented
         self.activateAppOnCommandSelection = activateAppOnCommandSelection
         self.content = content()
     }

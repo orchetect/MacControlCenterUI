@@ -1,7 +1,7 @@
 //
 //  MenuHeader.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -38,7 +38,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     public init(
         _ titleKey: LocalizedStringKey
     ) where Label == Text {
-        self.label = Self.stylized(Text(titleKey))
+        label = Self.stylized(Text(titleKey))
         trailingContent = nil
     }
     
@@ -64,7 +64,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         _ titleKey: LocalizedStringKey,
         @ViewBuilder trailingContent: @escaping () -> TrailingContent
     ) where Label == Text {
-        self.label = Self.stylized(Text(titleKey))
+        label = Self.stylized(Text(titleKey))
         self.trailingContent = trailingContent()
     }
     

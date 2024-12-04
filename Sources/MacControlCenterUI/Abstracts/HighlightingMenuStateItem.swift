@@ -1,7 +1,7 @@
 //
 //  HighlightingMenuStateItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -43,11 +43,11 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     ) {
         self.style = style
         self.height = height
-        self._isOn = isOn
-        self._isPressed = isPressed
+        _isOn = isOn
+        _isPressed = isPressed
         self.content = content
         self.onChangeBlock = onChangeBlock
-        self._isHighlighted = .constant(false)
+        _isHighlighted = .constant(false)
     }
     
     public init(
@@ -61,9 +61,9 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     ) {
         self.style = style
         self.height = height
-        self._isOn = isOn
-        self._isHighlighted = isHighlighted
-        self._isPressed = isPressed
+        _isOn = isOn
+        _isHighlighted = isHighlighted
+        _isPressed = isPressed
         self.content = content
         self.onChangeBlock = onChangeBlock
     }

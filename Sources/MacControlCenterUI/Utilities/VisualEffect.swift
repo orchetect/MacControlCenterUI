@@ -1,7 +1,7 @@
 //
-//  VisualEffectView.swift
+//  VisualEffect.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2023 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -25,7 +25,7 @@ public struct VisualEffect: NSViewRepresentable {
     ) {
         self.material = material
         self.appearance = appearance
-        self.allowsVibrancy = vibrancy
+        allowsVibrancy = vibrancy
         self.blendingMode = blendingMode
         self.mask = mask
     }

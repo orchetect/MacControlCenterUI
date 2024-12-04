@@ -1,7 +1,7 @@
 //
 //  MenuSlider.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -13,8 +13,7 @@ import SwiftUI
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
 public struct MenuSlider<Label, SliderImage>: View
-where Label: View, SliderImage: MenuSliderImage
-{
+where Label: View, SliderImage: MenuSliderImage {
     // MARK: Public Properties
     
     /// Value (0.0 ... 1.0).
@@ -66,7 +65,7 @@ where Label: View, SliderImage: MenuSliderImage
         image: @autoclosure () -> Image
     ) where Label == Text, SliderImage == StaticSliderImage {
         _value = value
-        self.label = Text(titleKey)
+        label = Text(titleKey)
         sliderImage = StaticSliderImage(image())
     }
     
@@ -226,9 +225,9 @@ where Label: View, SliderImage: MenuSliderImage
                 DragGesture(minimumDistance: 0)
                     .onChanged { value in
                         let calc = (value.location.x - (Self.sliderHeight / 2)) /
-                        (geometry.size.width - Self.sliderHeight)
+                            (geometry.size.width - Self.sliderHeight)
                         let newValue = min(max(0.0, calc), 1.0) // clamp
-                                                                // assign only if value changed
+                        // assign only if value changed
                         if self.value != newValue {
                             oldValue = self.value
                             self.value = newValue
@@ -239,7 +238,7 @@ where Label: View, SliderImage: MenuSliderImage
                                 updateImage(fgColor: fgColor)
                             }
                         } else {
-                            self.oldValue = self.value
+                            oldValue = self.value
                         }
                     }
             )
@@ -256,14 +255,14 @@ where Label: View, SliderImage: MenuSliderImage
                 .hudWindow,
                 vibrancy: true,
                 blendingMode: .behindWindow,
-                mask: nil //mask()
+                mask: nil // mask()
             )
         } else {
             return VisualEffect(
                 .underWindowBackground,
                 vibrancy: true,
                 blendingMode: .behindWindow,
-                mask: nil //mask()
+                mask: nil // mask()
             )
         }
     }

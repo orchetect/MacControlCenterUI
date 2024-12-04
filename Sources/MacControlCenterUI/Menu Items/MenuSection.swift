@@ -1,7 +1,7 @@
 //
 //  MenuSection.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -41,7 +41,7 @@ public struct MenuSection<Label: View>: View {
         _ titleKey: LocalizedStringKey,
         divider: Bool = true
     ) where Label == MenuSectionText {
-        self.label = MenuSectionText(text: Text(titleKey))
+        label = MenuSectionText(text: Text(titleKey))
         self.divider = divider
     }
     

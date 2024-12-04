@@ -1,11 +1,11 @@
 //
 //  DemoApp.swift
-//  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import SwiftUI
 import MacControlCenterUI
+import SwiftUI
 
 @main
 struct DemoApp: App {
@@ -33,12 +33,14 @@ struct DemoApp: App {
 
 // MARK: App Lifecycle & Global
 
-@MainActor func activateApp() {
+@MainActor
+func activateApp() {
     NSApp.activate(ignoringOtherApps: true)
 }
 
 /// This still works on macOS 14 thankfully.
-@MainActor func showStandardAboutWindow() {
+@MainActor
+func showStandardAboutWindow() {
     NSApp.sendAction(
         #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
         to: nil,
@@ -46,6 +48,7 @@ struct DemoApp: App {
     )
 }
 
-@MainActor func quit() {
+@MainActor
+func quit() {
     NSApp.terminate(nil)
 }

@@ -1,7 +1,7 @@
 //
 //  HighlightingMenuDisclosureGroup.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -42,8 +42,8 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         @MacControlCenterMenuBuilder content: @escaping () -> [any View]
     ) {
         self.style = style
-        self._isExpandedBinding = isExpanded
-        self._isExpanded = State(initialValue: isExpanded.wrappedValue)
+        _isExpandedBinding = isExpanded
+        _isExpanded = State(initialValue: isExpanded.wrappedValue)
         self.labelHeight = labelHeight
         self.toggleVisibility = toggleVisibility
         self.label = label()
@@ -62,8 +62,8 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         @MacControlCenterMenuBuilder content: @escaping () -> [any View]
     ) {
         self.style = style
-        self._isExpandedBinding = .constant(initiallyExpanded)
-        self._isExpanded = State(initialValue: initiallyExpanded)
+        _isExpandedBinding = .constant(initiallyExpanded)
+        _isExpanded = State(initialValue: initiallyExpanded)
         self.labelHeight = labelHeight
         self.toggleVisibility = toggleVisibility
         self.label = label()

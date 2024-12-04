@@ -1,7 +1,7 @@
 //
 //  MenuToggle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -27,9 +27,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
-        self._isOn = isOn
+        _isOn = isOn
         self.style = style
-        self.label = nil
+        label = nil
         self.onClickBlock = onClickBlock
     }
     
@@ -38,9 +38,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         image: Image,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
-        self._isOn = isOn
-        self.style = .init(image: image)
-        self.label = nil
+        _isOn = isOn
+        style = .init(image: image)
+        label = nil
         self.onClickBlock = onClickBlock
     }
     
@@ -53,8 +53,8 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
-        self.label = Text(title)
-        self._isOn = isOn
+        label = Text(title)
+        _isOn = isOn
         self.style = style
         self.onClickBlock = onClickBlock
     }
@@ -66,9 +66,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         image: Image,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
-        self.label = Text(title)
-        self._isOn = isOn
-        self.style = .init(image: image)
+        label = Text(title)
+        _isOn = isOn
+        style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
     
@@ -80,8 +80,8 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
-        self.label = Text(titleKey)
-        self._isOn = isOn
+        label = Text(titleKey)
+        _isOn = isOn
         self.style = style
         self.onClickBlock = onClickBlock
     }
@@ -92,9 +92,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         image: Image,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
-        self.label = Text(titleKey)
-        self._isOn = isOn
-        self.style = .init(image: image)
+        label = Text(titleKey)
+        _isOn = isOn
+        style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
     
@@ -106,7 +106,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         @ViewBuilder label: @escaping () -> Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
+        _isOn = isOn
         self.style = style
         self.label = label()
         self.onClickBlock = onClickBlock
@@ -118,8 +118,8 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         @ViewBuilder label: @escaping () -> Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
-        self.style = .init(image: image)
+        _isOn = isOn
+        style = .init(image: image)
         self.label = label()
         self.onClickBlock = onClickBlock
     }
@@ -133,7 +133,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         label: Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
+        _isOn = isOn
         self.style = style
         self.label = label
         self.onClickBlock = onClickBlock
@@ -146,8 +146,8 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         label: Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
-        self.style = .init(image: image)
+        _isOn = isOn
+        style = .init(image: image)
         self.label = label
         self.onClickBlock = onClickBlock
     }

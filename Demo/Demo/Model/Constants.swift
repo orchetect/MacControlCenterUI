@@ -1,6 +1,6 @@
 //
 //  Constants.swift
-//  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 

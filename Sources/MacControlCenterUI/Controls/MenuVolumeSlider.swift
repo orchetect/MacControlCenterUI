@@ -1,7 +1,7 @@
 //
 //  MenuVolumeSlider.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -38,7 +38,7 @@ public struct MenuVolumeSlider<Label: View>: View {
         value: Binding<CGFloat>
     ) where Label == Text {
         _value = value
-        self.label = Text(titleKey)
+        label = Text(titleKey)
     }
     
     public init(

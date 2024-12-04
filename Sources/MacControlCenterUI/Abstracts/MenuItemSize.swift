@@ -1,7 +1,7 @@
 //
 //  MenuItemSize.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2023 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -34,7 +34,7 @@ extension MenuItemSize {
             return MenuCircleButtonSize.menu.size + MenuGeometry.menuItemPadding
         case .controlCenterSection:
             return 20
-        case .custom(let value):
+        case let .custom(value):
             return value
         }
     }
@@ -42,7 +42,7 @@ extension MenuItemSize {
     /// The non-padded bounds height of the menu item.
     public var boundsHeight: CGFloat {
         switch self {
-        case .custom(let value):
+        case let .custom(value):
             return value
         default:
             return contentHeight + MenuGeometry.menuVerticalPadding

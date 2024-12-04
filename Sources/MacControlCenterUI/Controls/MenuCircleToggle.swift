@@ -1,7 +1,7 @@
 //
 //  MenuCircleToggle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -40,10 +40,10 @@ public struct MenuCircleToggle<Label: View>: View {
         style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
-        self._isOn = isOn
+        _isOn = isOn
         self.controlSize = controlSize
         self.style = style
-        self.label = nil
+        label = nil
         self.onClickBlock = onClickBlock
     }
     
@@ -53,10 +53,10 @@ public struct MenuCircleToggle<Label: View>: View {
         image: Image,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == EmptyView {
-        self._isOn = isOn
+        _isOn = isOn
         self.controlSize = controlSize
-        self.style = .init(image: image)
-        self.label = nil
+        style = .init(image: image)
+        label = nil
         self.onClickBlock = onClickBlock
     }
     
@@ -70,8 +70,8 @@ public struct MenuCircleToggle<Label: View>: View {
         style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
-        self.label = Text(title)
-        self._isOn = isOn
+        label = Text(title)
+        _isOn = isOn
         self.controlSize = controlSize
         self.style = style
         self.onClickBlock = onClickBlock
@@ -85,10 +85,10 @@ public struct MenuCircleToggle<Label: View>: View {
         image: Image,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where S: StringProtocol, Label == Text {
-        self.label = Text(title)
-        self._isOn = isOn
+        label = Text(title)
+        _isOn = isOn
         self.controlSize = controlSize
-        self.style = .init(image: image)
+        style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
     
@@ -101,8 +101,8 @@ public struct MenuCircleToggle<Label: View>: View {
         style: MenuCircleButtonStyle,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
-        self.label = Text(titleKey)
-        self._isOn = isOn
+        label = Text(titleKey)
+        _isOn = isOn
         self.controlSize = controlSize
         self.style = style
         self.onClickBlock = onClickBlock
@@ -115,10 +115,10 @@ public struct MenuCircleToggle<Label: View>: View {
         image: Image,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) where Label == Text {
-        self.label = Text(titleKey)
-        self._isOn = isOn
+        label = Text(titleKey)
+        _isOn = isOn
         self.controlSize = controlSize
-        self.style = .init(image: image)
+        style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
     
@@ -131,7 +131,7 @@ public struct MenuCircleToggle<Label: View>: View {
         @ViewBuilder label: @escaping () -> Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
+        _isOn = isOn
         self.controlSize = controlSize
         self.style = style
         self.label = label()
@@ -145,9 +145,9 @@ public struct MenuCircleToggle<Label: View>: View {
         @ViewBuilder label: @escaping () -> Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
+        _isOn = isOn
         self.controlSize = controlSize
-        self.style = .init(image: image)
+        style = .init(image: image)
         self.label = label()
         self.onClickBlock = onClickBlock
     }
@@ -162,7 +162,7 @@ public struct MenuCircleToggle<Label: View>: View {
         label: Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
+        _isOn = isOn
         self.controlSize = controlSize
         self.style = style
         self.label = label
@@ -177,9 +177,9 @@ public struct MenuCircleToggle<Label: View>: View {
         label: Label,
         onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
     ) {
-        self._isOn = isOn
+        _isOn = isOn
         self.controlSize = controlSize
-        self.style = .init(image: image)
+        style = .init(image: image)
         self.label = label
         self.onClickBlock = onClickBlock
     }
@@ -206,7 +206,7 @@ public struct MenuCircleToggle<Label: View>: View {
                     )
             } else {
                 hitTestBody
-                    .frame( //width: style.size,
+                    .frame( // width: style.size,
                         height: controlSize.size,
                         alignment: .top
                     )
@@ -314,8 +314,8 @@ public struct MenuCircleToggle<Label: View>: View {
     /// Adjust padding based on whether an image is present or not for the current toggle state.
     private var imagePadding: CGFloat {
         let circlePadding = style.hasColor
-                ? controlSize.imagePadding
-                : 0.0
+            ? controlSize.imagePadding
+            : 0.0
         return circlePadding + style.imagePadding
     }
     

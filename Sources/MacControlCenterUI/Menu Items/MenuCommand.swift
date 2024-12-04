@@ -1,7 +1,7 @@
 //
 //  MenuCommand.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -29,9 +29,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     
     private let label: Label
     private let action: () -> Void
-    internal var activatesApp: Bool
-    internal var dismissesMenu: Bool
-    internal var style: MenuCommandStyle = .controlCenter
+    var activatesApp: Bool
+    var dismissesMenu: Bool
+    var style: MenuCommandStyle = .controlCenter
     @State private var isHighlighted: Bool = false
     
     // MARK: Init
@@ -43,7 +43,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         dismissesMenu: Bool = true,
         action: @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
-        self.label = Text(title)
+        label = Text(title)
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -55,7 +55,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         dismissesMenu: Bool = true,
         action: @escaping () -> Void
     ) where Label == Text {
-        self.label = Text(titleKey)
+        label = Text(titleKey)
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action

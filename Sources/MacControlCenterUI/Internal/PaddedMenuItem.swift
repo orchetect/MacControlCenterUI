@@ -1,7 +1,7 @@
 //
 //  PaddedMenuItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -13,7 +13,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-internal struct PaddedMenuItem<Content: View>: View, MacControlCenterMenuItem {
+struct PaddedMenuItem<Content: View>: View, MacControlCenterMenuItem {
     public var verticalPadding: Bool
     public var horizontalPadding: Bool
     public var content: Content
@@ -36,10 +36,14 @@ internal struct PaddedMenuItem<Content: View>: View, MacControlCenterMenuItem {
         VStack(alignment: .leading) {
             content
         }
-        .padding([.leading, .trailing],
-                 horizontalPadding ? MenuGeometry.menuHorizontalContentInset : 0)
-        .padding([.top, .bottom],
-                 verticalPadding ? MenuGeometry.menuItemPadding : 0)
+        .padding(
+            [.leading, .trailing],
+            horizontalPadding ? MenuGeometry.menuHorizontalContentInset : 0
+        )
+        .padding(
+            [.top, .bottom],
+            verticalPadding ? MenuGeometry.menuItemPadding : 0
+        )
     }
 }
 

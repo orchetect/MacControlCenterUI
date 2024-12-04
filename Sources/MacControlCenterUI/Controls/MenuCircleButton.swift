@@ -1,7 +1,7 @@
 //
 //  MenuCircleButton.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -35,7 +35,7 @@ public struct MenuCircleButton<Label: View>: View {
     ) where Label == EmptyView {
         self.controlSize = controlSize
         self.style = style
-        self.label = nil
+        label = nil
         self.actionBlock = actionBlock
     }
     

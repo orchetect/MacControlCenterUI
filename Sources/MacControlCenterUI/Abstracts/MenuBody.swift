@@ -1,13 +1,13 @@
 //
 //  MenuBody.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
 
-import SwiftUI
 import MenuBarExtraAccess
+import SwiftUI
 
 /// Useful to add menu body padding imperatively within a view that conforms to
 /// ``MacControlCenterMenuItem``.

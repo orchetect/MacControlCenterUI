@@ -1,12 +1,12 @@
 //
 //  MenuView.swift
-//  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
-import SwiftUI
 import MacControlCenterUI
 import MenuBarExtraAccess
+import SwiftUI
 
 struct MenuView: View {
     @Environment(\.openSettings) var openSettings

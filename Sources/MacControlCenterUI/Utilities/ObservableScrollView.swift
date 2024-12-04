@@ -1,7 +1,7 @@
 //
 //  ObservableScrollView.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -32,10 +32,10 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
     ) {
         self.axes = axes
         self.showsIndicators = showsIndicators
-        self._offset = offset
-        self._scaling = scaling
+        _offset = offset
+        _scaling = scaling
         self.content = content()
-        self._contentHeight = contentHeight
+        _contentHeight = contentHeight
     }
     
     var body: some View {

@@ -1,6 +1,6 @@
 //
 //  MenuEntry.swift
-//  MacControlCenterUIDemoApp • https://github.com/orchetect/MacControlCenterUI
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
 //  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
@@ -28,7 +28,7 @@ struct MenuEntry: Hashable, Identifiable {
     
     init(name: String, systemImage: String, imageColor: Color? = nil) {
         self.name = name
-        self.image = Image(systemName: systemImage)
+        image = Image(systemName: systemImage)
         self.imageColor = imageColor
     }
 }

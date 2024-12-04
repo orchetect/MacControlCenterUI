@@ -1,7 +1,7 @@
 //
 //  MenuCircleButtonStyle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2023 Steffan Andrews • Licensed under MIT License
+//  © 2024 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -27,7 +27,7 @@ public struct MenuCircleButtonStyle {
         invertForeground: Bool = false
     ) {
         self.image = image?.resizable()
-        self.offImage =  image?.resizable()
+        offImage =  image?.resizable()
         self.offImageDimAmount = offImageDimAmount
         self.imagePadding = imagePadding
         self.color = color
