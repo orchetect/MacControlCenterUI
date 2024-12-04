@@ -328,7 +328,7 @@ public struct MenuCircleToggle<Label: View>: View {
         }
         
         if !style.hasColor, isMouseDown {
-            amount *= 0.8
+            amount *= isOn ? 0.8 : 1.2
         }
         
         if !style.hasColor, !isEnabled {
