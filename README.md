@@ -27,7 +27,7 @@ Both **Dark** and **Light Mode** are fully supported.
    - In a Swift Package, add it to the Package.swift dependencies:
 
      ```swift
-     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.1.0")
+     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.3.0")
      ```
 
 2. Import the library:
