@@ -78,7 +78,7 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
         }
         .coordinateSpace(name: coordSpace)
         .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
-            offset = value
+            Task { @MainActor in offset = value }
         }
     }
 }
