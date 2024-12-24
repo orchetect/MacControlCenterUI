@@ -142,9 +142,9 @@ struct MenuView: View {
                             Text(item.name)
                         }
                     }
+                    .disabled(isCommandsDisabled)
                 }
             }
-            .disabled(isCommandsDisabled)
             
             MenuSection("Custom Icons")
             MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
