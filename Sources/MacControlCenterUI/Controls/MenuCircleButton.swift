@@ -44,7 +44,6 @@ public struct MenuCircleButton<Label: View>: View {
         _ title: S,
         controlSize: MenuCircleButtonSize = .menu,
         style: MenuCircleButtonStyle,
-        @ViewBuilder label: @escaping () -> Label,
         action actionBlock: @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
         self.init(
