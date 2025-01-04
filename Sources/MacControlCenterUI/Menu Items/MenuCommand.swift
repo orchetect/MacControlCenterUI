@@ -119,7 +119,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         }
         
         // classic NSMenu-style menu commands still blink on click.
-        // for a few macOS releases starting with macOS 11, Control Center style menu commands did not blink,
+        // for one or two macOS releases macOS 12 (I believe, for one), Control Center style menu commands did not blink,
         // but at some point (macOS 14 or 15) Apple added this behavior back in to match the NSMenu behavior.
         Task {
             isHighlighted = false
