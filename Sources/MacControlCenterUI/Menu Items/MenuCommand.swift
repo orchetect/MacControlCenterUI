@@ -107,11 +107,15 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
                 NSApp.activate(ignoringOtherApps: true)
             }
             
-            if dismissesMenu {
-                menuBarExtraIsPresented.wrappedValue = false
+            Task {
+                if dismissesMenu {
+                    menuBarExtraIsPresented.wrappedValue = false
+                    // wait a small amount to give the menu a chance to close before calling the action block
+                    try? await Task.sleep(nanoseconds: 100 * NSEC_PER_MSEC) // 100 ms
+                }
+                
+                action()
             }
-            
-            action()
         }
         
         switch style {
