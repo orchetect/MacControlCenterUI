@@ -118,20 +118,14 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
             }
         }
         
-        switch style {
-        case .menu:
-            // classic NSMenu-style menu commands still blink on click, as of Ventura
-            DispatchQueue.main.asyncAfter(deadline: .now()) {
-                isHighlighted = false
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                isHighlighted = true
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                go()
-            }
-        case .controlCenter:
-            // Control Center menu commands don't blink because Apple is boring and hates charm
+        // classic NSMenu-style menu commands still blink on click.
+        // for a few macOS releases starting with macOS 11, Control Center style menu commands did not blink,
+        // but at some point (macOS 14 or 15) Apple added this behavior back in to match the NSMenu behavior.
+        Task {
+            isHighlighted = false
+            try? await Task.sleep(nanoseconds: 80 * NSEC_PER_MSEC) // 80 ms
+            isHighlighted = true
+            try? await Task.sleep(nanoseconds: 80 * NSEC_PER_MSEC) // 80 ms
             go()
         }
     }
