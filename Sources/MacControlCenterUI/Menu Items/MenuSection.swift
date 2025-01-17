@@ -32,7 +32,7 @@ public struct MenuSection<Label: View>: View {
     public init<S>(
         _ label: S,
         divider: Bool = true
-    ) where S: StringProtocol, Label == MenuSectionText {
+    ) where S: StringProtocol, Label == MenuSectionText<Text> {
         self.label = MenuSectionText(text: Text(label))
         self.divider = divider
     }
@@ -40,16 +40,27 @@ public struct MenuSection<Label: View>: View {
     public init(
         _ titleKey: LocalizedStringKey,
         divider: Bool = true
-    ) where Label == MenuSectionText {
+    ) where Label == MenuSectionText<Text> {
         label = MenuSectionText(text: Text(titleKey))
         self.divider = divider
     }
     
+    @_disfavoredOverload
     public init(
+        _ label: Text,
+        divider: Bool = true
+    ) where Label == MenuSectionText<Text> {
+        self.label = MenuSectionText(text: label)
+        self.divider = divider
+    }
+    
+    /// Initialize Menu Section with custom label.
+    /// Note that the standard menu section header text formatting is not applied when using this initializer.
+    public init<LabelContent: View>(
         divider: Bool = true,
-        @ViewBuilder _ label: () -> Label
-    ) {
-        self.label = label()
+        @ViewBuilder _ label: () -> LabelContent
+    ) where Label == MenuSectionText<LabelContent> {
+        self.label = MenuSectionText(label())
         self.divider = divider
     }
     
@@ -65,17 +76,27 @@ public struct MenuSection<Label: View>: View {
 
 /// ``MacControlCenterMenu`` section text view.
 /// This view is not commonly used by itself. It is more typical to use ``MenuSection`` instead.
-public struct MenuSectionText: View {
+public struct MenuSectionText<Content: View>: View {
     // MARK: Public Properties
     
-    public let text: Text
+    public let content: Content
+    
+    // MARK: Init
+    
+    public init(text: Text) where Content == Text {
+        self.content = text
+    }
+    
+    internal init(_ content: Content) {
+        self.content = content
+    }
     
     // MARK: Environment
     
     @Environment(\.colorScheme) private var colorScheme
     
     public var body: some View {
-        text
+        content
             .font(.system(size: MenuStyling.headerFontSize, weight: .semibold))
             .foregroundColor(foreColor)
     }
@@ -86,5 +107,4 @@ public struct MenuSectionText: View {
             : Color(white: 0).opacity(0.7)
     }
 }
-
 #endif
