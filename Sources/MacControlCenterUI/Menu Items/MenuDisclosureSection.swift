@@ -33,7 +33,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         divider: Bool = true,
         isExpanded: Binding<Bool>,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
-    ) where S: StringProtocol, Label == MenuSectionText {
+    ) where S: StringProtocol, Label == MenuSectionText<Text> {
         self.label = MenuSectionText(text: Text(label))
         self.divider = divider
         _isExpanded = isExpanded
@@ -45,22 +45,22 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         divider: Bool = true,
         isExpanded: Binding<Bool>,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
-    ) where Label == MenuSectionText {
+    ) where Label == MenuSectionText<Text> {
         label = MenuSectionText(text: Text(titleKey))
         self.divider = divider
         _isExpanded = isExpanded
         self.content = content
     }
     
-    public init(
+    public init<LabelContent: View>(
         divider: Bool = true,
         isExpanded: Binding<Bool>,
-        @ViewBuilder _ label: () -> Label,
+        @ViewBuilder _ label: () -> LabelContent,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
-    ) {
+    ) where Label == MenuSectionText<LabelContent> {
         self.divider = divider
         _isExpanded = isExpanded
-        self.label = label()
+        self.label = MenuSectionText(label())
         self.content = content
     }
     
@@ -72,7 +72,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         divider: Bool = true,
         initiallyExpanded: Bool = true,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
-    ) where S: StringProtocol, Label == MenuSectionText {
+    ) where S: StringProtocol, Label == MenuSectionText<Text> {
         self.label = MenuSectionText(text: Text(label))
         self.divider = divider
         _isExpanded = .constant(false) // not used
@@ -85,7 +85,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         divider: Bool = true,
         initiallyExpanded: Bool = true,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
-    ) where Label == MenuSectionText {
+    ) where Label == MenuSectionText<Text> {
         label = MenuSectionText(text: Text(titleKey))
         self.divider = divider
         _isExpanded = .constant(false) // not used
@@ -93,16 +93,16 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         self.content = content
     }
     
-    public init(
+    public init<LabelContent: View>(
         divider: Bool = true,
         initiallyExpanded: Bool = true,
-        @ViewBuilder _ label: () -> Label,
+        @ViewBuilder _ label: () -> LabelContent,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
-    ) {
+    ) where Label == MenuSectionText<LabelContent> {
         self.divider = divider
         _isExpanded = .constant(false) // not used
         nonBindingInitiallyExpanded = initiallyExpanded
-        self.label = label()
+        self.label = MenuSectionText(label())
         self.content = content
     }
     
