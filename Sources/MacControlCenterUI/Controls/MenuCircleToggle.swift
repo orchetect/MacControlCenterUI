@@ -235,6 +235,11 @@ public struct MenuCircleToggle<Label: View>: View {
                             }
                         }
                 )
+                .onChange(of: isEnabled) { newValue in
+                    if !isEnabled {
+                        isMouseDown = false
+                    }
+                }
         }
     }
     

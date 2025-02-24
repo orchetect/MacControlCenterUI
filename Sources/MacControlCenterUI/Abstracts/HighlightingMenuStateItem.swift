@@ -94,6 +94,11 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
                         }
                     }
             )
+            .onChange(of: isEnabled) { newValue in
+                if !isEnabled {
+                    isPressed = false
+                }
+            }
         }
         .frame(height: height.boundsHeight)
         

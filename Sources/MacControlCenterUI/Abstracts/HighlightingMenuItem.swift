@@ -76,12 +76,16 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
         .onHover { state in
             guard isEnabled else { return }
             if isHighlightedInternal != state {
-                isHighlightedInternal = state
-                isHighlighted = state
+                setHighlight(state: state)
             }
         }
         .onChange(of: isHighlighted) { newValue in
             isHighlightedInternal = newValue
+        }
+        .onChange(of: isEnabled) { newValue in
+            if !newValue {
+                setHighlight(state: false)
+            }
         }
     }
     
@@ -105,6 +109,11 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
                 blendingMode: .behindWindow
             )
         }
+    }
+    
+    private func setHighlight(state: Bool) {
+        isHighlightedInternal = state
+        isHighlighted = state
     }
 }
 

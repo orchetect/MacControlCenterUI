@@ -146,6 +146,11 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             guard isEnabled else { return }
             isHighlighted = state
         }
+        .onChange(of: isEnabled) { newValue in
+            if !isEnabled {
+                isHighlighted = false
+            }
+        }
     }
     
     private var labelFormatted: some View {

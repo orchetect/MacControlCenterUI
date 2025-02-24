@@ -38,6 +38,16 @@ public struct MenuDisclosureChevron: View {
     // MARK: Body
     
     public var body: some View {
+        chevronBody
+            .onChange(of: isEnabled) { newValue in
+                if !isEnabled {
+                    isPressed = false
+                }
+            }
+    }
+    
+    @ViewBuilder
+    private var chevronBody: some View {
         if #available(macOS 13.0, *) {
             imageBody
                 .gesture(gesture)
