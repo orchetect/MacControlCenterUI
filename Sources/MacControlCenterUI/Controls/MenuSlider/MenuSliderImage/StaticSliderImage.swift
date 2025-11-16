@@ -1,0 +1,31 @@
+//
+//  StaticSliderImage.swift
+//  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
+//  © 2024 Steffan Andrews • Licensed under MIT License
+//
+
+#if os(macOS)
+
+import SwiftUI
+
+nonisolated
+public struct StaticSliderImage: MenuSliderImage {
+    private let img: Image
+    
+    public init(_ img: Image) {
+        self.img = img
+    }
+    
+    public func staticImage() -> Image? {
+        img
+    }
+    
+    public func image(
+        for value: CGFloat,
+        oldValue: CGFloat?
+    ) -> MenuSliderImageUpdate? {
+        nil
+    }
+}
+
+#endif

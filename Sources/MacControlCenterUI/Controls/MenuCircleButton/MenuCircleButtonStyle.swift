@@ -9,6 +9,7 @@
 import SwiftUI
 
 /// Style for ``MenuCircleToggle`` and ``MenuCircleButton``.
+nonisolated
 public struct MenuCircleButtonStyle {
     public var image: Image?
     public var offImage: Image?
@@ -54,36 +55,9 @@ public struct MenuCircleButtonStyle {
     }
 }
 
-// MARK: - Convenience Methods
+extension MenuCircleButtonStyle: Equatable { }
 
-extension MenuCircleButtonStyle {
-    public var hasColor: Bool {
-        color != nil && color != .clear
-    }
-    
-    public var hasOffColor: Bool {
-        offColor != nil && offColor != .clear
-    }
-    
-    public func hasColor(forState state: Bool) -> Bool {
-        state ? hasColor : hasOffColor
-    }
-    
-    public func color(forState state: Bool, isEnabled: Bool, colorScheme: ColorScheme) -> Color? {
-        let base: Color? = state
-            ? color
-            : colorScheme == .dark ? offColor : offColor?.opacity(0.2)
-        return isEnabled ? base : base?.opacity(0.4)
-    }
-    
-    public func image(forState state: Bool) -> Image? {
-        state ? image : offImage
-    }
-    
-    public func hasImage(forState state: Bool) -> Bool {
-        state ? image != nil : offImage != nil
-    }
-}
+extension MenuCircleButtonStyle: Sendable { }
 
 // MARK: - Static Constructors
 
@@ -123,6 +97,37 @@ extension MenuCircleButtonStyle {
             color: nil,
             offColor: nil
         )
+    }
+}
+
+// MARK: - Convenience Methods
+
+extension MenuCircleButtonStyle {
+    public var hasColor: Bool {
+        color != nil && color != .clear
+    }
+    
+    public var hasOffColor: Bool {
+        offColor != nil && offColor != .clear
+    }
+    
+    public func hasColor(forState state: Bool) -> Bool {
+        state ? hasColor : hasOffColor
+    }
+    
+    public func color(forState state: Bool, isEnabled: Bool, colorScheme: ColorScheme) -> Color? {
+        let base: Color? = state
+            ? color
+            : (colorScheme == .dark ? offColor : offColor?.opacity(0.2))
+        return isEnabled ? base : base?.opacity(0.4)
+    }
+    
+    public func image(forState state: Bool) -> Image? {
+        state ? image : offImage
+    }
+    
+    public func hasImage(forState state: Bool) -> Bool {
+        state ? image != nil : offImage != nil
     }
 }
 

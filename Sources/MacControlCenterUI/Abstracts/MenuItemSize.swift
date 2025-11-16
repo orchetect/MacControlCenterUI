@@ -9,7 +9,8 @@
 import Foundation
 
 /// ``MacControlCenterMenu`` menu item size.
-public enum MenuItemSize: Equatable, Hashable {
+nonisolated
+public enum MenuItemSize {
     /// Standard height for text-only menu items.
     /// This equates to traditional NSMenu-style item height.
     case standardTextOnly
@@ -23,6 +24,12 @@ public enum MenuItemSize: Equatable, Hashable {
     /// Specify a custom size.
     case custom(CGFloat)
 }
+
+extension MenuItemSize: Equatable { }
+
+extension MenuItemSize: Hashable { }
+
+extension MenuItemSize: Sendable { }
 
 extension MenuItemSize {
     /// The inner padded content height.

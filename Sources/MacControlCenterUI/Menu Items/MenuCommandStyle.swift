@@ -13,6 +13,7 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
+nonisolated
 public enum MenuCommandStyle {
     /// Standard menu style (highlight on mouse hover using accent color).
     case menu
@@ -20,6 +21,14 @@ public enum MenuCommandStyle {
     /// Control Center style (highlight on mouse hover using translucent gray color).
     case controlCenter
 }
+
+extension MenuCommandStyle: Equatable { }
+
+extension MenuCommandStyle: Hashable { }
+
+extension MenuCommandStyle: CaseIterable { }
+
+extension MenuCommandStyle: Sendable { }
 
 extension MenuCommandStyle {
     public func textColor(hover: Bool, isEnabled: Bool) -> Color? {
@@ -51,6 +60,8 @@ extension MenuCommandStyle {
         }
     }
 }
+
+// MARK: - View Modifiers
 
 extension MenuCommand {
     /// Apply a menu command style.

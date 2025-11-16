@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+nonisolated
 enum MenuGeometry {
     static let menuItemStandardHoverForeColor = Color(NSColor.selectedMenuItemTextColor)
     static let menuItemStandardHoverBackColor = Color(NSColor.selectedContentBackgroundColor)
@@ -20,6 +21,7 @@ enum MenuGeometry {
     static let menuPadding: CGFloat = 6
 }
 
+nonisolated
 enum MenuStyling {
     static let headerFontSize: CGFloat = 13
 }

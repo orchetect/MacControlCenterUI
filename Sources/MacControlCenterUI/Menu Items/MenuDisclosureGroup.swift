@@ -189,12 +189,4 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     }
 }
 
-public enum MenuDisclosureGroupStyle {
-    /// Section style: Expanded content body has no added background (transparent).
-    case section
-    
-    /// Menu item style: Expanded content body has a shaded background.
-    case menuItem
-}
-
 #endif

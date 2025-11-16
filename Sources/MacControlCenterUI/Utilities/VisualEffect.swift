@@ -51,6 +51,8 @@ public struct VisualEffect: NSViewRepresentable {
     }
 }
 
+// MARK: - Static Constructors
+
 extension VisualEffect {
     public static func nonVibrant(mask: NSImage? = nil) -> Self {
         VisualEffect(
@@ -79,6 +81,8 @@ extension VisualEffect {
         )
     }
 }
+
+// MARK: - View Modifiers
 
 extension View {
     /// Backwards compatible implementation of thin material background.

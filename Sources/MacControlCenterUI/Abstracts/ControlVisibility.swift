@@ -8,6 +8,7 @@
 
 import Foundation
 
+nonisolated
 public enum ControlVisibility {
     /// Control is always visible.
     case always
@@ -18,5 +19,13 @@ public enum ControlVisibility {
     /// Control is always hidden.
     case never
 }
+
+extension ControlVisibility: Equatable { }
+
+extension ControlVisibility: Hashable { }
+
+extension ControlVisibility: CaseIterable { }
+
+extension ControlVisibility: Sendable { }
 
 #endif

@@ -8,25 +8,26 @@
 
 import SwiftUI
 
-public protocol MenuSliderImage {
+/// Protocol to allow types to define ``MenuSlider`` image states.
+nonisolated
+public protocol MenuSliderImage: Equatable, Sendable {
     /// Return an image if the image is static.
     func staticImage() -> Image?
     
     /// Return an image conditionally based on slider value.
-    func image(for value: CGFloat, oldValue: CGFloat?, force: Bool)
-        -> MenuSliderImageUpdate?
+    func image(for value: CGFloat, oldValue: CGFloat?, force: Bool) -> MenuSliderImageUpdate?
     
     /// Transform the image.
     func transform(image: Image, for value: CGFloat) -> AnyView?
 }
 
+// MARK: - Default implementation
+
 extension MenuSliderImage {
-    // Default implementation.
     public func staticImage() -> Image? {
         nil
     }
     
-    // Default implementation.
     public func image(
         for value: CGFloat,
         oldValue: CGFloat?,
@@ -35,11 +36,12 @@ extension MenuSliderImage {
         nil
     }
     
-    // Default implementation.
     public func transform(image: Image, for value: CGFloat) -> AnyView? {
         nil
     }
 }
+
+// MARK: - Methods
 
 extension MenuSliderImage {
     /// Convenience method to test if a value has newly entered a given value range.
@@ -53,14 +55,6 @@ extension MenuSliderImage {
         guard let oldValue = oldValue else { return range.contains(value) }
         return range.contains(value) && !range.contains(oldValue)
     }
-}
-
-// MARK: Types
-
-/// Type returned by ``MenuSliderImageProtocol/image(for:oldValue:force:)-3y6w9``.
-public enum MenuSliderImageUpdate {
-    case noChange
-    case newImage(Image)
 }
 
 #endif

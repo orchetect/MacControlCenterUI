@@ -41,7 +41,11 @@ public struct FullWidthMenuItem<Content: View>: View, MacControlCenterMenuItem {
     }
 }
 
+// MARK: - View Modifier
+
 extension View {
+    /// Generic full-width ``MacControlCenterMenu`` menu item abstract.
+    /// Utility for when you need to escape the automatic padding that ``MacControlCenterMenu`` applies.
     public func fullWidthMenuItem(
         verticalPadding: Bool = true
     ) -> FullWidthMenuItem<Self> {
