@@ -42,6 +42,15 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         trailingContent = nil
     }
     
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource
+    ) where Label == Text {
+        label = Self.stylized(Text(titleResource))
+        trailingContent = nil
+    }
+    
     public init(
         @ViewBuilder _ label: () -> Label
     ) where TrailingContent == EmptyView {
@@ -65,6 +74,16 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         @ViewBuilder trailingContent: @escaping () -> TrailingContent
     ) where Label == Text {
         label = Self.stylized(Text(titleKey))
+        self.trailingContent = trailingContent()
+    }
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        @ViewBuilder trailingContent: @escaping () -> TrailingContent
+    ) where Label == Text {
+        label = Self.stylized(Text(titleResource))
         self.trailingContent = trailingContent()
     }
     

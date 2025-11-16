@@ -41,6 +41,16 @@ public struct MenuVolumeSlider<Label: View>: View {
         label = Text(titleKey)
     }
     
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        value: Binding<CGFloat>
+    ) where Label == Text {
+        _value = value
+        label = Text(titleResource)
+    }
+    
     public init(
         value: Binding<CGFloat>,
         label: () -> Label

@@ -69,6 +69,18 @@ where Label: View, SliderImage: MenuSliderImage {
         sliderImage = StaticSliderImage(image())
     }
     
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> Image
+    ) where Label == Text, SliderImage == StaticSliderImage {
+        _value = value
+        label = Text(titleResource)
+        sliderImage = StaticSliderImage(image())
+    }
+    
     public init(
         value: Binding<CGFloat>,
         label: () -> Label,
@@ -109,6 +121,18 @@ where Label: View, SliderImage: MenuSliderImage {
     ) where Label == Text {
         _value = value
         label = Text(titleKey)
+        sliderImage = image()
+    }
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        value: Binding<CGFloat>,
+        image: @autoclosure () -> SliderImage
+    ) where Label == Text {
+        _value = value
+        label = Text(titleResource)
         sliderImage = image()
     }
     

@@ -45,6 +45,16 @@ public struct MenuSection<Label: View>: View {
         self.divider = divider
     }
     
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        divider: Bool = true
+    ) where Label == MenuSectionText<Text> {
+        label = MenuSectionText(text: Text(titleResource))
+        self.divider = divider
+    }
+    
     @_disfavoredOverload
     public init(
         _ label: Text,

@@ -26,7 +26,7 @@ public struct MenuCircleButton<Label: View>: View {
     
     @State private var isMouseDown: Bool = false
     
-    // MARK: Init
+    // MARK: Init - No Label
     
     public init(
         controlSize: MenuCircleButtonSize = .menu,
@@ -38,6 +38,8 @@ public struct MenuCircleButton<Label: View>: View {
         label = nil
         self.actionBlock = actionBlock
     }
+    
+    // MARK: Init - With String Label
     
     @_disfavoredOverload
     public init<S>(
@@ -54,6 +56,8 @@ public struct MenuCircleButton<Label: View>: View {
         )
     }
     
+    // MARK: Init - With LocalizedStringKey Label
+    
     public init(
         _ titleKey: LocalizedStringKey,
         controlSize: MenuCircleButtonSize = .menu,
@@ -67,6 +71,26 @@ public struct MenuCircleButton<Label: View>: View {
             action: actionBlock
         )
     }
+    
+    // MARK: Init - With LocalizedStringResource Label
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
+        action actionBlock: @escaping () -> Void
+    ) where Label == Text {
+        self.init(
+            controlSize: controlSize,
+            style: style,
+            label: { Text(titleResource) },
+            action: actionBlock
+        )
+    }
+    
+    // MARK: Init - With Label Closure
     
     public init(
         controlSize: MenuCircleButtonSize = .menu,

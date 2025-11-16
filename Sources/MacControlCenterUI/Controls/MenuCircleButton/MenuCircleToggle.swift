@@ -122,6 +122,40 @@ public struct MenuCircleToggle<Label: View>: View {
         self.onClickBlock = onClickBlock
     }
     
+    // MARK: Init - With LocalizedStringResource Label
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        style: MenuCircleButtonStyle,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == Text {
+        label = Text(titleResource)
+        _isOn = isOn
+        self.controlSize = controlSize
+        self.style = style
+        self.onClickBlock = onClickBlock
+    }
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        isOn: Binding<Bool>,
+        controlSize: MenuCircleButtonSize = .menu,
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == Text {
+        label = Text(titleResource)
+        _isOn = isOn
+        self.controlSize = controlSize
+        style = .init(image: image)
+        self.onClickBlock = onClickBlock
+    }
+    
     // MARK: Init - With Label Closure
     
     public init(

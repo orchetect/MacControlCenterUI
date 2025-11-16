@@ -61,6 +61,20 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.action = action
     }
     
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        activatesApp: Bool = true,
+        dismissesMenu: Bool = true,
+        action: @escaping () -> Void
+    ) where Label == Text {
+        label = Text(titleResource)
+        self.activatesApp = activatesApp
+        self.dismissesMenu = dismissesMenu
+        self.action = action
+    }
+    
     public init(
         action: @escaping () -> Void,
         activatesApp: Bool = true,

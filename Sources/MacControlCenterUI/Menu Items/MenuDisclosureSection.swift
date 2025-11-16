@@ -52,6 +52,20 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         self.content = content
     }
     
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        divider: Bool = true,
+        isExpanded: Binding<Bool>,
+        @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
+    ) where Label == MenuSectionText<Text> {
+        label = MenuSectionText(text: Text(titleResource))
+        self.divider = divider
+        _isExpanded = isExpanded
+        self.content = content
+    }
+    
     public init<LabelContent: View>(
         divider: Bool = true,
         isExpanded: Binding<Bool>,
@@ -87,6 +101,21 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
     ) where Label == MenuSectionText<Text> {
         label = MenuSectionText(text: Text(titleKey))
+        self.divider = divider
+        _isExpanded = .constant(false) // not used
+        nonBindingInitiallyExpanded = initiallyExpanded
+        self.content = content
+    }
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        divider: Bool = true,
+        initiallyExpanded: Bool = true,
+        @MacControlCenterMenuBuilder _ content: @escaping () -> [any View]
+    ) where Label == MenuSectionText<Text> {
+        label = MenuSectionText(text: Text(titleResource))
         self.divider = divider
         _isExpanded = .constant(false) // not used
         nonBindingInitiallyExpanded = initiallyExpanded

@@ -98,6 +98,36 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.onClickBlock = onClickBlock
     }
     
+    // MARK: Init - With LocalizedStringResource Label
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        isOn: Binding<Bool> = .constant(false),
+        style: MenuCircleButtonStyle,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == Text {
+        label = Text(titleResource)
+        _isOn = isOn
+        self.style = style
+        self.onClickBlock = onClickBlock
+    }
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        isOn: Binding<Bool> = .constant(false),
+        image: Image,
+        onClick onClickBlock: @escaping (Bool) -> Void = { _ in }
+    ) where Label == Text {
+        label = Text(titleResource)
+        _isOn = isOn
+        style = .init(image: image)
+        self.onClickBlock = onClickBlock
+    }
+    
     // MARK: Init - With Label Closure
     
     public init(
