@@ -6,7 +6,7 @@
 
 
 
-A **menu builder** and **suite of SwiftUI controls** that closely mimic the feel of **macOS Control Center** menus.
+A **menu builder** and **suite of SwiftUI controls** that closely mimics the feel of **macOS Control Center** menus.
 
 Integrates seamlessly with SwiftUI's `MenuBarExtra`.
 
