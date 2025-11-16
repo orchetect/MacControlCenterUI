@@ -107,8 +107,8 @@ struct MenuView: View {
                                     .frame(height: 10)
                                     .opacity(0.7)
                                 }
-                            } onClick: {
-                                _ in itemClicked()
+                            } onClick: { _ in
+                                itemClicked()
                             }
                         }, content: {
                             MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
@@ -121,8 +121,8 @@ struct MenuView: View {
                                         Text(item.name).font(.system(size: 12))
                                         Spacer()
                                     }
-                                } onClick: {
-                                    _ in itemClicked()
+                                } onClick: { _ in
+                                    itemClicked()
                                 }
                             }
                         }
