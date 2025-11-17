@@ -28,8 +28,10 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
     // MARK: Private State
     
     @State private var isExpanded: Bool
-    @State private var isHighlighted: Bool = false
     @State private var isChevronVisible: Bool
+    
+    @Binding private var isHighlighted: Bool
+    @State private var isHighlightedInternal: Bool = false
     
     // MARK: Init - With Binding
     
@@ -38,6 +40,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         isExpanded: Binding<Bool>,
         labelHeight: MenuItemSize,
         toggleVisibility: ControlVisibility = .always,
+        isHighlighted: Binding<Bool>? = nil,
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: @escaping () -> [any View]
     ) {
@@ -48,6 +51,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         self.toggleVisibility = toggleVisibility
         self.label = label()
         self.content = content
+        _isHighlighted = isHighlighted ?? .constant(false)
         isChevronVisible = toggleVisibility == .always
     }
     
@@ -58,6 +62,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         initiallyExpanded: Bool = true,
         labelHeight: MenuItemSize,
         toggleVisibility: ControlVisibility = .always,
+        isHighlighted: Binding<Bool>? = nil,
         @ViewBuilder label: () -> Label,
         @MacControlCenterMenuBuilder content: @escaping () -> [any View]
     ) {
@@ -66,6 +71,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         _isExpanded = State(initialValue: initiallyExpanded)
         self.labelHeight = labelHeight
         self.toggleVisibility = toggleVisibility
+        _isHighlighted = isHighlighted ?? .constant(false)
         self.label = label()
         self.content = content
         isChevronVisible = toggleVisibility == .always
@@ -95,7 +101,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
                 HighlightingMenuItem(
                     style: .controlCenter,
                     height: labelHeight,
-                    isHighlighted: $isHighlighted,
+                    isHighlighted: $isHighlightedInternal,
                     {
                         HStack {
                             label
@@ -114,6 +120,12 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
             },
             content: content
         )
+        .onChange(of: isHighlighted) { newValue in
+            isHighlightedInternal = newValue
+        }
+        .onChange(of: isHighlightedInternal) { newValue in
+            isHighlighted = newValue
+        }
     }
     
     private var shouldChevronBeVisible: Bool {

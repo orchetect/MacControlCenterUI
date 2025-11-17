@@ -21,9 +21,9 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     public var height: MenuItemSize
     @Binding public var isOn: Bool
     @Binding public var isPressed: Bool
+    @Binding public var isHighlighted: Bool
     public let content: () -> Content
     public var onChangeBlock: (_ state: Bool) -> Void
-    @Binding public var isHighlighted: Bool
     
     // MARK: Environment
     
