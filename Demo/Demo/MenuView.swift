@@ -110,7 +110,8 @@ struct MenuView: View {
                             } onClick: { _ in
                                 itemClicked()
                             }
-                        }, content: {
+                        },
+                        content: {
                             MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
                                 MenuToggle(
                                     isOn: .constant(isSelected),
