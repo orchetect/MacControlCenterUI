@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+/// A ``MenuSliderImage`` static image.
 nonisolated
 public struct StaticSliderImage: MenuSliderImage {
     private let img: Image
@@ -18,6 +19,14 @@ public struct StaticSliderImage: MenuSliderImage {
     
     public func staticImage() -> Image? {
         img
+    }
+    
+    public func minImage() -> Image? {
+        nil
+    }
+    
+    public func maxImage() -> Image? {
+        nil
     }
     
     public func image(
