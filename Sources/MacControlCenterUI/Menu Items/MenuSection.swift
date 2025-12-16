@@ -97,7 +97,6 @@ public struct MenuSection<Label: View>: View {
         MenuCommand("Test Menu Item") { }
         MenuCommand("Test Menu Item") { }
     }
-    .frame(width: 310)
 }
 #endif
 

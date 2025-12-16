@@ -121,34 +121,48 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
 }
 
 #if DEBUG
-@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
-#Preview {
-    @Previewable @State var isOn: Bool = false
+@available(macOS 14, *)
+#Preview("Text Only Header") {
+    @Previewable @State var isOn: Bool = true
+    @Previewable @State var isKeyboardOn: Bool = true
+    @Previewable @State var isTrackpadOn: Bool = false
     
     MacControlCenterMenu(isPresented: .constant(true)) {
-        MenuHeader("Header")
+        MenuHeader("Bluetooth")
+        
         Divider()
         
-        MenuCommand("Test Menu Item") { }
-        MenuCommand("Test Menu Item") { }
+        MenuToggle("Keyboard", isOn: $isKeyboardOn, style: .standard(systemImage: "keyboard"))
+        MenuToggle("Trackpad", isOn: $isTrackpadOn, style: .standard(systemImage: "rectangle.and.hand.point.up.left.filled"))
         
-        MenuHeader("Header") {
-            Toggle("On", isOn: $isOn)
-                .toggleStyle(.switch)
-                .controlSize(.small)
-        }
         Divider()
         
-        MenuCommand("Test Menu Item") { }
-        MenuCommand("Test Menu Item") { }
-        
-        MenuHeader { Text("Header Without Formatting") }
-        Divider()
-        
-        MenuCommand("Test Menu Item") { }
-        MenuCommand("Test Menu Item") { }
+        MenuCommand("Bluetooth Settings...") { }
     }
-    .frame(width: 310)
+}
+
+@available(macOS 14, *)
+#Preview("Header With Trailing Content") {
+    @Previewable @State var isOn: Bool = true
+    @Previewable @State var isKeyboardOn: Bool = true
+    @Previewable @State var isTrackpadOn: Bool = false
+    
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuHeader("Bluetooth") {
+            Toggle("", isOn: $isOn)
+                .toggleStyle(.switch)
+                .labelsHidden()
+        }
+        
+        Divider()
+        
+        MenuToggle("Keyboard", isOn: $isKeyboardOn, style: .standard(systemImage: "keyboard"))
+        MenuToggle("Trackpad", isOn: $isTrackpadOn, style: .standard(systemImage: "rectangle.and.hand.point.up.left.filled"))
+        
+        Divider()
+        
+        MenuCommand("Bluetooth Settings...") { }
+    }
 }
 #endif
 
