@@ -5,10 +5,6 @@
 <p align="right"><b>macOS 26</b></p>
 <img align="right" width="40%" src="Images/macOS26-screenshot.png" alt="macOS 26 Example">
 
-<p align="right"><b>macOS 11 Through 15</b></p>
-<img align="right" width="40%" src="Images/macOS15-screenshot.png" alt="macOS 15 Example">
-
-
 
 A **menu builder** and **suite of SwiftUI controls** that closely mimics the feel of **macOS Control Center** menus.
 
@@ -41,6 +37,9 @@ Both **Dark** and **Light Mode** are fully supported.
    ```
 
 3. Try the [Demo](Demo) example project to see all of the available controls in action.
+
+<p align="right"><b>macOS 11 Through 15</b></p>
+<img align="right" width="40%" src="Images/macOS15-screenshot.png" alt="macOS 15 Example">
 
 ## Requirements
 
