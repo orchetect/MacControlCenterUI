@@ -120,4 +120,36 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     }
 }
 
+#if DEBUG
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
+#Preview {
+    @Previewable @State var isOn: Bool = false
+    
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuHeader("Header")
+        Divider()
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+        
+        MenuHeader("Header") {
+            Toggle("On", isOn: $isOn)
+                .toggleStyle(.switch)
+                .controlSize(.small)
+        }
+        Divider()
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+        
+        MenuHeader { Text("Header Without Formatting") }
+        Divider()
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+    }
+    .frame(width: 310)
+}
+#endif
+
 #endif
