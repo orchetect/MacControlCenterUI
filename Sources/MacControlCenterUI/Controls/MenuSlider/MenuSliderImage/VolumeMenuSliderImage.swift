@@ -113,4 +113,11 @@ extension VolumeMenuSliderImage {
     }
 }
 
+// MARK: - Static Constructor
+
+extension MenuSliderImage where Self == VolumeMenuSliderImage {
+    /// A ``MenuSliderImage`` suitable for a volume slider.
+    public static var volume: VolumeMenuSliderImage { VolumeMenuSliderImage() }
+}
+
 #endif
