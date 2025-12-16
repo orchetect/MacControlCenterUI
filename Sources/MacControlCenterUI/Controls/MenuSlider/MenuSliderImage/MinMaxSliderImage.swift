@@ -10,38 +10,36 @@ import SwiftUI
 
 /// A ``MenuSliderImage`` static minimum & maximum value image set.
 nonisolated
-public struct MinMaxSliderImage: MenuSliderImage {
-    private let minImg: Image
-    private let maxImg: Image
+public struct MinMaxSliderImage {
+    private var minImg: Image
+    private var maxImg: Image
     
     public init(min: Image, max: Image) {
         minImg = min
         maxImg = max
     }
-    
-    public func staticImage() -> Image? {
+}
+
+extension MinMaxSliderImage: MenuSliderImage {
+    public func staticImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
         nil
     }
     
-    public func minImage() -> Image? {
-        minImg
+    public func minImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
+        MenuSliderImageDescriptor(image: minImg)
     }
     
-    public func maxImage() -> Image? {
-        maxImg
+    public func maxImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
+        MenuSliderImageDescriptor(image: maxImg)
     }
     
-    public func image(
-        for value: CGFloat,
-        oldValue: CGFloat?,
-        force: Bool = false
-    ) -> MenuSliderImageUpdate? {
-        if newlyEntered(value: value, oldValue: oldValue, in: 0.0 ... 0.4999, force: force) {
-            return .newImage(minImg)
+    public func deltaImage(forValue value: CGFloat, oldValue: CGFloat?, style: MenuSliderStyle, force: Bool) -> MenuSliderImageUpdate? {
+        if isNewlyEntered(value: value, oldValue: oldValue, in: 0.0 ... 0.4999, force: force) {
+            return .newImage(MenuSliderImageDescriptor(image: minImg))
         }
         
-        if newlyEntered(value: value, oldValue: oldValue, in: 0.5 ... 1.0, force: force) {
-            return .newImage(maxImg)
+        if isNewlyEntered(value: value, oldValue: oldValue, in: 0.5 ... 1.0, force: force) {
+            return .newImage(MenuSliderImageDescriptor(image: maxImg))
         }
         
         return .noChange

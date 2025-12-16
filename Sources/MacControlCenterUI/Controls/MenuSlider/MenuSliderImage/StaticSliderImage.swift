@@ -17,23 +17,8 @@ public struct StaticSliderImage: MenuSliderImage {
         self.img = img
     }
     
-    public func staticImage() -> Image? {
-        img
-    }
-    
-    public func minImage() -> Image? {
-        nil
-    }
-    
-    public func maxImage() -> Image? {
-        nil
-    }
-    
-    public func image(
-        for value: CGFloat,
-        oldValue: CGFloat?
-    ) -> MenuSliderImageUpdate? {
-        nil
+    public func staticImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
+        MenuSliderImageDescriptor(image: img)
     }
 }
 

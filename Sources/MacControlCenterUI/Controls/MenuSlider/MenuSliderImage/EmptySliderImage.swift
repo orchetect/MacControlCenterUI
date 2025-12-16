@@ -12,17 +12,6 @@ import SwiftUI
 nonisolated
 public struct EmptySliderImage: MenuSliderImage {
     public init() { }
-    
-    public func staticImage() -> Image? {
-        nil
-    }
-    
-    public func image(
-        for value: CGFloat,
-        oldValue: CGFloat?
-    ) -> MenuSliderImageUpdate? {
-        nil
-    }
 }
 
 // MARK: - Static Constructor
