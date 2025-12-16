@@ -30,14 +30,14 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     @_disfavoredOverload
     public init<S>(
         _ label: S
-    ) where S: StringProtocol, Label == Text {
+    ) where S: StringProtocol, Label == Text, TrailingContent == Never {
         self.label = Self.stylized(Text(label))
         trailingContent = nil
     }
     
     public init(
         _ titleKey: LocalizedStringKey
-    ) where Label == Text {
+    ) where Label == Text, TrailingContent == Never {
         label = Self.stylized(Text(titleKey))
         trailingContent = nil
     }
@@ -46,14 +46,14 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     @_disfavoredOverload
     public init(
         _ titleResource: LocalizedStringResource
-    ) where Label == Text {
+    ) where Label == Text, TrailingContent == Never {
         label = Self.stylized(Text(titleResource))
         trailingContent = nil
     }
     
     public init(
         @ViewBuilder _ label: () -> Label
-    ) where TrailingContent == EmptyView {
+    ) where TrailingContent == Never {
         self.label = label()
         trailingContent = nil
     }
