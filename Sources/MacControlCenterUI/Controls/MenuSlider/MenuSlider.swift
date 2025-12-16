@@ -235,29 +235,31 @@ extension MenuSlider {
             guard let sliderImage = sliderImage else { return }
             
             // first check if static image is being used
-            if minImage == nil || force, let img = sliderImage.staticImage() {
-                minImage = AnyView(formatStandardImage(image: img, fgColor: fgColor))
+            if minImage == nil || force,
+                let imageDescriptor = sliderImage.staticImage(style: .macOS26)
+            {
+                minImage = formatImage(sliderImage: sliderImage, imageDescriptor: imageDescriptor, fgColor: fgColor)
                 maxImage = minImage
                 return
             }
             // otherwise check if a variable image is being used
             else {
                 if value == 0.0 || oldValue == 0.0 || force,
-                   let result = sliderImage.image(for: min(value, 0.001), oldValue: oldValue, force: force)
+                   let result = sliderImage.deltaImage(forValue: min(value, 0.001), oldValue: oldValue, style: .macOS26, force: force)
                 {
                     switch result {
-                    case let .newImage(rawImg):
-                        minImage = AnyView(formatStandardImage(image: rawImg, fgColor: fgColor))
+                    case let .newImage(imageDescriptor):
+                        minImage = formatImage(sliderImage: sliderImage, imageDescriptor: imageDescriptor, fgColor: fgColor)
                     case .noChange:
                         return
                     }
                 }
                 if value == 1.0 || oldValue == 1.0 || force,
-                   let result = sliderImage.image(for: max(value, 0.999), oldValue: oldValue, force: force)
+                   let result = sliderImage.deltaImage(forValue: max(value, 0.999), oldValue: oldValue, style: .macOS26, force: force)
                 {
                     switch result {
-                    case let .newImage(rawImg):
-                        maxImage = AnyView(formatStandardImage(image: rawImg, fgColor: fgColor))
+                    case let .newImage(imageDescriptor):
+                        maxImage = formatImage(sliderImage: sliderImage, imageDescriptor: imageDescriptor, fgColor: fgColor)
                     case .noChange:
                         return
                     }
@@ -265,15 +267,17 @@ extension MenuSlider {
             }
         }
         
-        private func formatStandardImage(image: Image?, fgColor: Color) -> some View {
-            image?
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: CGFloat(Self.sliderHeight - 2),
-                    height: CGFloat(Self.sliderHeight - 2)
-                )
-                .foregroundColor(fgColor)
+        private func formatImage(sliderImage: SliderImage, imageDescriptor: MenuSliderImageDescriptor, fgColor: Color) -> AnyView {
+            return AnyView(
+                imageDescriptor.image
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: Self.sliderHeight - 6) // add a little padding
+                    .frame(minWidth: Self.sliderHeight - 6) // add a little padding
+                    .scaleEffect(imageDescriptor.scale ?? 1.0, anchor: .center)
+                    .offset(x: imageDescriptor.xOffset ?? 0.0)
+                    .foregroundColor(fgColor)
+            )
         }
     }
     
@@ -453,45 +457,34 @@ extension MenuSlider {
         private func updateImage(fgColor: Color, force: Bool = false) {
             guard let sliderImage = sliderImage else { return }
             
+            func apply(imageDescriptor: MenuSliderImageDescriptor) {
+                currentImage = imageDescriptor.image
+                currentImageView = AnyView(
+                    imageDescriptor.image
+                        .scaleEffect(imageDescriptor.scale ?? 1.0, anchor: .center)
+                        .offset(x: 4 + (imageDescriptor.xOffset ?? 0.0), y: 0)
+                        .foregroundColor(fgColor)
+                )
+            }
+            
             // first check if static image is being used
-            if let img = sliderImage.staticImage() {
+            if let imageDescriptor = sliderImage.staticImage(style: .macOS10_15Thru15) {
                 if currentImage == nil || force {
-                    currentImage = img
-                    currentImageView = AnyView(formatStandardImage(image: img, fgColor: fgColor))
+                    apply(imageDescriptor: imageDescriptor)
                     return
                 }
             }
             
             // otherwise check if a variable image is being used
-            if let imgUpdate = sliderImage.image(for: value, oldValue: oldValue, force: force) {
-                switch imgUpdate {
+            if let delta = sliderImage.deltaImage(forValue: value, oldValue: oldValue, style: .macOS10_15Thru15, force: force) {
+                switch delta {
                 case .noChange:
                     break
-                case let .newImage(newImg):
-                    currentImage = newImg
-                    if let transformed = sliderImage.transform(image: newImg, for: value) {
-                        currentImageView = AnyView(
-                            transformed
-                                .foregroundColor(fgColor)
-                        )
-                    } else {
-                        currentImageView = AnyView(formatStandardImage(image: newImg, fgColor: fgColor))
-                    }
+                case let .newImage(imageDescriptor):
+                    apply(imageDescriptor: imageDescriptor)
                 }
                 return
             }
-        }
-        
-        private func formatStandardImage(image: Image, fgColor: Color) -> some View {
-            image
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: CGFloat(Self.sliderHeight - 6),
-                    height: CGFloat(Self.sliderHeight - 6)
-                )
-                .foregroundColor(fgColor)
-                .offset(x: 4, y: 0)
         }
         
         private func scale(_ unitIntervalValue: CGFloat, to range: ClosedRange<CGFloat>) -> CGFloat {
@@ -550,7 +543,7 @@ extension MenuSlider {
     }
 }
 
-@available(macOS 26, *)
+@available(macOS 26.0, *)
 #Preview("macOS 26 Style") {
     @Previewable @State var value: CGFloat = 0.5
     
