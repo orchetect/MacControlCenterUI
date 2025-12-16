@@ -58,6 +58,7 @@ public struct MacControlCenterMenu: View {
     // MARK: Public Properties
     
     @Binding public var menuBarExtraIsPresented: Bool
+    public var width: MenuWidth?
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
     
@@ -69,6 +70,8 @@ public struct MacControlCenterMenu: View {
     ///
     /// - Parameters:
     ///   - isPresented: Pass the binding from `.menuBarExtraAccess(isPresented:)` here.
+    ///   - width: Select a standard menu width for the `currentPlatform()` or manually specify.
+    ///     If `nil`, the menu is not constrained.
     ///   - activateAppOnCommandSelection: Activate the app before executing
     ///     command action blocks. This is often necessary since menubar items
     ///     can be accessed while the app is not in focus. This will allow
@@ -77,10 +80,12 @@ public struct MacControlCenterMenu: View {
     ///   - content: Menu item builder content.
     public init(
         isPresented: Binding<Bool>,
+        width: MenuWidth? = .currentPlatform(),
         activateAppOnCommandSelection: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
         _menuBarExtraIsPresented = isPresented
+        self.width = width
         self.activateAppOnCommandSelection = activateAppOnCommandSelection
         self.content = content()
     }
@@ -96,6 +101,7 @@ public struct MacControlCenterMenu: View {
             Spacer().frame(minHeight: 0)
         }
         .background(VisualEffect.popoverWindow())
+        .frame(width: width?.width)
     }
     
     @ViewBuilder
@@ -109,11 +115,44 @@ public struct MacControlCenterMenu: View {
 }
 
 #if DEBUG
-#Preview {
+#Preview("Default Width for Current Platform") {
     MacControlCenterMenu(isPresented: .constant(true)) {
-        EmptyView()        
+        MenuHeader("Header")
+        MenuCommand("Test Command") { }
+        
+        MenuSection("Section", divider: true)
+        MenuCommand("Test Command") { }
     }
-    .frame(width: 310)
+}
+
+#Preview("macOS 26 Width") {
+    MacControlCenterMenu(isPresented: .constant(true), width: .macOS26) {
+        MenuHeader("Header")
+        MenuCommand("Test Command") { }
+        
+        MenuSection("Section", divider: true)
+        MenuCommand("Test Command") { }
+    }
+}
+
+#Preview("macOS 11-15 Width") {
+    MacControlCenterMenu(isPresented: .constant(true), width: .macOS11Thru15) {
+        MenuHeader("Header")
+        MenuCommand("Test Command") { }
+        
+        MenuSection("Section", divider: true)
+        MenuCommand("Test Command") { }
+    }
+}
+
+#Preview("No Width Constraint") {
+    MacControlCenterMenu(isPresented: .constant(true), width: nil) {
+        MenuHeader("Header")
+        MenuCommand("Test Command") { }
+        
+        MenuSection("Section", divider: true)
+        MenuCommand("Test Command") { }
+    }
 }
 #endif
 
