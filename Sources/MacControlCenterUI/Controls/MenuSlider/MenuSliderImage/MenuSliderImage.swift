@@ -14,6 +14,12 @@ public protocol MenuSliderImage: Equatable, Sendable {
     /// Return an image if the image is static.
     func staticImage() -> Image?
     
+    /// Return an image for minimum value.
+    func minImage() -> Image?
+    
+    /// Return an image for maximum value.
+    func maxImage() -> Image?
+    
     /// Return an image conditionally based on slider value.
     func image(for value: CGFloat, oldValue: CGFloat?, force: Bool) -> MenuSliderImageUpdate?
     
@@ -26,6 +32,24 @@ public protocol MenuSliderImage: Equatable, Sendable {
 extension MenuSliderImage {
     public func staticImage() -> Image? {
         nil
+    }
+    
+    public func minImage() -> Image? {
+        guard let result = image(for: 0.0, oldValue: nil, force: true) else { return nil }
+        
+        switch result {
+        case let .newImage(image): return image
+        case .noChange: return nil
+        }
+    }
+    
+    public func maxImage() -> Image? {
+        guard let result = image(for: 1.0, oldValue: nil, force: true) else { return nil }
+        
+        switch result {
+        case let .newImage(image): return image
+        case .noChange: return nil
+        }
     }
     
     public func image(
