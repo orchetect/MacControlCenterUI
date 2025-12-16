@@ -13,7 +13,7 @@ struct MenuView: View {
     
     @Binding var isMenuPresented: Bool
     
-    @State private var isCommandsDisabled = false
+    @State private var isEnabled = true
     @State private var darkMode: Bool = true
     @State private var nightShift: Bool = true
     @State private var trueTone: Bool = true
@@ -32,13 +32,26 @@ struct MenuView: View {
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
+            MenuHeader("Enabled") {
+                Toggle("", isOn: $isEnabled)
+                    .toggleStyle(.switch)
+                    .labelsHidden()
+            }
+            
+            if !isEnabled {
+                Text("Some menu items are now disabled.")
+                    .foregroundStyle(.secondary)
+            }
+            
+            Divider()
+            
             MenuSection("Display", divider: false)
             
             MenuSlider(
                 value: $brightness,
-                image: Image(systemName: "sun.max.fill")
+                image: .minMax(minSystemName: "sun.min.fill", maxSystemName: "sun.max.fill")
             )
-            .disabled(isCommandsDisabled)
+            .disabled(!isEnabled)
             .frame(minWidth: sliderWidth)
             
             HStack {
@@ -73,7 +86,7 @@ struct MenuView: View {
                 ) {
                     Text("True Tone")
                 }
-                .disabled(isCommandsDisabled)
+                .disabled(!isEnabled)
             }
             .frame(height: 80)
             
@@ -128,7 +141,7 @@ struct MenuView: View {
                             }
                         }
                     )
-                    .disabled(isCommandsDisabled)
+                    .disabled(!isEnabled)
                 } else {
                     MenuToggle(isOn: .constant(isSelected), image: item.image) {
                         Text(item.name)
@@ -143,7 +156,7 @@ struct MenuView: View {
                             Text(item.name)
                         }
                     }
-                    .disabled(isCommandsDisabled)
+                    .disabled(!isEnabled)
                 }
             }
             
@@ -151,16 +164,7 @@ struct MenuView: View {
             MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
             MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
             MenuToggle("Xcode", isOn: $isXcodeEnabled, style: .icon(appIcon(for: "com.apple.dt.Xcode")))
-                .disabled(isCommandsDisabled)
-            
-            MenuSection("Debug")
-                .disabled(isCommandsDisabled)
-            
-            MenuCircleToggle(
-                "Disable Some Menu Items",
-                isOn: $isCommandsDisabled,
-                image: Image(systemName: "rectangle.slash")
-            )
+                .disabled(!isEnabled)
             
             Divider()
             
@@ -169,7 +173,7 @@ struct MenuView: View {
             } label: {
                 Text("About") // custom label view
             }
-            .disabled(isCommandsDisabled)
+            .disabled(!isEnabled)
             
             MenuCommand {
                 openSettings()
