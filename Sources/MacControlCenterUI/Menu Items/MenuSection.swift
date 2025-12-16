@@ -84,4 +84,21 @@ public struct MenuSection<Label: View>: View {
     }
 }
 
+#if DEBUG
+#Preview {
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuSection("Section", divider: false)
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+        
+        MenuSection("Section", divider: true)
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+    }
+    .frame(width: 310)
+}
+#endif
+
 #endif

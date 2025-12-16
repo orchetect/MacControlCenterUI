@@ -108,4 +108,13 @@ public struct MacControlCenterMenu: View {
     }
 }
 
+#if DEBUG
+#Preview {
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        EmptyView()        
+    }
+    .frame(width: 310)
+}
+#endif
+
 #endif
