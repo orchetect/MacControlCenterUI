@@ -37,4 +37,19 @@ public struct StaticSliderImage: MenuSliderImage {
     }
 }
 
+// MARK: - Static Constructor
+
+extension MenuSliderImage where Self == StaticSliderImage {
+    /// A ``MenuSliderImage`` static image.
+    public static func `static`(_ image: Image) -> StaticSliderImage {
+        StaticSliderImage(image)
+    }
+    
+    /// A ``MenuSliderImage`` static image.
+    public static func `static`(systemName: String) -> StaticSliderImage {
+        StaticSliderImage(Image(systemName: systemName))
+    }
+}
+
+
 #endif
