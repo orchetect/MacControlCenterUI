@@ -16,20 +16,10 @@ public struct VolumeMenuSliderImage: MenuSliderImage {
         oldValue: CGFloat?,
         force: Bool = false
     ) -> MenuSliderImageUpdate? {
-        if newlyEntered(value: value, oldValue: oldValue, in: Level.off.range, force: force) {
-            return .newImage(Level.off.image)
-        }
-        
-        if newlyEntered(value: value, oldValue: oldValue, in: Level.vol1.range, force: force) {
-            return .newImage(Level.vol1.image)
-        }
-        
-        if newlyEntered(value: value, oldValue: oldValue, in: Level.vol2.range, force: force) {
-            return .newImage(Level.vol2.image)
-        }
-        
-        if newlyEntered(value: value, oldValue: oldValue, in: Level.vol3.range, force: force) {
-            return .newImage(Level.vol3.image)
+        for level in Level.allCases {
+            if newlyEntered(value: value, oldValue: oldValue, in: level.range, force: force) {
+                return .newImage(level.image)
+            }
         }
         
         return .noChange
@@ -58,15 +48,17 @@ public struct VolumeMenuSliderImage: MenuSliderImage {
 }
 
 extension VolumeMenuSliderImage {
-    private enum Level {
-        case off
+    private enum Level: CaseIterable {
+        case off // "muted"
+        case vol0 // "min"
         case vol1
         case vol2
-        case vol3
+        case vol3 // "max"
         
         init?(value: CGFloat) {
             switch value {
             case Self.off.range: self = .off
+            case Self.vol0.range: self = .vol0
             case Self.vol1.range: self = .vol1
             case Self.vol2.range: self = .vol2
             case Self.vol3.range: self = .vol3
@@ -77,7 +69,8 @@ extension VolumeMenuSliderImage {
         var range: ClosedRange<CGFloat> {
             switch self {
             case .off: return 0.0 ... 0.0
-            case .vol1: return 0.00001 ... 0.33
+            case .vol0: return 0.00001 ... 0.165
+            case .vol1: return 0.165 ... 0.33
             case .vol2: return 0.33 ... 0.66
             case .vol3: return 0.66 ... 1.0
             }
@@ -87,6 +80,7 @@ extension VolumeMenuSliderImage {
             if #available(macOS 11, *) {
                 switch self {
                 case .off: return 10
+                case .vol0: return 6
                 case .vol1: return 9
                 case .vol2: return 11
                 case .vol3: return 14
@@ -100,7 +94,7 @@ extension VolumeMenuSliderImage {
             if #available(macOS 11, *) {
                 switch self {
                 case .off: return true
-                case .vol1, .vol2, .vol3: return false
+                case .vol0, .vol1, .vol2, .vol3: return false
                 }
             } else {
                 return false
@@ -110,6 +104,7 @@ extension VolumeMenuSliderImage {
         var image: Image {
             switch self {
             case .off: return Image(systemName: "speaker.slash.fill")
+            case .vol0: return Image(systemName: "speaker.fill")
             case .vol1: return Image(systemName: "speaker.wave.1.fill")
             case .vol2: return Image(systemName: "speaker.wave.2.fill")
             case .vol3: return Image(systemName: "speaker.wave.3.fill")
