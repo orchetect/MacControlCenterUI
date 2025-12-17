@@ -93,24 +93,21 @@ public struct MacControlCenterMenu: View {
     // MARK: Body
     
     public var body: some View {
-        ZStack(alignment: .top) {
-            menuBody
+        VStack(alignment: .leading, spacing: 0) {
+            Spacer()
+                .frame(height: MenuGeometry.menuPadding)
             
-            // not sure why this helps, but it keeps the window in place when its size changes
-            // and prevents janky view animations
-            Spacer().frame(minHeight: 0)
+            MenuBody(content: content) { item in
+                item
+                    .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+            }
+            .geometryGroupIfSupportedByPlatform()
+            
+            Spacer()
+                .frame(height: MenuGeometry.menuPadding)
         }
-        .background(VisualEffect.popoverWindow())
         .frame(width: width?.width)
-    }
-    
-    @ViewBuilder
-    private var menuBody: some View {
-        MenuBody(content: content) { item in
-            item
-                .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
-        }
-        .padding([.top, .bottom], MenuGeometry.menuPadding)
+        .menuBackgroundEffectForCurrentPlatform()
     }
 }
 
