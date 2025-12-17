@@ -2,8 +2,7 @@
 
 [![Platforms | macOS 11](https://img.shields.io/badge/platforms-macOS%2011-blue.svg?style=flat)](https://developer.apple.com/swift) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FMacControlCenterUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/MacControlCenterUI) [![Xcode 14](https://img.shields.io/badge/Xcode-14-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
 
-<p align="right"><b>macOS 26</b></p>
-<img align="right" width="40%" src="Images/macOS26-screenshot.png" alt="macOS 26 Example">
+<img align="right" width="40%" src="Images/screenshot.png" alt="Example Screeshot">
 
 
 A **menu builder** and **suite of SwiftUI controls** that closely mimics the feel of **macOS Control Center** menus.
@@ -27,7 +26,7 @@ Both **Dark** and **Light Mode** are fully supported.
    - In a Swift Package, add it to the Package.swift dependencies:
 
      ```swift
-     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.5.0")
+     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.7.0")
      ```
 
 2. Import the library:
@@ -37,9 +36,6 @@ Both **Dark** and **Light Mode** are fully supported.
    ```
 
 3. Try the [Demo](Demo) example project to see all of the available controls in action.
-
-<p align="right"><b>macOS 11 Through 15</b></p>
-<img align="right" width="40%" src="Images/macOS15-screenshot.png" alt="macOS 15 Example">
 
 ## Requirements
 
