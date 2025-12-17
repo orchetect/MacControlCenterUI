@@ -9,6 +9,7 @@
 import SwiftUI
 
 /// Translucent visual effect background.
+@available(macOS, deprecated: 26.0, message: "Deprecated. Use .background(.ultraThinMaterial) or liquid glass effects instead.")
 public struct VisualEffect: NSViewRepresentable {
     let material: NSVisualEffectView.Material
     let appearance: NSAppearance.Name?
@@ -54,6 +55,7 @@ public struct VisualEffect: NSViewRepresentable {
 // MARK: - Static Constructors
 
 extension VisualEffect {
+    @available(macOS, deprecated: 26.0, message: "Deprecated. Use .background(.ultraThinMaterial) or liquid glass effects instead.")
     public static func nonVibrant(mask: NSImage? = nil) -> Self {
         VisualEffect(
             .underWindowBackground,
@@ -63,6 +65,7 @@ extension VisualEffect {
         )
     }
     
+    @available(macOS, deprecated: 26.0, message: "Deprecated. Use .background(.ultraThinMaterial) or liquid glass effects instead.")
     public static func vibrant(mask: NSImage? = nil) -> Self {
         VisualEffect(
             .underWindowBackground,
@@ -73,6 +76,7 @@ extension VisualEffect {
     }
     
     /// Mimics the macOS Control Center / system menus translucency.
+    @available(macOS, deprecated: 26.0, message: "Deprecated. Use .background(.ultraThinMaterial) or liquid glass effects instead.")
     public static func popoverWindow() -> Self {
         VisualEffect(
             .popover,
