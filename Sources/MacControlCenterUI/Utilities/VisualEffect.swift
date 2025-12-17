@@ -89,12 +89,33 @@ extension VisualEffect {
 // MARK: - View Modifiers
 
 extension View {
+    /// Applies the appropriate window background effect for the menu based on the current platform.
+    func menuBackgroundEffectForCurrentPlatform() -> some View {
+        if #available(macOS 26.0, *) {
+            return self
+                .backgroundStyle(.ultraThinMaterial /*. thinMaterial */)
+                .windowResizeAnchor(.topLeading) // helps with smooth menu window resize animations
+        } else {
+            return self
+                .background(VisualEffect.popoverWindow())
+        }
+    }
+    
     /// Backwards compatible implementation of thin material background.
-    func foregroundStyleThinMaterial() -> some View {
-        if #available(macOS 13, *) {
+    func foregroundStyleThinMaterialIfSupportedByPlatform() -> some View {
+        if #available(macOS 13.0, *) {
             return self.foregroundStyle(.thinMaterial)
         } else {
             return self // .background(VisualEffect())
+        }
+    }
+    
+    /// Backwards compatible implementation of geometry group.
+    func geometryGroupIfSupportedByPlatform() -> some View {
+        if #available(macOS 14.0, *) {
+            return self.geometryGroup()
+        } else {
+            return self
         }
     }
 }
