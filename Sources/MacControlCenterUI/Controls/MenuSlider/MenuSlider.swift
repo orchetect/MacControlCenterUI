@@ -239,7 +239,7 @@ extension MenuSlider {
                 let imageDescriptor = sliderImage.staticImage(style: .macOS26)
             {
                 minImage = formatImage(sliderImage: sliderImage, imageDescriptor: imageDescriptor, fgColor: fgColor)
-                maxImage = minImage
+                maxImage = nil
                 return
             }
             // otherwise check if a variable image is being used
