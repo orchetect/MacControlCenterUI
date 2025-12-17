@@ -99,15 +99,14 @@ public struct MacControlCenterMenu: View {
             
             MenuBody(content: content) { item in
                 item
-                    .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
             }
-            .geometryGroupIfSupportedByPlatform()
             
             Spacer()
                 .frame(height: MenuGeometry.menuPadding)
         }
         .frame(width: width?.width)
         .menuBackgroundEffectForCurrentPlatform()
+        .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
     }
 }
 

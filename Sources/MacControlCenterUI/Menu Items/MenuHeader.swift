@@ -101,6 +101,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
             .opacity(isEnabled ? 1.0 : 0.4)
             .frame(minHeight: MenuGeometry.menuItemContentStandardHeight)
             .frame(maxWidth: .infinity)
+            .geometryGroupIfSupportedByPlatform()
     }
     
     @ViewBuilder

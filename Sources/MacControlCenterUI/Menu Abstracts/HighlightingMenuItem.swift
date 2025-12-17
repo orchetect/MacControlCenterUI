@@ -73,6 +73,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
         .frame(height: height.boundsHeight)
+        .geometryGroupIfSupportedByPlatform()
         .onHover { state in
             guard isEnabled else { return }
             if isHighlightedInternal != state {

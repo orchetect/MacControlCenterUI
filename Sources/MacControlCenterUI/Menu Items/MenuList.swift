@@ -69,9 +69,12 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
     }
     
     public var body: some View {
-        ForEach(data, id: \.id) { item in
-            content(item, selection == item.id) { itemClicked(id: item.id) }
+        VStack(spacing: 0) {
+            ForEach(data, id: \.id) { item in
+                content(item, selection == item.id) { itemClicked(id: item.id) }
+            }
         }
+        .geometryGroupIfSupportedByPlatform()
     }
     
     private func itemClicked(id: Data.Element.ID) {

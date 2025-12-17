@@ -44,6 +44,7 @@ struct PaddedMenuItem<Content: View>: View, MacControlCenterMenuItem {
             [.top, .bottom],
             verticalPadding ? MenuGeometry.menuItemPadding : 0
         )
+        .geometryGroupIfSupportedByPlatform()
     }
 }
 

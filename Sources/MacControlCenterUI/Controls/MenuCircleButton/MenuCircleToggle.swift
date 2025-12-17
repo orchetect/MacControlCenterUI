@@ -221,6 +221,12 @@ public struct MenuCircleToggle<Label: View>: View {
     // MARK: Body
     
     public var body: some View {
+        conditionalBody
+            .geometryGroupIfSupportedByPlatform()
+    }
+    
+    @ViewBuilder
+    public var conditionalBody: some View {
         switch controlSize {
         case .menu:
             if label != nil {

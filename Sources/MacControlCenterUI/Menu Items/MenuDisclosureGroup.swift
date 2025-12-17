@@ -81,6 +81,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     public var body: some View {
         viewBody
+            .geometryGroupIfSupportedByPlatform()
             .onChange(of: isExpandedBinding) { newValue in
                 isExpanded = newValue
             }

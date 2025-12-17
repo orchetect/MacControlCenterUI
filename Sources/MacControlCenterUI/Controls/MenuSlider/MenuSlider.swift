@@ -151,6 +151,7 @@ where Label: View, SliderImage: MenuSliderImage {
     
     public var body: some View {
         sliderView
+            .geometryGroupIfSupportedByPlatform()
             .onAppear {
                 // validate value
                 value = value.clamped(to: 0.0 ... 1.0)
@@ -223,6 +224,7 @@ extension MenuSlider {
             .labelsHidden()
             .controlSize(.small)
             .frame(height: Self.sliderHeight)
+            .geometryGroupIfSupportedByPlatform()
             .onChange(of: value) { oldValue, newValue in
                 updateImage(fgColor: .secondary, oldValue: oldValue)
             }
@@ -327,7 +329,7 @@ extension MenuSlider {
                 }
                 dynamicImageBody
             }
-            .compositingGroup()
+            .geometryGroupIfSupportedByPlatform()
             .opacity(isEnabled ? 1.0 : 0.5)
         }
         

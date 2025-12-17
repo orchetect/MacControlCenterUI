@@ -80,6 +80,7 @@ public struct MenuSection<Label: View>: View {
         if divider { Divider() }
         
         label
+            .geometryGroupIfSupportedByPlatform()
             .opacity(isEnabled ? 1.0 : 0.4)
     }
 }

@@ -65,6 +65,7 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
             }
         }
         .frame(height: min(maxHeight, contentHeight))
+        .geometryGroupIfSupportedByPlatform()
     }
 }
 

@@ -33,6 +33,7 @@ public struct MenuSectionText<Content: View>: View {
         content
             .font(.system(size: MenuStyling.headerFontSize, weight: .semibold))
             .foregroundColor(foreColor)
+            .geometryGroupIfSupportedByPlatform()
     }
     
     private var foreColor: Color {
