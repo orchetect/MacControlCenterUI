@@ -98,7 +98,7 @@
 			mainGroup = E2253BA82C9FD258003D69BB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E2BEF3A12EF38CDA005B56E3 /* XCLocalSwiftPackageReference "../../MacControlCenterUI" */,
+				E2BEF3A12EF38CDA005B56E3 /* XCLocalSwiftPackageReference "../" */,
 			);
 			productRefGroup = E2253BB22C9FD258003D69BB /* Products */;
 			projectDirPath = "";
@@ -340,9 +340,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E2BEF3A12EF38CDA005B56E3 /* XCLocalSwiftPackageReference "../../MacControlCenterUI" */ = {
+		E2BEF3A12EF38CDA005B56E3 /* XCLocalSwiftPackageReference "../" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../MacControlCenterUI;
+			relativePath = ../;
 		};
 /* End XCLocalSwiftPackageReference section */
 
