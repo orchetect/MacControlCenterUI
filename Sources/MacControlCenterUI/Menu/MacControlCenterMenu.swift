@@ -98,15 +98,14 @@ public struct MacControlCenterMenu: View {
     
     public var body: some View {
         if #available(macOS 26, *) {
-            menuBody
-                .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-                .animation(.macControlCenterMenuResize, value: height)
+            menuBodyMacOS26
         } else {
-            menuBody
+            menuBodyMacOS10_15Thru15
         }
     }
     
-    public var menuBody: some View {
+    @available(macOS 26, *)
+    public var menuBodyMacOS26: some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
                 .frame(height: MenuGeometry.menuPadding)
@@ -122,6 +121,31 @@ public struct MacControlCenterMenu: View {
         .frame(width: width?.width)
         .menuBackgroundEffectForCurrentPlatform()
         .geometryGroupIfSupportedByPlatform()
+        .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
+        .animation(.macControlCenterMenuResize, value: height)
+    }
+    
+    public var menuBodyMacOS10_15Thru15: some View {
+        ZStack(alignment: .top) {
+            VStack(alignment: .leading, spacing: 0) {
+                Spacer()
+                    .frame(height: MenuGeometry.menuPadding)
+                
+                MenuBody(content: content) { item in
+                    item
+                        .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+                }
+                
+                Spacer()
+                    .frame(height: MenuGeometry.menuPadding)
+            }
+            
+            // not sure why this helps, but it keeps the window in place when its size changes
+            // and prevents janky view animations
+            Spacer().frame(minHeight: 0)
+        }
+        .frame(width: width?.width)
+        .menuBackgroundEffectForCurrentPlatform()
     }
 }
 
