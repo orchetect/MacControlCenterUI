@@ -5,7 +5,7 @@
 <img align="right" width="40%" src="Images/screenshot.png" alt="Example Screeshot">
 
 
-A **menu builder** and **suite of SwiftUI controls** that closely mimics the feel of **macOS Control Center** menus.
+A **menu builder** and **suite of SwiftUI controls** that closely mimics the look, feel, and animations of **macOS Control Center** menus.
 
 Integrates seamlessly with SwiftUI's `MenuBarExtra`.
 
