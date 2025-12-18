@@ -62,6 +62,10 @@ public struct MacControlCenterMenu: View {
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
     
+    // MARK: Private State
+    
+    @State private var height: CGFloat = 0
+    
     // MARK: Init
     
     /// Useful for building a custom `MenuBarExtra` menu when using `.menuBarExtraStyle(.window)`.
@@ -93,12 +97,23 @@ public struct MacControlCenterMenu: View {
     // MARK: Body
     
     public var body: some View {
+        if #available(macOS 26, *) {
+            menuBody
+                .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
+                .animation(.macControlCenterMenuResize, value: height)
+        } else {
+            menuBody
+        }
+    }
+    
+    public var menuBody: some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
                 .frame(height: MenuGeometry.menuPadding)
             
             MenuBody(content: content) { item in
                 item
+                    .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
             }
             
             Spacer()
@@ -106,7 +121,7 @@ public struct MacControlCenterMenu: View {
         }
         .frame(width: width?.width)
         .menuBackgroundEffectForCurrentPlatform()
-        .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+        .geometryGroupIfSupportedByPlatform()
     }
 }
 
