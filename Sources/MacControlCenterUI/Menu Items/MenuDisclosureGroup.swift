@@ -31,9 +31,11 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     // MARK: Private State
     
+    @State private var height: CGFloat = 0
+    @State private var isViewReadyForAnimation: Bool = false
     @State private var isExpanded: Bool
     @State private var isPressed: Bool = false
-    @State private var isHighlighted = false
+    @State private var isHighlighted: Bool = false
     
     // MARK: Init - With Binding
     
@@ -80,14 +82,31 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        viewBody
+        animatedViewBody
             .geometryGroupIfSupportedByPlatform()
+            .onAppear {
+                Task {
+                    try await Task.sleep(nanoseconds: UInt64(0.5 * Double(NSEC_PER_SEC)))
+                    isViewReadyForAnimation = true
+                }
+            }
             .onChange(of: isExpandedBinding) { newValue in
                 isExpanded = newValue
             }
             .onChange(of: isExpanded) { newValue in
                 isExpandedBinding = newValue
             }
+    }
+    
+    @ViewBuilder
+    public var animatedViewBody: some View {
+        if #available(macOS 13, *) {
+            viewBody
+                .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
+                .animation(isViewReadyForAnimation ? .macControlCenterMenuResize : nil, value: height) // don't animate when view first appears
+        } else {
+            viewBody
+        }
     }
     
     @ViewBuilder
@@ -123,7 +142,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                 labelFormatted
                 if isChevronVisible {
                     Spacer()
-                    MenuDisclosureChevron(isExpanded: $isExpanded)
+                    MenuDisclosureChevron(isExpanded: $isExpanded.animation(.macControlCenterMenuResize))
                 }
             }
         }
@@ -137,7 +156,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             HStack(spacing: 0) {
                 Spacer()
                 if isChevronVisible {
-                    MenuDisclosureChevron(isExpanded: $isExpanded)
+                    MenuDisclosureChevron(isExpanded: $isExpanded.animation(.macControlCenterMenuResize))
                 }
                 Spacer()
                     .frame(width: MenuGeometry.menuHorizontalContentInset)
@@ -165,28 +184,31 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     @ViewBuilder
     private var expandedContent: some View {
-        switch style {
-        case .section:
-            MenuBody(content: content)
-        case .menuItem:
-            FullWidthMenuItem {
-                VStack(spacing: 0) {
-                    Rectangle()
-                        .fill(.gray.opacity(0.5))
-                        .frame(height: 1)
-                    
-                    ZStack {
-                        Rectangle().fill(.gray.opacity(0.15))
-                        MenuBody(content: content)
+        Group {
+            switch style {
+            case .section:
+                MenuBody(content: content)
+            case .menuItem:
+                FullWidthMenuItem {
+                    VStack(spacing: 0) {
+                        Rectangle()
+                            .fill(.gray.opacity(0.5))
+                            .frame(height: 1)
+                        
+                        ZStack {
+                            Rectangle().fill(.gray.opacity(0.15))
+                            MenuBody(content: content)
+                        }
+                        .padding([.top, .bottom], 1)
+                        
+                        Rectangle()
+                            .fill(.gray.opacity(0.7))
+                            .frame(height: 1)
                     }
-                    .padding([.top, .bottom], 1)
-                    
-                    Rectangle()
-                        .fill(.gray.opacity(0.7))
-                        .frame(height: 1)
                 }
             }
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
