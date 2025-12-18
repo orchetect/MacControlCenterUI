@@ -97,15 +97,24 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     // MARK: Body
     
     public var body: some View {
-        compose
-            .opacity(isEnabled ? 1.0 : 0.4)
-            .frame(minHeight: MenuGeometry.menuItemContentStandardHeight)
-            .frame(maxWidth: .infinity)
+        conditionalHeightBody
             .geometryGroupIfSupportedByPlatform()
+            .opacity(isEnabled ? 1.0 : 0.4)
+            
     }
     
     @ViewBuilder
-    private var compose: some View {
+    private var conditionalHeightBody: some View {
+        if trailingContent == nil {
+            headerBody
+                .frame(height: MenuGeometry.menuItemContentStandardHeight)
+        } else {
+            headerBody
+        }
+    }
+    
+    @ViewBuilder
+    private var headerBody: some View {
         HStack {
             label
             Spacer()
@@ -113,6 +122,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
                 trailingContent
             }
         }
+        .frame(maxWidth: .infinity)
     }
     
     private static func stylized(_ text: Text) -> Text {
