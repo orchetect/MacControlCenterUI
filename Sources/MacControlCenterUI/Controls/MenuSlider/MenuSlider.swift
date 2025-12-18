@@ -328,9 +328,10 @@ extension MenuSlider {
                     }
                 }
                 dynamicImageBody
+                    .compositingGroup()
             }
-            .geometryGroupIfSupportedByPlatform()
             .opacity(isEnabled ? 1.0 : 0.5)
+            .geometryGroupIfSupportedByPlatform()
         }
         
         @ViewBuilder
@@ -542,6 +543,11 @@ extension MenuSlider {
         Divider()
         
         MenuSlider(value: $value, image: .volume)
+        
+        Divider()
+        
+        MenuSlider("Volume (Disabled)", value: $value, image: .volume)
+            .disabled(true)
     }
 }
 
@@ -572,6 +578,12 @@ extension MenuSlider {
         
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS26MenuSlider(value: $value, label: nil, image: .volume)
+        
+        Divider()
+        
+        MenuSlider<Text, VolumeMenuSliderImage>
+            .MacOS26MenuSlider(value: $value, label: Text("Volume (Disabled)"), image: .volume)
+            .disabled(true)
     }
 }
 
@@ -602,6 +614,12 @@ extension MenuSlider {
         
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS10_15Thru15MenuSlider(value: $value, label: nil, image: .volume)
+        
+        Divider()
+        
+        MenuSlider<Text, VolumeMenuSliderImage>
+            .MacOS10_15Thru15MenuSlider(value: $value, label: Text("Volume (Disabled)"), image: .volume)
+            .disabled(true)
     }
 }
 #endif
