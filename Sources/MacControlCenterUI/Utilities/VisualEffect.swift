@@ -120,4 +120,14 @@ extension View {
     }
 }
 
+// MARK: - Animation
+
+extension Animation {
+    /// Animation that mimics the menu resize animation that macOS Control Center menus implement.
+    public static var macControlCenterMenuResize: Animation {
+        // this closely mimics menu height resize animation on macOS 26.2
+        .spring(duration: 0.2, bounce: 0.3)
+    }
+}
+
 #endif
