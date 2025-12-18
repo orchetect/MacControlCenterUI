@@ -32,124 +32,128 @@ struct MenuView: View {
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
+            // If state changes may result menu height changing, it is recommended to use the macControlCenterMenuResize
+            // animation constant which replicates menu height change animations.
             MenuHeader("Enabled") {
-                Toggle("", isOn: $isEnabled)
+                Toggle("", isOn: $isEnabled.animation(.macControlCenterMenuResize))
                     .toggleStyle(.switch)
                     .labelsHidden()
             }
             
-            if !isEnabled {
-                Text("Some menu items are now disabled.")
-                    .foregroundStyle(.secondary)
+            // To prevent layout animation glitches, if there is a menu section that may conditionally appear or disappear,
+            // it is best to place it within a stable MenuSection container which will always be present.
+            MenuSection(divider: false) {
+                if !isEnabled {
+                    Text("Some menu items are now disabled.")
+                        .foregroundStyle(.secondary)
+                }
             }
             
-            Divider()
-            
-            MenuSection("Display", divider: false)
-            
-            MenuSlider(
-                value: $brightness,
-                image: .minMax(minSystemName: "sun.min.fill", maxSystemName: "sun.max.fill")
-            )
-            .disabled(!isEnabled)
-            .frame(minWidth: sliderWidth)
-            
-            HStack {
-                MenuCircleToggle(
-                    isOn: $darkMode,
-                    controlSize: .prominent,
-                    style: .init(
-                        image: Image(systemName: "airplayvideo"),
-                        color: .white,
-                        invertForeground: true
-                    )
-                ) {
-                    Text("Dark Mode")
-                }
-                MenuCircleToggle(
-                    isOn: $nightShift,
-                    controlSize: .prominent,
-                    style: .init(
-                        image: Image(systemName: "sun.max.fill"),
-                        color: .orange
-                    )
-                ) {
-                    Text("Night Shift")
-                }
-                MenuCircleToggle(
-                    isOn: $trueTone,
-                    controlSize: .prominent,
-                    style: .init(
-                        image: Image(systemName: "sun.max.fill"),
-                        color: .blue
-                    )
-                ) {
-                    Text("True Tone")
-                }
+            MenuSection("Display", divider: true) {
+                MenuSlider(
+                    value: $brightness,
+                    image: .minMax(minSystemName: "sun.min.fill", maxSystemName: "sun.max.fill")
+                )
                 .disabled(!isEnabled)
-            }
-            .frame(height: 80)
-            
-            MenuSection("Sound")
-            
-            MenuVolumeSlider(value: $volume)
                 .frame(minWidth: sliderWidth)
-            
-            MenuCommand("Sound Settings...") {
-                print("Sound Settings clicked")
+                
+                HStack {
+                    MenuCircleToggle(
+                        isOn: $darkMode,
+                        controlSize: .prominent,
+                        style: .init(
+                            image: Image(systemName: "airplayvideo"),
+                            color: .white,
+                            invertForeground: true
+                        )
+                    ) {
+                        Text("Dark Mode")
+                    }
+                    MenuCircleToggle(
+                        isOn: $nightShift,
+                        controlSize: .prominent,
+                        style: .init(
+                            image: Image(systemName: "sun.max.fill"),
+                            color: .orange
+                        )
+                    ) {
+                        Text("Night Shift")
+                    }
+                    MenuCircleToggle(
+                        isOn: $trueTone,
+                        controlSize: .prominent,
+                        style: .init(
+                            image: Image(systemName: "sun.max.fill"),
+                            color: .blue
+                        )
+                    ) {
+                        Text("True Tone")
+                    }
+                    .disabled(!isEnabled)
+                }
+                .frame(height: 80)
             }
             
-            MenuSection("Output")
+            MenuSection("Sound", divider: true) {
+                MenuVolumeSlider(value: $volume)
+                    .frame(minWidth: sliderWidth)
+                
+                MenuCommand("Sound Settings...") {
+                    print("Sound Settings clicked")
+                }
+            }
             
-            MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
-                if item.name.contains("AirPods Max") {
-                    HighlightingMenuDisclosureGroup(
-                        style: .menuItem,
-                        initiallyExpanded: false,
-                        labelHeight: .controlCenterIconItem,
-                        toggleVisibility: .always, // <-- try setting to .onHover!
-                        label: {
-                            MenuCircleToggle(isOn: .constant(isSelected), image: item.image) {
-                                HStack {
-                                    Text(item.name)
-                                    Spacer()
-                                    HStack(spacing: 2) {
-                                        Text("82%")
-                                        Image(systemName: "battery.75", variableValue: 0.82)
-                                    }
-                                    .frame(height: 10)
-                                    .opacity(0.7)
-                                }
-                            } onClick: { _ in
-                                itemClicked()
-                            }
-                        },
-                        content: {
-                            MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
-                                MenuToggle(
-                                    isOn: .constant(isSelected),
-                                    style: .checkmark()
-                                ) {
+            MenuSection("Output", divider: true) {
+                MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
+                    if item.name.contains("AirPods Max") {
+                        HighlightingMenuDisclosureGroup(
+                            style: .menuItem,
+                            initiallyExpanded: false,
+                            labelHeight: .controlCenterIconItem,
+                            toggleVisibility: .always, // <-- try setting to .onHover!
+                            label: {
+                                MenuCircleToggle(isOn: .constant(isSelected), image: item.image) {
                                     HStack {
-                                        item.image
-                                        Text(item.name).font(.system(size: 12))
+                                        Text(item.name)
                                         Spacer()
+                                        HStack(spacing: 2) {
+                                            Text("82%")
+                                            Image(systemName: "battery.75", variableValue: 0.82)
+                                        }
+                                        .frame(height: 10)
+                                        .opacity(0.7)
                                     }
                                 } onClick: { _ in
                                     itemClicked()
                                 }
+                            },
+                            content: {
+                                MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
+                                    MenuToggle(
+                                        isOn: .constant(isSelected),
+                                        style: .checkmark()
+                                    ) {
+                                        HStack {
+                                            item.image
+                                            Text(item.name).font(.system(size: 12))
+                                            Spacer()
+                                        }
+                                    } onClick: { _ in
+                                        itemClicked()
+                                    }
+                                }
                             }
-                        }
-                    )
-                    .disabled(!isEnabled)
-                } else {
-                    MenuToggle(isOn: .constant(isSelected), image: item.image) {
-                        Text(item.name)
-                    } onClick: { _ in itemClicked() }
+                        )
+                        .disabled(!isEnabled)
+                    } else {
+                        MenuToggle(isOn: .constant(isSelected), image: item.image) {
+                            Text(item.name)
+                        } onClick: { _ in itemClicked() }
+                    }
                 }
             }
             
-            MenuDisclosureSection("Wi-Fi Network", isExpanded: $isWiFiExpanded) {
+            MenuDisclosureSection("Wi-Fi Network", divider: true, isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 135) {
                     MenuList(wiFiNetworks, selection: $wiFiSelection) { item in
                         MenuToggle(image: item.image) {
@@ -160,31 +164,32 @@ struct MenuView: View {
                 }
             }
             
-            MenuSection("Custom Icons")
-            MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
-            MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
-            MenuToggle("Xcode", isOn: $isXcodeEnabled, style: .icon(appIcon(for: "com.apple.dt.Xcode")))
+            MenuSection("Custom Icons", divider: true) {
+                MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
+                MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
+                MenuToggle("Xcode", isOn: $isXcodeEnabled, style: .icon(appIcon(for: "com.apple.dt.Xcode")))
+                    .disabled(!isEnabled)
+            }
+            
+            MenuSection(divider: true) {
+                MenuCommand {
+                    showStandardAboutWindow()
+                } label: {
+                    Text("About") // custom label view
+                }
                 .disabled(!isEnabled)
-            
-            Divider()
-            
-            MenuCommand {
-                showStandardAboutWindow()
-            } label: {
-                Text("About") // custom label view
-            }
-            .disabled(!isEnabled)
-            
-            MenuCommand {
-                openSettings()
-            } label: {
-                Text("Settings...") // custom label view
+                
+                MenuCommand {
+                    openSettings()
+                } label: {
+                    Text("Settings...") // custom label view
+                }
             }
             
-            Divider()
-            
-            MenuCommand("Quit") {
-                quit()
+            MenuSection(divider: true) {
+                MenuCommand("Quit") {
+                    quit()
+                }
             }
         }
     }

@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E2253BE92C9FD361003D69BB /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E2253BE82C9FD361003D69BB /* MacControlCenterUI */; };
-		E25267BB2EF223900035246D /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E25267BA2EF223900035246D /* MacControlCenterUI */; };
-		E284D3612EF1601600FA71A0 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E284D3602EF1601600FA71A0 /* MacControlCenterUI */; };
+		E2BEF3A32EF38CDA005B56E3 /* MacControlCenterUI in Frameworks */ = {isa = PBXBuildFile; productRef = E2BEF3A22EF38CDA005B56E3 /* MacControlCenterUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +23,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2253BE92C9FD361003D69BB /* MacControlCenterUI in Frameworks */,
-				E284D3612EF1601600FA71A0 /* MacControlCenterUI in Frameworks */,
-				E25267BB2EF223900035246D /* MacControlCenterUI in Frameworks */,
+				E2BEF3A32EF38CDA005B56E3 /* MacControlCenterUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,9 +66,7 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				E2253BE82C9FD361003D69BB /* MacControlCenterUI */,
-				E284D3602EF1601600FA71A0 /* MacControlCenterUI */,
-				E25267BA2EF223900035246D /* MacControlCenterUI */,
+				E2BEF3A22EF38CDA005B56E3 /* MacControlCenterUI */,
 			);
 			productName = Demo;
 			productReference = E2253BB12C9FD258003D69BB /* Demo.app */;
@@ -104,7 +98,7 @@
 			mainGroup = E2253BA82C9FD258003D69BB;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				E25267B92EF223900035246D /* XCLocalSwiftPackageReference "../../MacControlCenterUI" */,
+				E2BEF3A12EF38CDA005B56E3 /* XCLocalSwiftPackageReference "../../MacControlCenterUI" */,
 			);
 			productRefGroup = E2253BB22C9FD258003D69BB /* Products */;
 			projectDirPath = "";
@@ -346,22 +340,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E25267B92EF223900035246D /* XCLocalSwiftPackageReference "../../MacControlCenterUI" */ = {
+		E2BEF3A12EF38CDA005B56E3 /* XCLocalSwiftPackageReference "../../MacControlCenterUI" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../MacControlCenterUI;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E2253BE82C9FD361003D69BB /* MacControlCenterUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MacControlCenterUI;
-		};
-		E25267BA2EF223900035246D /* MacControlCenterUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = MacControlCenterUI;
-		};
-		E284D3602EF1601600FA71A0 /* MacControlCenterUI */ = {
+		E2BEF3A22EF38CDA005B56E3 /* MacControlCenterUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MacControlCenterUI;
 		};
