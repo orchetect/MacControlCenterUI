@@ -168,9 +168,16 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
             }
             
             if let content {
-                MenuBody(content: content) { item in
-                    item
+                // using an "invisible"/non-interactive scroll view allows smoother window height resize animation
+                MenuScrollView(maxHeight: 10000, showsIndicators: false) {
+                    FullWidthMenuItem(verticalPadding: false) {
+                        MenuBody(content: content) { item in
+                            item
+                        }
+                        .scrollDisabledIfSupportedByPlatform(false)
+                    }
                 }
+                .scrollDisabledIfSupportedByPlatform(true)
             }
         }
         .geometryGroupIfSupportedByPlatform()

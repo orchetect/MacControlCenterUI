@@ -118,6 +118,15 @@ extension View {
             return self
         }
     }
+    
+    /// Backwards compatible implementation of the `scrollDisabled` view modifier.
+    func scrollDisabledIfSupportedByPlatform(_ disabled: Bool) -> some View {
+        if #available(macOS 13.0, *) {
+            return self.scrollDisabled(disabled)
+        } else {
+            return self
+        }
+    }
 }
 
 // MARK: - Animation

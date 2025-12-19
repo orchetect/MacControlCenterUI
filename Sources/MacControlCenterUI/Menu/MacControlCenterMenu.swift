@@ -65,6 +65,7 @@ public struct MacControlCenterMenu: View {
     // MARK: Private State
     
     @State private var height: CGFloat = 0
+    @State private var isViewReadyForAnimation: Bool = false
     
     // MARK: Init
     
@@ -97,10 +98,18 @@ public struct MacControlCenterMenu: View {
     // MARK: Body
     
     public var body: some View {
-        if #available(macOS 26, *) {
-            menuBodyMacOS26
-        } else {
-            menuBodyMacOS10_15Thru15
+        Group {
+            if #available(macOS 26, *) {
+                menuBodyMacOS26
+            } else {
+                menuBodyMacOS10_15Thru15
+            }
+        }
+        .onAppear {
+            Task {
+                try await Task.sleep(nanoseconds: UInt64(0.2 * Double(NSEC_PER_SEC)))
+                isViewReadyForAnimation = true
+            }
         }
     }
     
@@ -122,7 +131,7 @@ public struct MacControlCenterMenu: View {
         .menuBackgroundEffectForCurrentPlatform()
         .geometryGroupIfSupportedByPlatform()
         .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-        .animation(.macControlCenterMenuResize, value: height)
+        .animation(isViewReadyForAnimation ? .macControlCenterMenuResize : nil, value: height)
     }
     
     public var menuBodyMacOS10_15Thru15: some View {

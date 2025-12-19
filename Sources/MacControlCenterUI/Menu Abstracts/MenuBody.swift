@@ -51,6 +51,7 @@ public struct MenuBody: View, MacControlCenterMenuItem {
             VStack(alignment: .leading, spacing: 0) {
                 unwrapContent
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     

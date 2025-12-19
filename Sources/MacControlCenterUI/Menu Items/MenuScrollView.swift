@@ -16,15 +16,18 @@ import SwiftUI
 public struct MenuScrollView: View, MacControlCenterMenuItem {
     public var content: [any View]
     public var maxHeight: CGFloat
+    public var showsIndicators: Bool
     
     @State private var scrollPosition: CGPoint = .zero
     @State private var contentHeight: CGFloat = .zero
     
     public init(
         maxHeight: CGFloat = 300,
+        showsIndicators: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) {
         self.maxHeight = maxHeight.clamped(to: 0...)
+        self.showsIndicators = showsIndicators
         self.content = content()
     }
     
@@ -32,6 +35,7 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
         ZStack {
             ObservableScrollView(
                 .vertical,
+                showsIndicators: showsIndicators,
                 offset: $scrollPosition,
                 contentHeight: $contentHeight
             ) {
