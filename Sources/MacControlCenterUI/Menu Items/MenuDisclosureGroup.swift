@@ -28,11 +28,11 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Environment
     
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.isMenuReadyForAnimation) private var isMenuReadyForAnimation
     
     // MARK: Private State
     
     @State private var height: CGFloat = 0
-    @State private var isViewReadyForAnimation: Bool = false
     @State private var isExpanded: Bool
     @State private var isPressed: Bool = false
     @State private var isHighlighted: Bool = false
@@ -84,12 +84,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     public var body: some View {
         animatedViewBody
             .geometryGroupIfSupportedByPlatform()
-            .onAppear {
-                Task {
-                    try await Task.sleep(nanoseconds: UInt64(0.2 * Double(NSEC_PER_SEC)))
-                    isViewReadyForAnimation = true
-                }
-            }
             .onChange(of: isExpandedBinding) { newValue in
                 withAnimation(.macControlCenterMenuResize) { isExpanded = newValue }
             }
@@ -103,7 +97,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
         if #available(macOS 13, *) {
             viewBody
                 .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-                .animation(isViewReadyForAnimation ? .macControlCenterMenuResize : nil, value: height) // don't animate when view first appears
+                .animation(isMenuReadyForAnimation ? .macControlCenterMenuResize : nil, value: height) // don't animate when view first appears
         } else {
             viewBody
         }

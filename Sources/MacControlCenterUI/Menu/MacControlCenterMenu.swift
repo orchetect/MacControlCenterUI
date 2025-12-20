@@ -62,10 +62,14 @@ public struct MacControlCenterMenu: View {
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
     
+    // MARK: Environment
+    
+    @Environment(\.isMenuReadyForAnimation) private var isMenuReadyForAnimation
+    
     // MARK: Private State
     
     @State private var height: CGFloat = 0
-    @State private var isViewReadyForAnimation: Bool = false
+    @State private var isMenuReadyForAnimationLocal: Bool = false
     
     // MARK: Init
     
@@ -107,10 +111,11 @@ public struct MacControlCenterMenu: View {
         }
         .onAppear {
             Task {
-                isViewReadyForAnimation = true
                 try await Task.sleep(seconds: 0.2)
+                isMenuReadyForAnimationLocal = true // updates environment
             }
         }
+        .environment(\.isMenuReadyForAnimation, isMenuReadyForAnimationLocal)
     }
     
     @available(macOS 26, *)
@@ -131,7 +136,7 @@ public struct MacControlCenterMenu: View {
         .menuBackgroundEffectForCurrentPlatform()
         .geometryGroupIfSupportedByPlatform()
         .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-        .animation(isViewReadyForAnimation ? .macControlCenterMenuResize : nil, value: height)
+        .animation(isMenuReadyForAnimation ? .macControlCenterMenuResize : nil, value: height)
     }
     
     public var menuBodyMacOS10_15Thru15: some View {
