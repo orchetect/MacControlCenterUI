@@ -107,8 +107,8 @@ public struct MacControlCenterMenu: View {
         }
         .onAppear {
             Task {
-                try await Task.sleep(nanoseconds: UInt64(0.2 * Double(NSEC_PER_SEC)))
                 isViewReadyForAnimation = true
+                try await Task.sleep(seconds: 0.2)
             }
         }
     }

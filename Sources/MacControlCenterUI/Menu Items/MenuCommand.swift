@@ -125,7 +125,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
                 if dismissesMenu {
                     menuBarExtraIsPresented.wrappedValue = false
                     // wait a small amount to give the menu a chance to close before calling the action block
-                    try? await Task.sleep(nanoseconds: 100 * NSEC_PER_MSEC) // 100 ms
+                    try? await Task.sleep(seconds: 0.100) // 100 ms
                 }
                 
                 action()
@@ -137,9 +137,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         // but at some point (macOS 14 or 15) Apple added this behavior back in to match the NSMenu behavior.
         Task {
             isHighlighted = false
-            try? await Task.sleep(nanoseconds: 80 * NSEC_PER_MSEC) // 80 ms
+            try? await Task.sleep(seconds: 0.080) // 80 ms
             isHighlighted = true
-            try? await Task.sleep(nanoseconds: 80 * NSEC_PER_MSEC) // 80 ms
+            try? await Task.sleep(seconds: 0.080) // 80 ms
             go()
         }
     }
