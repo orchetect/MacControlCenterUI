@@ -186,9 +186,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
     @ViewBuilder
     private var contentBody: some View {
         if let content {
-            MenuBody(content: content) { item in
-                item
-                    }
+            MenuBody(content: content)
         }
     }
 }
