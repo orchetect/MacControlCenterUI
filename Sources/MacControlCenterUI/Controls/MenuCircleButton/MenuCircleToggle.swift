@@ -222,6 +222,7 @@ public struct MenuCircleToggle<Label: View>: View {
     
     public var body: some View {
         conditionalBody
+            .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
             .geometryGroupIfSupportedByPlatform()
             .animation(nil, value: isEnabled) // TODO: prevents janky animation by turning off animation. fix, ideally.
     }
@@ -305,6 +306,7 @@ public struct MenuCircleToggle<Label: View>: View {
                 circleBody
             }
         }
+        .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
     }
     
     @ViewBuilder
