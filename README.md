@@ -45,8 +45,7 @@ Supports macOS 11.0+ once compiled.
 
 ## Known Issues
 
-- Due to the lacklustre implementation of window resize behavior in SwiftUI, it is currently not possible to get smooth window resize animations without a tremendous amount of work. For that reason, most MacControlCenterUI controls whose Control Center counterparts use animation will instead use safer static view size changes.
-  - Note that macOS 26 introduces improvements to how SwiftUI resizes windows as a result of animating view size changes. Once macOS 26 is close to public (non-beta) release, this will be investigated and conditional improvements may be possible to MacControlCenterUI menu behavior on that OS version.
+- Due to the lacklustre implementation of window resize behavior in SwiftUI, animations are kept to a bare minimum on macOS 15 and earlier. macOS 26 introduces improvements to how SwiftUI resizes windows as a result of animating view size changes, and these benefits will be conditionally available in this library when running on macOS 26.
 
 
 ## Author
