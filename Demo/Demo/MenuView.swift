@@ -14,6 +14,8 @@ struct MenuView: View {
     @Binding var isMenuPresented: Bool
     
     @State private var isEnabled = true
+    @State private var isContentShown = false
+    @State private var isContentShownAnimated = true
     @State private var darkMode: Bool = true
     @State private var nightShift: Bool = true
     @State private var trueTone: Bool = true
@@ -32,7 +34,7 @@ struct MenuView: View {
     
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
-            // If state changes may result menu height changing, it is recommended to use the macControlCenterMenuResize
+            // If state changes may result menu height changing, it is recommended to use the `macControlCenterMenuResize`
             // animation constant which replicates menu height change animations.
             MenuHeader("Enabled") {
                 Toggle("", isOn: $isEnabled.animation(.macControlCenterMenuResize))
@@ -40,12 +42,45 @@ struct MenuView: View {
                     .labelsHidden()
             }
             
-            // To prevent layout animation glitches, if there is a menu section that may conditionally appear or disappear,
-            // it is best to place it within a stable MenuSection container which will always be present.
+            // To prevent layout animation glitches, if there is menu content that may appear/disappear,
+            // it is best to place it within a stable `MenuSection` container which will always be present.
             MenuSection(divider: false) {
                 if !isEnabled {
                     Text("Some menu items are now disabled.")
                         .foregroundStyle(.secondary)
+                }
+            }
+            
+            // To prevent layout animation glitches, if there is menu content that may change height,
+            // it is best to place it within a stable `MenuSection` container which will always be present.
+            MenuSection {
+                MenuToggle(
+                    isOn: $isContentShown.animation(isContentShownAnimated ? .macControlCenterMenuResize : nil),
+                    image: Image(systemName: "questionmark.circle")
+                ) {
+                    Text("Show Content")
+                        .fixedSize()
+                    Spacer()
+                    Toggle("Animate", isOn: $isContentShownAnimated)
+                        .toggleStyle(.switch)
+                        .controlSize(.mini)
+                        .fixedSize()
+                }
+                
+                if isContentShown {
+                    Group {
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                        Text(UUID().uuidString)
+                    }
+                    .font(.callout)
+                    .monospaced()
+                    .foregroundStyle(.secondary)
                 }
             }
             
