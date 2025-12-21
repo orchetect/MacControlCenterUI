@@ -211,7 +211,6 @@ struct MenuView: View {
             MenuSection("Custom Icons", divider: true) {
                 MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
                 MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
-                MenuToggle("Xcode", isOn: $isXcodeEnabled, style: .icon(appIcon(for: "com.apple.dt.Xcode")))
                     .disabled(!isEnabled)
             }
             
