@@ -96,7 +96,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
                             label
                             if isChevronVisible {
                                 Spacer()
-                                MenuDisclosureChevron(isExpanded: $isExpanded)
+                                MenuDisclosureChevron(isExpanded: $isExpanded.animation(.macControlCenterMenuResize))
                             }
                         }
                         .onChange(of: shouldChevronBeVisible) { _ in
@@ -116,7 +116,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
             isHighlighted = newValue
         }
         .onChange(of: isExpandedBinding) { newValue in
-            isExpanded = newValue
+            withAnimation(.macControlCenterMenuResize) { isExpanded = newValue }
         }
         .onChange(of: isExpanded) { newValue in
             isExpandedBinding = newValue

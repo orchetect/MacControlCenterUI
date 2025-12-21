@@ -26,7 +26,6 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
     
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
-    @Environment(\.isMenuReadyForAnimation) private var isMenuReadyForAnimation
     
     // MARK: Private State
     
@@ -157,19 +156,8 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        animatedViewBody
+        viewBody
             .geometryGroupIfSupportedByPlatform()
-    }
-    
-    @ViewBuilder
-    public var animatedViewBody: some View {
-        if #available(macOS 13, *) {
-            viewBody
-                .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-                .animation(isMenuReadyForAnimation ? .macControlCenterMenuResize : nil, value: height) // don't animate when view first appears
-        } else {
-            viewBody
-        }
     }
     
     @ViewBuilder
@@ -185,7 +173,6 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
                 if let label {
                     MenuBody {
                         label
-                            .geometryGroupIfSupportedByPlatform()
                             .opacity(isEnabled ? 1.0 : 0.4)
                     }
                 }
@@ -199,16 +186,9 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
     @ViewBuilder
     private var contentBody: some View {
         if let content {
-            // using an "invisible"/non-interactive scroll view allows smoother window height resize animation
-            MenuScrollView(maxHeight: 10000, showsIndicators: false) {
-                FullWidthMenuItem(verticalPadding: false) {
-                    MenuBody(content: content) { item in
-                        item
+            MenuBody(content: content) { item in
+                item
                     }
-                    .scrollDisabledIfSupportedByPlatform(false)
-                }
-            }
-            .scrollDisabledIfSupportedByPlatform(true)
         }
     }
 }

@@ -62,15 +62,6 @@ public struct MacControlCenterMenu: View {
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
     
-    // MARK: Environment
-    
-    @Environment(\.isMenuReadyForAnimation) private var isMenuReadyForAnimation
-    
-    // MARK: Private State
-    
-    @State private var height: CGFloat = 0
-    @State private var isMenuReadyForAnimationLocal: Bool = false
-    
     // MARK: Init
     
     /// Useful for building a custom `MenuBarExtra` menu when using `.menuBarExtraStyle(.window)`.
@@ -109,13 +100,6 @@ public struct MacControlCenterMenu: View {
                 menuBodyMacOS10_15Thru15
             }
         }
-        .onAppear {
-            Task {
-                try await Task.sleep(seconds: 0.2)
-                isMenuReadyForAnimationLocal = true // updates environment
-            }
-        }
-        .environment(\.isMenuReadyForAnimation, isMenuReadyForAnimationLocal)
     }
     
     @available(macOS 26, *)
@@ -135,8 +119,6 @@ public struct MacControlCenterMenu: View {
         .frame(width: width?.width)
         .menuBackgroundEffectForCurrentPlatform()
         .geometryGroupIfSupportedByPlatform()
-        .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-        .animation(isMenuReadyForAnimation ? .macControlCenterMenuResize : nil, value: height)
     }
     
     public var menuBodyMacOS10_15Thru15: some View {

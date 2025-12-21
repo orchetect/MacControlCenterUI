@@ -135,7 +135,11 @@ extension Animation {
     /// Animation that mimics the menu resize animation that macOS Control Center menus implement.
     public static var macControlCenterMenuResize: Animation {
         // this closely mimics menu height resize animation on macOS 26.2
-        .spring(duration: 0.2, bounce: 0.3)
+        
+        // ideally it would be something a bit slower (like .smooth), but as of macOS 26.2 SwiftUI seems
+        // to resize windows a very fast, static speed. so we have no choice but to match it as best we can.
+        
+        .smooth(duration: 0.2, extraBounce: 0.3)
     }
 }
 

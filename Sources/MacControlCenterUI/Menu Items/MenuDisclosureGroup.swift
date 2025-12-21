@@ -28,7 +28,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Environment
     
     @Environment(\.isEnabled) private var isEnabled
-    @Environment(\.isMenuReadyForAnimation) private var isMenuReadyForAnimation
     
     // MARK: Private State
     
@@ -82,25 +81,14 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        animatedViewBody
+        viewBody
             .geometryGroupIfSupportedByPlatform()
             .onChange(of: isExpandedBinding) { newValue in
                 withAnimation(.macControlCenterMenuResize) { isExpanded = newValue }
             }
             .onChange(of: isExpanded) { newValue in
-                isExpandedBinding = newValue
+                withAnimation(.macControlCenterMenuResize) { isExpandedBinding = newValue }
             }
-    }
-    
-    @ViewBuilder
-    public var animatedViewBody: some View {
-        if #available(macOS 13, *) {
-            viewBody
-                .onGeometryChange(for: CGFloat.self, of: { $0.size.height }, action: { height = $0 })
-                .animation(isMenuReadyForAnimation ? .macControlCenterMenuResize : nil, value: height) // don't animate when view first appears
-        } else {
-            viewBody
-        }
     }
     
     @ViewBuilder
@@ -118,11 +106,7 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             .animation(nil, value: height)
             
             if isExpanded {
-                // using an "invisible"/non-interactive scroll view allows smoother window height resize animation
-                MenuScrollView(maxHeight: 10000, showsIndicators: false) {
-                    expandedContent
-                }
-                .scrollDisabledIfSupportedByPlatform(true) // counterbalanced with `false` in expandedContent
+                expandedContent
             }
         }
     }
