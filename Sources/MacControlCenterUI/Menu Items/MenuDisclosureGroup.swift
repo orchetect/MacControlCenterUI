@@ -123,8 +123,8 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
         ) {
             HStack {
                 labelFormatted
+                Spacer()
                 if isChevronVisible {
-                    Spacer()
                     MenuDisclosureChevron(isExpanded: $isExpanded.animation(.macControlCenterMenuResize))
                 }
             }
