@@ -108,9 +108,15 @@ public struct MacControlCenterMenu: View {
             Spacer()
                 .frame(height: MenuGeometry.menuPadding)
             
-            MenuBody(content: content) { item in
-                item
-                    .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+            MenuScrollView(
+                maxHeight: maxMenuHeight,
+                showsIndicators: true,
+                disableScrollIfFullContentIsVisible: true
+            ) {
+                MenuBody(content: content) { item in
+                    item
+                        .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+                }
             }
             
             Spacer()
@@ -127,9 +133,15 @@ public struct MacControlCenterMenu: View {
                 Spacer()
                     .frame(height: MenuGeometry.menuPadding)
                 
-                MenuBody(content: content) { item in
-                    item
-                        .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+                MenuScrollView(
+                    maxHeight: maxMenuHeight,
+                    showsIndicators: true,
+                    disableScrollIfFullContentIsVisible: true
+                ) {
+                    MenuBody(content: content) { item in
+                        item
+                            .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
+                    }
                 }
                 
                 Spacer()
@@ -142,6 +154,34 @@ public struct MacControlCenterMenu: View {
         }
         .frame(width: width?.width)
         .menuBackgroundEffectForCurrentPlatform()
+    }
+    
+    // MARK: - Computed Properties
+    
+    private var maxMenuHeight: CGFloat {
+        // `NSScreen.main`:
+        // The main screen is not necessarily the same screen that contains the menu bar or has its origin at
+        // (0, 0). The main screen refers to the screen containing the window that is currently receiving
+        // keyboard events.
+        // It will however reference the currently focused screen if user has "Displays have separate Spaces"
+        // enabled in System Preferences -> Mission Control.
+        
+        // `NSScreen.screens`:
+        // The screen at index 0 in the returned array corresponds to the primary screen of the user’s system.
+        // This is the screen that contains the menu bar and whose origin is at the point (0, 0).
+        
+        // `visibleFrame`:
+        // The returned rectangle is always based on the current user-interface settings and does not include
+        // the area currently occupied by the dock and menu bar.
+        
+        guard let availableScreenHeight = NSScreen.screens.first?.visibleFrame.height else {
+            // should never happen, but provide a reasonable default just in case we get nil
+            return 800
+        }
+        
+        // TODO: If the screen resolution changes or the user modifies system display configuration, this value might not recalculate in response. It might require adding a system notification observer to detect when screen geometry has changed.
+        
+        return availableScreenHeight
     }
 }
 
