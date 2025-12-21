@@ -45,8 +45,13 @@ public struct MenuBody: View, MacControlCenterMenuItem {
     // MARK: Body
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            unwrapContent
+        if content.isEmpty {
+            EmptyView()
+        } else {
+            VStack(alignment: .leading, spacing: 0) {
+                unwrapContent
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     

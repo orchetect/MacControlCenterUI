@@ -8,8 +8,7 @@
 
 import SwiftUI
 
-/// ``MacControlCenterMenu`` header label menu item with leading label content, optional trailing
-/// content, and optional divider.
+/// ``MacControlCenterMenu`` header label menu item with leading label content and optional trailing content.
 /// Typically used as the first item in a menu, to establish the functionality contained within.
 @available(macOS 10.15, *)
 @available(iOS, unavailable)
@@ -30,14 +29,14 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     @_disfavoredOverload
     public init<S>(
         _ label: S
-    ) where S: StringProtocol, Label == Text {
+    ) where S: StringProtocol, Label == Text, TrailingContent == Never {
         self.label = Self.stylized(Text(label))
         trailingContent = nil
     }
     
     public init(
         _ titleKey: LocalizedStringKey
-    ) where Label == Text {
+    ) where Label == Text, TrailingContent == Never {
         label = Self.stylized(Text(titleKey))
         trailingContent = nil
     }
@@ -46,14 +45,14 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     @_disfavoredOverload
     public init(
         _ titleResource: LocalizedStringResource
-    ) where Label == Text {
+    ) where Label == Text, TrailingContent == Never {
         label = Self.stylized(Text(titleResource))
         trailingContent = nil
     }
     
     public init(
         @ViewBuilder _ label: () -> Label
-    ) where TrailingContent == EmptyView {
+    ) where TrailingContent == Never {
         self.label = label()
         trailingContent = nil
     }
@@ -98,22 +97,32 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     // MARK: Body
     
     public var body: some View {
-        compose
+        conditionalHeightBody
+            .geometryGroupIfSupportedByPlatform()
             .opacity(isEnabled ? 1.0 : 0.4)
-            .frame(minHeight: MenuGeometry.menuItemContentStandardHeight)
+            
     }
     
     @ViewBuilder
-    private var compose: some View {
-        if let trailingContent {
-            HStack {
-                label
-                Spacer()
+    private var conditionalHeightBody: some View {
+        if trailingContent == nil {
+            headerBody
+                .frame(height: MenuGeometry.menuItemContentStandardHeight)
+        } else {
+            headerBody
+        }
+    }
+    
+    @ViewBuilder
+    private var headerBody: some View {
+        HStack {
+            label
+            Spacer()
+            if let trailingContent {
                 trailingContent
             }
-        } else {
-            label
         }
+        .frame(maxWidth: .infinity)
     }
     
     private static func stylized(_ text: Text) -> Text {
@@ -121,5 +130,51 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
             .font(.system(size: MenuStyling.headerFontSize, weight: .bold))
     }
 }
+
+#if DEBUG
+@available(macOS 14, *)
+#Preview("Text Only Header") {
+    @Previewable @State var isOn: Bool = true
+    @Previewable @State var isKeyboardOn: Bool = true
+    @Previewable @State var isTrackpadOn: Bool = false
+    
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuHeader("Bluetooth")
+        
+        Divider()
+        
+        MenuToggle("Keyboard", isOn: $isKeyboardOn, style: .standard(systemImage: "keyboard"))
+        MenuToggle("Trackpad", isOn: $isTrackpadOn, style: .standard(systemImage: "rectangle.and.hand.point.up.left.filled"))
+        
+        Divider()
+        
+        MenuCommand("Bluetooth Settings...") { }
+    }
+}
+
+@available(macOS 14, *)
+#Preview("Header With Trailing Content") {
+    @Previewable @State var isOn: Bool = true
+    @Previewable @State var isKeyboardOn: Bool = true
+    @Previewable @State var isTrackpadOn: Bool = false
+    
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuHeader("Bluetooth") {
+            Toggle("", isOn: $isOn)
+                .toggleStyle(.switch)
+                .labelsHidden()
+        }
+        
+        Divider()
+        
+        MenuToggle("Keyboard", isOn: $isKeyboardOn, style: .standard(systemImage: "keyboard"))
+        MenuToggle("Trackpad", isOn: $isTrackpadOn, style: .standard(systemImage: "rectangle.and.hand.point.up.left.filled"))
+        
+        Divider()
+        
+        MenuCommand("Bluetooth Settings...") { }
+    }
+}
+#endif
 
 #endif

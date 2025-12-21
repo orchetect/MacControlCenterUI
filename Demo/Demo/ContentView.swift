@@ -12,6 +12,7 @@ struct ContentView: View {
         VStack(spacing: 40) {
             Image(systemName: "message.fill")
                 .resizable()
+                .scaledToFit()
                 .frame(width: 80, height: 80)
                 .foregroundColor(.secondary)
             

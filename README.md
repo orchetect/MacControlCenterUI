@@ -2,11 +2,10 @@
 
 [![Platforms | macOS 11](https://img.shields.io/badge/platforms-macOS%2011-blue.svg?style=flat)](https://developer.apple.com/swift) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FMacControlCenterUI%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/MacControlCenterUI) [![Xcode 14](https://img.shields.io/badge/Xcode-14-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/MacControlCenterUI/blob/main/LICENSE)
 
-<img align="right" width="40%" src="Images/demo.png" alt="Example">
+<img align="right" width="40%" src="Images/screenshot.png" alt="Example Screeshot">
 
 
-
-A **menu builder** and **suite of SwiftUI controls** that closely mimics the feel of **macOS Control Center** menus.
+A **menu builder** and **suite of SwiftUI controls** that closely mimics the look, feel, and animations of **macOS Control Center** menus.
 
 Integrates seamlessly with SwiftUI's `MenuBarExtra`.
 
@@ -27,7 +26,7 @@ Both **Dark** and **Light Mode** are fully supported.
    - In a Swift Package, add it to the Package.swift dependencies:
 
      ```swift
-     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.5.0")
+     .package(url: "https://github.com/orchetect/MacControlCenterUI", from: "2.7.0")
      ```
 
 2. Import the library:
@@ -46,8 +45,7 @@ Supports macOS 11.0+ once compiled.
 
 ## Known Issues
 
-- Due to the lacklustre implementation of window resize behavior in SwiftUI, it is currently not possible to get smooth window resize animations without a tremendous amount of work. For that reason, most MacControlCenterUI controls whose Control Center counterparts use animation will instead use safer static view size changes.
-  - Note that macOS 26 introduces improvements to how SwiftUI resizes windows as a result of animating view size changes. Once macOS 26 is close to public (non-beta) release, this will be investigated and conditional improvements may be possible to MacControlCenterUI menu behavior on that OS version.
+- Due to the lacklustre implementation of window resize behavior in SwiftUI, animations are kept to a bare minimum on macOS 15 and earlier. macOS 26 introduces improvements to how SwiftUI resizes windows as a result of animating view size changes, and these benefits will be conditionally available in this library when running on macOS 26.
 
 
 ## Author

@@ -15,34 +15,37 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuSection<Label: View>: View {
+public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Public Properties
     
-    public var label: Label
+    public var label: Label?
     public var divider: Bool
+    public var content: [any View]?
     
     // MARK: Environment
     
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
     
-    // MARK: Init
+    // MARK: Init - With Label, No Content
     
     @_disfavoredOverload
     public init<S>(
         _ label: S,
         divider: Bool = true
     ) where S: StringProtocol, Label == MenuSectionText<Text> {
-        self.label = MenuSectionText(text: Text(label))
+        self.label = MenuSectionText(label)
         self.divider = divider
+        self.content = nil
     }
     
     public init(
         _ titleKey: LocalizedStringKey,
         divider: Bool = true
     ) where Label == MenuSectionText<Text> {
-        label = MenuSectionText(text: Text(titleKey))
+        label = MenuSectionText(titleKey)
         self.divider = divider
+        self.content = nil
     }
     
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
@@ -51,8 +54,9 @@ public struct MenuSection<Label: View>: View {
         _ titleResource: LocalizedStringResource,
         divider: Bool = true
     ) where Label == MenuSectionText<Text> {
-        label = MenuSectionText(text: Text(titleResource))
+        label = MenuSectionText(titleResource)
         self.divider = divider
+        self.content = nil
     }
     
     @_disfavoredOverload
@@ -60,8 +64,9 @@ public struct MenuSection<Label: View>: View {
         _ label: Text,
         divider: Bool = true
     ) where Label == MenuSectionText<Text> {
-        self.label = MenuSectionText(text: label)
+        self.label = MenuSectionText(label)
         self.divider = divider
+        self.content = nil
     }
     
     /// Initialize Menu Section with custom label.
@@ -72,16 +77,151 @@ public struct MenuSection<Label: View>: View {
     ) where Label == MenuSectionText<LabelContent> {
         self.label = MenuSectionText(label())
         self.divider = divider
+        self.content = nil
+    }
+    
+    // MARK: Init - With Label, With Content
+    
+    @_disfavoredOverload
+    public init<S>(
+        _ label: S,
+        divider: Bool = true,
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
+    ) where S: StringProtocol, Label == MenuSectionText<Text> {
+        self.label = MenuSectionText(label)
+        self.divider = divider
+        self.content = content()
+    }
+    
+    public init(
+        _ titleKey: LocalizedStringKey,
+        divider: Bool = true,
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
+    ) where Label == MenuSectionText<Text> {
+        label = MenuSectionText(titleKey)
+        self.divider = divider
+        self.content = content()
+    }
+    
+    @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
+    @_disfavoredOverload
+    public init(
+        _ titleResource: LocalizedStringResource,
+        divider: Bool = true,
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
+    ) where Label == MenuSectionText<Text> {
+        label = MenuSectionText(titleResource)
+        self.divider = divider
+        self.content = content()
+    }
+    
+    @_disfavoredOverload
+    public init(
+        _ label: Text,
+        divider: Bool = true,
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
+    ) where Label == MenuSectionText<Text> {
+        self.label = MenuSectionText(label)
+        self.divider = divider
+        self.content = content()
+    }
+    
+    /// Initialize Menu Section with custom label.
+    /// Note that the standard menu section header text formatting is not applied when using this initializer.
+    public init<LabelContent: View>(
+        divider: Bool = true,
+        @MacControlCenterMenuBuilder content: () -> [any View],
+        @ViewBuilder label: () -> LabelContent
+    ) where Label == MenuSectionText<LabelContent> {
+        self.label = MenuSectionText(label())
+        self.divider = divider
+        self.content = content()
+    }
+    
+    // MARK: Init - No Label, With Content
+    
+    public init(
+        divider: Bool = true,
+        @MacControlCenterMenuBuilder _ content: () -> [any View]
+    ) where Label == Never {
+        self.label = nil
+        self.divider = divider
+        self.content = content()
     }
     
     // MARK: Body
     
     public var body: some View {
-        if divider { Divider() }
-        
-        label
-            .opacity(isEnabled ? 1.0 : 0.4)
+        viewBody
+            .geometryGroupIfSupportedByPlatform()
+    }
+    
+    @ViewBuilder
+    public var viewBody: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Group {
+                if divider {
+                    MenuBody {
+                        Divider()
+                    }
+                }
+                
+                if let label {
+                    MenuBody {
+                        label
+                            .opacity(isEnabled ? 1.0 : 0.4)
+                    }
+                }
+            }
+            .geometryGroupIfSupportedByPlatform()
+            
+            contentBody
+        }
+    }
+    
+    @ViewBuilder
+    private var contentBody: some View {
+        if let content {
+            MenuBody(content: content)
+        }
     }
 }
+
+#if DEBUG
+#Preview("Label, No Content") {
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuSection("Section", divider: false)
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+        
+        MenuSection("Section", divider: true)
+        
+        MenuCommand("Test Menu Item") { }
+        MenuCommand("Test Menu Item") { }
+        
+        MenuSection("Section", divider: true)
+        
+        MenuSection(divider: false) {
+            MenuCommand("Test Menu Item") { }
+            MenuCommand("Test Menu Item") { }
+        }
+    }
+}
+
+#Preview("Label, With Content") {
+    MacControlCenterMenu(isPresented: .constant(true)) {
+        MenuSection("Section", divider: false) {
+            MenuCommand("Test Menu Item") { }
+            MenuCommand("Test Menu Item") { }
+        }
+        
+        MenuSection("Section", divider: true) {
+            MenuCommand("Test Menu Item") { }
+            MenuCommand("Test Menu Item") { }
+        }
+    }
+}
+#endif
 
 #endif

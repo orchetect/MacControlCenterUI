@@ -101,6 +101,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
             }
         }
         .frame(height: height.boundsHeight)
+        .geometryGroupIfSupportedByPlatform()
         
         .onChange(of: isHighlighted) { newValue in
             isHighlightedInternal = newValue

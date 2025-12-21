@@ -28,6 +28,7 @@ struct DemoApp: App {
         }
         .menuBarExtraStyle(.window) // required for menu builder
         .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
+        .windowResizability(.contentSize) // this modifier is not necessary; it may affect menu height animations. YMMV.
     }
 }
 

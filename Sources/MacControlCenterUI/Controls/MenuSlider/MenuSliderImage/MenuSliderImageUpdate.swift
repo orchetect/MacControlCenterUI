@@ -12,7 +12,7 @@ import SwiftUI
 nonisolated
 public enum MenuSliderImageUpdate {
     case noChange
-    case newImage(Image)
+    case newImage(MenuSliderImageDescriptor)
 }
 
 extension MenuSliderImageUpdate: Equatable { }

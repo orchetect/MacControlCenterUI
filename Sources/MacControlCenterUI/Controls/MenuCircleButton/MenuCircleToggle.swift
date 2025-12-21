@@ -221,6 +221,14 @@ public struct MenuCircleToggle<Label: View>: View {
     // MARK: Body
     
     public var body: some View {
+        conditionalBody
+            .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
+            .geometryGroupIfSupportedByPlatform()
+            .animation(nil, value: isEnabled) // TODO: prevents janky animation by turning off animation. fix, ideally.
+    }
+    
+    @ViewBuilder
+    public var conditionalBody: some View {
         switch controlSize {
         case .menu:
             if label != nil {
@@ -235,7 +243,7 @@ public struct MenuCircleToggle<Label: View>: View {
             if label != nil {
                 hitTestBody
                     .frame(
-                        minHeight: controlSize.size + 26,
+                        minHeight: controlSize.size + 26, // TODO: magic number, should be a constant
                         alignment: .top
                     )
             } else {
@@ -279,29 +287,32 @@ public struct MenuCircleToggle<Label: View>: View {
     
     @ViewBuilder
     private var buttonBody: some View {
-        if let label = labelWithFormatting {
-            switch controlSize {
-            case .menu:
-                HStack {
-                    circleBody
-                    label.frame(maxWidth: .infinity, alignment: .leading)
+        Group {
+            if let label = labelWithFormatting {
+                switch controlSize {
+                case .menu:
+                    HStack {
+                        circleBody
+                        label.frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                case .prominent:
+                    VStack(alignment: .center, spacing: 4) {
+                        circleBody
+                        label
+                    }
+                    .fixedSize()
                 }
-            case .prominent:
-                VStack(alignment: .center, spacing: 4) {
-                    circleBody
-                    label
-                }
-                .fixedSize()
+            } else {
+                circleBody
             }
-        } else {
-            circleBody
         }
+        .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
     }
     
     @ViewBuilder
     private var labelWithFormatting: (some View)? {
         label?
-            .foregroundColor(isEnabled ? Color.primary : .primary.opacity(0.5))
+            .foregroundColor(Color.primary.opacity(isEnabled ? 1.0 : 0.5))
     }
     
     @ViewBuilder

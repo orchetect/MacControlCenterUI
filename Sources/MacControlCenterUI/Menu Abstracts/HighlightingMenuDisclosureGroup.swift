@@ -80,17 +80,6 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
     // MARK: Body
     
     public var body: some View {
-        viewBody
-            .onChange(of: isExpandedBinding) { newValue in
-                isExpanded = newValue
-            }
-            .onChange(of: isExpanded) { newValue in
-                isExpandedBinding = newValue
-            }
-    }
-    
-    @ViewBuilder
-    public var viewBody: some View {
         MenuDisclosureGroup(
             style: style,
             isExpanded: $isExpanded,
@@ -107,7 +96,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
                             label
                             if isChevronVisible {
                                 Spacer()
-                                MenuDisclosureChevron(isExpanded: $isExpanded)
+                                MenuDisclosureChevron(isExpanded: $isExpanded.animation(.macControlCenterMenuResize))
                             }
                         }
                         .onChange(of: shouldChevronBeVisible) { _ in
@@ -125,6 +114,12 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         }
         .onChange(of: isHighlightedInternal) { newValue in
             isHighlighted = newValue
+        }
+        .onChange(of: isExpandedBinding) { newValue in
+            withAnimation(.macControlCenterMenuResize) { isExpanded = newValue }
+        }
+        .onChange(of: isExpanded) { newValue in
+            isExpandedBinding = newValue
         }
     }
     

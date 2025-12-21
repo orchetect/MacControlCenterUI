@@ -39,6 +39,7 @@ public struct MenuDisclosureChevron: View {
     
     public var body: some View {
         chevronBody
+            .geometryGroupIfSupportedByPlatform()
             .onChange(of: isEnabled) { newValue in
                 if !isEnabled {
                     isPressed = false

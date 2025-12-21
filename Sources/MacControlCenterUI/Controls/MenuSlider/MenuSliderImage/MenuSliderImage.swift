@@ -12,40 +12,46 @@ import SwiftUI
 nonisolated
 public protocol MenuSliderImage: Equatable, Sendable {
     /// Return an image if the image is static.
-    func staticImage() -> Image?
+    func staticImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor?
+    
+    /// Return an image based on slider value.
+    func image(forValue value: CGFloat, style: MenuSliderStyle) -> MenuSliderImageDescriptor?
     
     /// Return an image conditionally based on slider value.
-    func image(for value: CGFloat, oldValue: CGFloat?, force: Bool) -> MenuSliderImageUpdate?
-    
-    /// Transform the image.
-    func transform(image: Image, for value: CGFloat) -> AnyView?
+    func deltaImage(forValue value: CGFloat, oldValue: CGFloat?, style: MenuSliderStyle, force: Bool) -> MenuSliderImageUpdate?
 }
 
 // MARK: - Default implementation
 
 extension MenuSliderImage {
-    public func staticImage() -> Image? {
+    public func staticImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
         nil
     }
     
-    public func image(
-        for value: CGFloat,
-        oldValue: CGFloat?,
-        force: Bool
-    ) -> MenuSliderImageUpdate? {
+    public func image(forValue value: CGFloat, style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
         nil
     }
     
-    public func transform(image: Image, for value: CGFloat) -> AnyView? {
+    public func deltaImage(forValue value: CGFloat, oldValue: CGFloat?, style: MenuSliderStyle, force: Bool) -> MenuSliderImageUpdate? {
         nil
     }
 }
 
-// MARK: - Methods
+// MARK: - Public Methods
 
 extension MenuSliderImage {
+    /// Return an image for minimum value (`0.0`).
+    public func minImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
+        image(forValue: 0.0, style: style)
+    }
+    
+    /// Return an image for maximum value (`1.0`).
+    public func maxImage(style: MenuSliderStyle) -> MenuSliderImageDescriptor? {
+        image(forValue: 1.0, style: style)
+    }
+    
     /// Convenience method to test if a value has newly entered a given value range.
-    public func newlyEntered(
+    public func isNewlyEntered(
         value: CGFloat,
         oldValue: CGFloat?,
         in range: ClosedRange<CGFloat>,

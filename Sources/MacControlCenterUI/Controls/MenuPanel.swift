@@ -61,6 +61,7 @@ public struct MenuPanel<Content: View>: View {
             }
             .padding(10)
         }
+        .geometryGroupIfSupportedByPlatform()
     }
 }
 
