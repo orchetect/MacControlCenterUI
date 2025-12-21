@@ -27,10 +27,6 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
     
-    // MARK: Private State
-    
-    @State private var height: CGFloat = 0
-    
     // MARK: Init - With Label, No Content
     
     @_disfavoredOverload
