@@ -51,8 +51,8 @@ public struct MenuCircleButton<Label: View>: View {
         self.init(
             controlSize: controlSize,
             style: style,
-            label: { Text(title) },
-            action: actionBlock
+            action: actionBlock,
+            label: { Text(title) }
         )
     }
     
@@ -67,8 +67,8 @@ public struct MenuCircleButton<Label: View>: View {
         self.init(
             controlSize: controlSize,
             style: style,
-            label: { Text(titleKey) },
-            action: actionBlock
+            action: actionBlock,
+            label: { Text(titleKey) }
         )
     }
     
@@ -85,8 +85,8 @@ public struct MenuCircleButton<Label: View>: View {
         self.init(
             controlSize: controlSize,
             style: style,
-            label: { Text(titleResource) },
-            action: actionBlock
+            action: actionBlock,
+            label: { Text(titleResource) }
         )
     }
     
@@ -95,13 +95,13 @@ public struct MenuCircleButton<Label: View>: View {
     public init(
         controlSize: MenuCircleButtonSize = .menu,
         style: MenuCircleButtonStyle,
-        @ViewBuilder label: @escaping () -> Label,
-        action actionBlock: @escaping () -> Void
+        action actionBlock: @escaping () -> Void,
+        @ViewBuilder label: @escaping () -> Label
     ) {
         self.controlSize = controlSize
         self.style = style
-        self.label = label()
         self.actionBlock = actionBlock
+        self.label = label()
     }
     
     // MARK: Body
