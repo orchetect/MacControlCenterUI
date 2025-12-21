@@ -139,7 +139,7 @@ extension Animation {
         // ideally it would be something a bit slower (like .smooth), but as of macOS 26.2 SwiftUI seems
         // to resize windows a very fast, static speed. so we have no choice but to match it as best we can.
         
-        .smooth(duration: 0.2, extraBounce: 0.3)
+        .smooth(duration: 0.2, extraBounce: 0.25)
     }
 }
 
