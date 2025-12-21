@@ -181,7 +181,7 @@ public struct MacControlCenterMenu: View {
         
         // TODO: If the screen resolution changes or the user modifies system display configuration, this value might not recalculate in response. It might require adding a system notification observer to detect when screen geometry has changed.
         
-        return availableScreenHeight
+        return availableScreenHeight - 30 // allow for a modest margin to add spacing
     }
 }
 
