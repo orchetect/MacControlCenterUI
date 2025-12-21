@@ -31,7 +31,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     
     // MARK: Private State
     
-    @State private var height: CGFloat = 0
     @State private var isExpanded: Bool
     @State private var isPressed: Bool = false
     @State private var isHighlighted: Bool = false
@@ -103,7 +102,6 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
             }
             .geometryGroupIfSupportedByPlatform()
             .animation(nil, value: isExpanded)
-            .animation(nil, value: height)
             
             if isExpanded {
                 expandedContent
