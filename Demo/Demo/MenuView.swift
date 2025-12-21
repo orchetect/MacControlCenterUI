@@ -14,8 +14,9 @@ struct MenuView: View {
     @Binding var isMenuPresented: Bool
     
     @State private var isEnabled = true
-    @State private var isContentShown = false
-    @State private var isContentShownAnimated = true
+    @State private var isUUIDContentShown = false
+    @State private var isUUIDContentAnimated = true
+    @State private var uuidContentItems: [UUID] = (0 ... 9).map { _ in UUID() }
     @State private var darkMode: Bool = true
     @State private var nightShift: Bool = true
     @State private var trueTone: Bool = true
@@ -55,32 +56,40 @@ struct MenuView: View {
             // it is best to place it within a stable `MenuSection` container which will always be present.
             MenuSection {
                 MenuToggle(
-                    isOn: $isContentShown.animation(isContentShownAnimated ? .macControlCenterMenuResize : nil),
+                    isOn: $isUUIDContentShown.animation(isUUIDContentAnimated ? .macControlCenterMenuResize : nil),
                     image: Image(systemName: "questionmark.circle")
                 ) {
-                    Text("Show Content")
+                    Text("Show UUIDs")
                         .fixedSize()
                     Spacer()
-                    Toggle("Animate", isOn: $isContentShownAnimated)
+                    Toggle("Animate Changes", isOn: $isUUIDContentAnimated)
                         .toggleStyle(.switch)
                         .controlSize(.mini)
+                        .textScale(.secondary)
                         .fixedSize()
                 }
                 
-                if isContentShown {
-                    Group {
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
-                        Text(UUID().uuidString)
+                if isUUIDContentShown {
+                    ForEach(uuidContentItems, id: \.self) { uuid in
+                        Text(uuid.uuidString)
                     }
                     .font(.callout)
                     .monospaced()
                     .foregroundStyle(.secondary)
+                    
+                    MenuCircleButton(style: .standard(systemImage: "plus")) {
+                        withAnimation(isUUIDContentAnimated ? .macControlCenterMenuResize : nil) {
+                            uuidContentItems.append(contentsOf: (0 ... 9).map { _ in UUID() })
+                        }
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text("Add more content")
+                            Text("To test menu animation and scrolling.")
+                                .multilineTextAlignment(.leading)
+                                .textScale(.secondary)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
                 }
             }
             
