@@ -38,7 +38,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         _ label: S,
         divider: Bool = true
     ) where S: StringProtocol, Label == MenuSectionText<Text> {
-        self.label = MenuSectionText(text: Text(label))
+        self.label = MenuSectionText(label)
         self.divider = divider
         self.content = nil
     }
@@ -47,7 +47,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         _ titleKey: LocalizedStringKey,
         divider: Bool = true
     ) where Label == MenuSectionText<Text> {
-        label = MenuSectionText(text: Text(titleKey))
+        label = MenuSectionText(titleKey)
         self.divider = divider
         self.content = nil
     }
@@ -58,7 +58,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         _ titleResource: LocalizedStringResource,
         divider: Bool = true
     ) where Label == MenuSectionText<Text> {
-        label = MenuSectionText(text: Text(titleResource))
+        label = MenuSectionText(titleResource)
         self.divider = divider
         self.content = nil
     }
@@ -68,7 +68,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         _ label: Text,
         divider: Bool = true
     ) where Label == MenuSectionText<Text> {
-        self.label = MenuSectionText(text: label)
+        self.label = MenuSectionText(label)
         self.divider = divider
         self.content = nil
     }
@@ -92,7 +92,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         divider: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) where S: StringProtocol, Label == MenuSectionText<Text> {
-        self.label = MenuSectionText(text: Text(label))
+        self.label = MenuSectionText(label)
         self.divider = divider
         self.content = content()
     }
@@ -102,7 +102,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         divider: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) where Label == MenuSectionText<Text> {
-        label = MenuSectionText(text: Text(titleKey))
+        label = MenuSectionText(titleKey)
         self.divider = divider
         self.content = content()
     }
@@ -114,7 +114,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         divider: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) where Label == MenuSectionText<Text> {
-        label = MenuSectionText(text: Text(titleResource))
+        label = MenuSectionText(titleResource)
         self.divider = divider
         self.content = content()
     }
@@ -125,7 +125,7 @@ public struct MenuSection<Label: View>: View, MacControlCenterMenuItem {
         divider: Bool = true,
         @MacControlCenterMenuBuilder _ content: () -> [any View]
     ) where Label == MenuSectionText<Text> {
-        self.label = MenuSectionText(text: label)
+        self.label = MenuSectionText(label)
         self.divider = divider
         self.content = content()
     }
