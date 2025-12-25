@@ -11,6 +11,7 @@ import SwiftUI
 extension MenuDisclosureSection {
     // MARK: Init - With Binding
     
+    @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "init(divider:isExpanded:_:label:)")
     public init<LabelContent: View>(
         divider: Bool = true,
@@ -28,6 +29,7 @@ extension MenuDisclosureSection {
     
     // MARK: Init - Without Binding
     
+    @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "init(divider:initiallyExpanded:_:label:)")
     public init<LabelContent: View>(
         divider: Bool = true,
