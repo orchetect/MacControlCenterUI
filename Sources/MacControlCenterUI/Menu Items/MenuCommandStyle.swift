@@ -61,15 +61,4 @@ extension MenuCommandStyle {
     }
 }
 
-// MARK: - View Modifiers
-
-extension MenuCommand {
-    /// Apply a menu command style.
-    public func menuCommandStyle(_ style: MenuCommandStyle) -> Self {
-        var copy = self
-        copy.style = style
-        return copy
-    }
-}
-
 #endif
