@@ -32,6 +32,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     var activatesApp: Bool
     var dismissesMenu: Bool
     var style: MenuCommandStyle = .controlCenter
+    var height: MenuItemSize = .standardTextOnly
     @State private var isHighlighted: Bool = false
     
     // MARK: Init
@@ -39,11 +40,15 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     @_disfavoredOverload
     public init<S>(
         _ title: S,
+        style: MenuCommandStyle = .controlCenter,
+        height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
         label = Text(title)
+        self.style = style
+        self.height = height
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -51,11 +56,15 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     
     public init(
         _ titleKey: LocalizedStringKey,
+        style: MenuCommandStyle = .controlCenter,
+        height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @escaping () -> Void
     ) where Label == Text {
         label = Text(titleKey)
+        self.style = style
+        self.height = height
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -65,11 +74,15 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     @_disfavoredOverload
     public init(
         _ titleResource: LocalizedStringResource,
+        style: MenuCommandStyle = .controlCenter,
+        height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @escaping () -> Void
     ) where Label == Text {
         label = Text(titleResource)
+        self.style = style
+        self.height = height
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -77,11 +90,15 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     
     public init(
         action: @escaping () -> Void,
+        style: MenuCommandStyle = .controlCenter,
+        height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         @ViewBuilder label: () -> Label
     ) {
         self.label = label()
+        self.style = style
+        self.height = height
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -92,7 +109,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     public var body: some View {
         HighlightingMenuItem(
             style: style,
-            height: .standardTextOnly,
+            height: height,
             isHighlighted: $isHighlighted
         ) {
             commandBody
