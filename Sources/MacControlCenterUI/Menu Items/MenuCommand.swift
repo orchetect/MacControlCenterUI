@@ -27,8 +27,8 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     
     // MARK: Private State
     
-    private let label: Label
-    private let action: () -> Void
+    private let label: @MainActor (_ action: @MainActor @escaping () -> Void) -> Label
+    private let action: @MainActor () -> Void
     var activatesApp: Bool
     var dismissesMenu: Bool
     var style: MenuCommandStyle = .controlCenter
@@ -44,9 +44,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
-        action: @escaping () -> Void
+        action: @MainActor @escaping () -> Void
     ) where S: StringProtocol, Label == Text {
-        label = Text(title)
+        label = { _ in Text(title) }
         self.style = style
         self.height = height
         self.activatesApp = activatesApp
@@ -60,9 +60,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
-        action: @escaping () -> Void
+        action: @MainActor @escaping () -> Void
     ) where Label == Text {
-        label = Text(titleKey)
+        label = { _ in Text(titleKey) }
         self.style = style
         self.height = height
         self.activatesApp = activatesApp
@@ -78,9 +78,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
-        action: @escaping () -> Void
+        action: @MainActor @escaping () -> Void
     ) where Label == Text {
-        label = Text(titleResource)
+        label = { _ in Text(titleResource) }
         self.style = style
         self.height = height
         self.activatesApp = activatesApp
@@ -93,10 +93,26 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
-        action: @escaping () -> Void,
-        @ViewBuilder label: () -> Label
+        action: @MainActor @escaping () -> Void,
+        @ViewBuilder label: @MainActor @escaping () -> Label
     ) {
-        self.label = label()
+        self.label = { _ in label() }
+        self.style = style
+        self.height = height
+        self.activatesApp = activatesApp
+        self.dismissesMenu = dismissesMenu
+        self.action = action
+    }
+    
+    public init(
+        style: MenuCommandStyle = .controlCenter,
+        height: MenuItemSize = .standardTextOnly,
+        activatesApp: Bool = true,
+        dismissesMenu: Bool = true,
+        action: @MainActor @escaping () -> Void,
+        @ViewBuilder label: @MainActor @escaping (_ action: @MainActor @escaping () -> Void) -> Label
+    ) {
+        self.label = label
         self.style = style
         self.height = height
         self.activatesApp = activatesApp
@@ -124,7 +140,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     private var commandBody: some View {
         HStack {
             VStack(alignment: .leading) {
-                label
+                label(userTapped)
                     .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
             }
             Spacer()
