@@ -231,28 +231,30 @@ struct MenuView: View {
                 } label: {
                     Text("Settings...") // custom label view
                 }
-                
+            }
+            
+            MenuSection(divider: true) {
                 MenuCommand(height: .auto) {
                     print("Custom-size menu command clicked")
                 } label: {
-                    Text("Non-Standard Height Command").border(.red)
+                    Text("Non-Standard Height Command")
                     Text("A brief description of this command that describes what it does.")
                         .foregroundStyle(.secondary)
-                        .textScale(.secondary).border(.red)
+                        .textScale(.secondary)
                 }
                 
                 MenuCommand(style: .plain, height: .auto) {
                     print("Custom-size menu command clicked")
                 } label: { action in
-                    Text("Non-Standard Height Command With Proxy").border(.red)
+                    Text("Non-Standard Height Command With Proxy")
                     HStack {
                         Text("Example:")
-                            .textScale(.secondary)
                             .foregroundStyle(.secondary)
                         Spacer()
                         Button("Action Proxy") { action() }
                         Button("Custom Action") { print("Custom action without dismissing menu") }
                     }
+                    .textScale(.secondary)
                     .buttonStyle(.link)
                 }
             }
