@@ -22,7 +22,10 @@ public enum MenuItemSize {
     case controlCenterSection
     
     /// Specify a custom size.
-    case custom(CGFloat)
+    case custom(CGFloat, verticalPadding: Bool = true)
+    
+    /// Automatically size the menu item.
+    case auto(verticalPadding: Bool = true)
 }
 
 extension MenuItemSize: Equatable { }
@@ -31,29 +34,52 @@ extension MenuItemSize: Hashable { }
 
 extension MenuItemSize: Sendable { }
 
+// MARK: - Static Constructors
+
 extension MenuItemSize {
-    /// The inner padded content height.
-    public var contentHeight: CGFloat {
+    /// Automatically size the menu item.
+    public static var auto: Self { .auto() }
+}
+
+// MARK: - Properties
+
+extension MenuItemSize {
+    /// The inner content height portion of the ``boundsHeight`` (without padding).
+    public var contentHeight: CGFloat? {
         switch self {
         case .standardTextOnly:
-            return MenuGeometry.menuItemContentStandardHeight + MenuGeometry.menuItemPadding
+            return MenuGeometry.menuItemContentStandardHeight
         case .controlCenterIconItem:
-            return MenuCircleButtonSize.menu.size + MenuGeometry.menuItemPadding
+            return MenuCircleButtonSize.menu.size
         case .controlCenterSection:
             return 20
-        case let .custom(value):
+        case let .custom(value, verticalPadding: _):
             return value
+        case .auto(verticalPadding: _):
+            return nil
         }
     }
     
-    /// The non-padded bounds height of the menu item.
-    public var boundsHeight: CGFloat {
+    /// Returns the padding portion of the ``boundsHeight`` (without inner content).
+    public var paddingHeight: CGFloat {
         switch self {
-        case let .custom(value):
-            return value
-        default:
-            return contentHeight + MenuGeometry.menuVerticalPadding
+        case .standardTextOnly:
+            return MenuGeometry.menuItemPadding
+        case .controlCenterIconItem:
+            return MenuGeometry.menuItemPadding
+        case .controlCenterSection:
+            return 0
+        case let .custom(_, verticalPadding: verticalPadding):
+            return verticalPadding ? MenuGeometry.menuItemPadding : 0
+        case let .auto(verticalPadding: verticalPadding):
+            return verticalPadding ? MenuGeometry.menuItemPadding : 0
         }
+    }
+    
+    /// The full bounds height of the menu item, including padding.
+    public var boundsHeight: CGFloat? {
+        guard let contentHeight else { return nil }
+        return contentHeight + paddingHeight
     }
 }
 
