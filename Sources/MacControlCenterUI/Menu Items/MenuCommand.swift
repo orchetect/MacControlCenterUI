@@ -33,6 +33,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     var dismissesMenu: Bool
     var style: MenuCommandStyle = .controlCenter
     var height: MenuItemSize = .standardTextOnly
+    var spacing: CGFloat
     @State private var isHighlighted: Bool = false
     
     // MARK: Init
@@ -42,6 +43,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         _ title: S,
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
+        spacing: CGFloat = 0,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @MainActor @escaping () -> Void
@@ -49,6 +51,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         label = { _ in Text(title) }
         self.style = style
         self.height = height
+        self.spacing = spacing
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -58,6 +61,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         _ titleKey: LocalizedStringKey,
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
+        spacing: CGFloat = 0,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @MainActor @escaping () -> Void
@@ -65,6 +69,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         label = { _ in Text(titleKey) }
         self.style = style
         self.height = height
+        self.spacing = spacing
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -76,6 +81,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         _ titleResource: LocalizedStringResource,
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
+        spacing: CGFloat = 0,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @MainActor @escaping () -> Void
@@ -83,6 +89,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         label = { _ in Text(titleResource) }
         self.style = style
         self.height = height
+        self.spacing = spacing
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -91,6 +98,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
+        spacing: CGFloat = 0,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @MainActor @escaping () -> Void,
@@ -99,6 +107,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.label = { _ in label() }
         self.style = style
         self.height = height
+        self.spacing = spacing
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -107,6 +116,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
+        spacing: CGFloat = 0,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
         action: @MainActor @escaping () -> Void,
@@ -115,6 +125,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.label = label
         self.style = style
         self.height = height
+        self.spacing = spacing
         self.activatesApp = activatesApp
         self.dismissesMenu = dismissesMenu
         self.action = action
@@ -141,7 +152,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         ZStack(alignment: .leading) {
             Color.clear
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: spacing) {
                 label(userTapped)
             }
         }
