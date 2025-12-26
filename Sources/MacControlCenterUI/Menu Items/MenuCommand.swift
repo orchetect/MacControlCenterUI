@@ -89,11 +89,11 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     }
     
     public init(
-        action: @escaping () -> Void,
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
         activatesApp: Bool = true,
         dismissesMenu: Bool = true,
+        action: @escaping () -> Void,
         @ViewBuilder label: () -> Label
     ) {
         self.label = label()
