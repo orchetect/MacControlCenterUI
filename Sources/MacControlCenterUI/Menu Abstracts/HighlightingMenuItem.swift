@@ -100,7 +100,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     @ViewBuilder
     private var heightBoundContent: some View {
         switch height {
-        case .standardTextOnly, .controlCenterIconItem, .controlCenterSection, .custom(_):
+        case .standardTextOnly, .controlCenterIconItem, .controlCenterSection, .custom(_, _):
             content
                 .frame(height: height.boundsHeight)
             
