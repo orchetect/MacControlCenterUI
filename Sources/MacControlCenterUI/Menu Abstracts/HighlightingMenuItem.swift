@@ -60,6 +60,27 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     // MARK: Body
     
     public var body: some View {
+        itemBody
+            .fixedSize(horizontal: false, vertical: true)
+            .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in another view
+            .geometryGroupIfSupportedByPlatform()
+            .onHover { state in
+                guard isEnabled else { return }
+                if isHighlightedInternal != state {
+                    setHighlight(state: state)
+                }
+            }
+            .onChange(of: isHighlighted) { newValue in
+                isHighlightedInternal = newValue
+            }
+            .onChange(of: isEnabled) { newValue in
+                if !newValue {
+                    setHighlight(state: false)
+                }
+            }
+    }
+    
+    private var itemBody: some View {
         ZStack {
             backgroundShape
                 .background(isHighlightedInternal ? visualEffect : nil)
@@ -68,27 +89,31 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
                 .padding([.leading, .trailing], MenuGeometry.menuHorizontalHighlightInset)
             
             VStack(alignment: .leading) {
-                content
+                heightBoundContent
             }
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
-        .frame(height: height.boundsHeight)
-        .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in another view
-        .geometryGroupIfSupportedByPlatform()
-        .onHover { state in
-            guard isEnabled else { return }
-            if isHighlightedInternal != state {
-                setHighlight(state: state)
+    }
+    
+    @ViewBuilder
+    private var heightBoundContent: some View {
+        switch height {
+        case .standardTextOnly, .controlCenterIconItem, .controlCenterSection, .custom(_):
+            contentBody
+                .frame(height: height.boundsHeight)
+            
+        case let .auto(verticalPadding: isVerticalPadded):
+            if isVerticalPadded {
+                contentBody
+                    .padding([.top, .bottom], height.paddingHeight / 2)
+            } else {
+                contentBody
             }
         }
-        .onChange(of: isHighlighted) { newValue in
-            isHighlightedInternal = newValue
-        }
-        .onChange(of: isEnabled) { newValue in
-            if !newValue {
-                setHighlight(state: false)
-            }
-        }
+    }
+    
+    private var contentBody: some View {
+        content
     }
     
     // MARK: Helpers

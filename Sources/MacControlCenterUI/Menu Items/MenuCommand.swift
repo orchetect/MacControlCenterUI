@@ -123,8 +123,10 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     
     private var commandBody: some View {
         HStack {
-            label
-                .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
+            VStack(alignment: .leading) {
+                label
+                    .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
+            }
             Spacer()
         }
         .contentShape(Rectangle())
