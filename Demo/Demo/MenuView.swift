@@ -240,6 +240,21 @@ struct MenuView: View {
                         .foregroundStyle(.secondary)
                         .textScale(.secondary)
                 }
+                
+                MenuCommand(height: .auto) {
+                    print("Custom size menu command clicked")
+                } label: { action in
+                    Text("Non-Standard Height Command With Proxy")
+                    HStack {
+                        Text("Example:")
+                        Spacer()
+                        Button("Action Proxy") { action() }
+                        Button("Custom Action") { print("Custom action without dismissing menu") }
+                    }
+                    .foregroundStyle(.secondary)
+                    .textScale(.secondary)
+                    .buttonStyle(.bordered)
+                }
             }
             
             MenuSection(divider: true) {
