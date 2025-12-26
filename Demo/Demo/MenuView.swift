@@ -33,6 +33,10 @@ struct MenuView: View {
     @State private var isMusicEnabled: Bool = true
     @State private var isXcodeEnabled: Bool = false
     
+    init(isMenuPresented: Binding<Bool>) {
+        _isMenuPresented = isMenuPresented
+    }
+    
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
             // If state changes may result menu height changing, it is recommended to use the `macControlCenterMenuResize`
@@ -226,6 +230,15 @@ struct MenuView: View {
                     openSettings()
                 } label: {
                     Text("Settings...") // custom label view
+                }
+                
+                MenuCommand(height: .auto) {
+                    print("Custom size menu command clicked")
+                } label: {
+                    Text("Non-Standard Height Command")
+                    Text("A brief description of this command that describes what it does.")
+                        .foregroundStyle(.secondary)
+                        .textScale(.secondary)
                 }
             }
             
