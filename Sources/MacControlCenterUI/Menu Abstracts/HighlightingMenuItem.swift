@@ -90,7 +90,9 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             
             VStack(alignment: .leading) {
                 heightBoundContent
+                    .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
     }
@@ -99,21 +101,17 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     private var heightBoundContent: some View {
         switch height {
         case .standardTextOnly, .controlCenterIconItem, .controlCenterSection, .custom(_):
-            contentBody
+            content
                 .frame(height: height.boundsHeight)
             
         case let .auto(verticalPadding: isVerticalPadded):
             if isVerticalPadded {
-                contentBody
+                content
                     .padding([.top, .bottom], height.paddingHeight / 2)
             } else {
-                contentBody
+                content
             }
         }
-    }
-    
-    private var contentBody: some View {
-        content
     }
     
     // MARK: Helpers
