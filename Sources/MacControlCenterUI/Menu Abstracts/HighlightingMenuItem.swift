@@ -65,7 +65,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in another view
             .geometryGroupIfSupportedByPlatform()
             .onHover { state in
-                guard isEnabled else { return }
+                guard isEnabled else { setHighlight(state: false); return }
                 if isHighlightedInternal != state {
                     setHighlight(state: state)
                 }
@@ -137,8 +137,8 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
     }
     
     private func setHighlight(state: Bool) {
-        isHighlightedInternal = state
         isHighlighted = state
+        isHighlightedInternal = state
     }
 }
 

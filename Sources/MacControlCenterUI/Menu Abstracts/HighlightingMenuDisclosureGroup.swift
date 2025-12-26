@@ -125,7 +125,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
     
     private var shouldChevronBeVisible: Bool {
         guard toggleVisibility != .never else { return false }
-        return isExpanded || isHighlighted || toggleVisibility == .always
+        return isExpanded || isHighlightedInternal || toggleVisibility == .always
     }
 }
 
