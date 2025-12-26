@@ -138,12 +138,12 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     }
     
     private var commandBody: some View {
-        HStack {
+        ZStack(alignment: .leading) {
+            Color.clear
+            
             VStack(alignment: .leading) {
                 label(userTapped)
-                    .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
             }
-            Spacer()
         }
         .contentShape(Rectangle())
     }
