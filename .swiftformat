@@ -8,6 +8,7 @@
 --func-attributes prev-line
 --ifdef preserve
 --maxwidth 140
+--indent-strings true
 --property-types explicit
 --stored-var-attributes preserve
 --strip-unused-args unnamed-only
