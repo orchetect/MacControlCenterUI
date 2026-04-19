@@ -1,7 +1,7 @@
 //
 //  MenuItemSize.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -14,16 +14,16 @@ public enum MenuItemSize {
     /// Standard height for text-only menu items.
     /// This equates to traditional NSMenu-style item height.
     case standardTextOnly
-    
+
     /// Standard height for Control Center menu items that contain an icon/image.
     case controlCenterIconItem
-    
+
     /// Standard height for Control Center section labels.
     case controlCenterSection
-    
+
     /// Specify a custom size.
     case custom(CGFloat, verticalPadding: Bool = true)
-    
+
     /// Automatically size the menu item.
     case auto(verticalPadding: Bool = true)
 }
@@ -38,7 +38,9 @@ extension MenuItemSize: Sendable { }
 
 extension MenuItemSize {
     /// Automatically size the menu item.
-    public static var auto: Self { .auto() }
+    public static var auto: Self {
+        .auto()
+    }
 }
 
 // MARK: - Properties
@@ -59,7 +61,7 @@ extension MenuItemSize {
             return nil
         }
     }
-    
+
     /// Returns the padding portion of the ``boundsHeight`` (without inner content).
     public var paddingHeight: CGFloat {
         switch self {
@@ -75,7 +77,7 @@ extension MenuItemSize {
             return verticalPadding ? MenuGeometry.menuItemPadding : 0
         }
     }
-    
+
     /// The full bounds height of the menu item, including padding.
     public var boundsHeight: CGFloat? {
         guard let contentHeight else { return nil }

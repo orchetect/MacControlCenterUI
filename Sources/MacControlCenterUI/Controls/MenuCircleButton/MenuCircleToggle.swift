@@ -1,7 +1,7 @@
 //
 //  MenuCircleToggle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -16,24 +16,24 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MenuCircleToggle<Label: View>: View {
     // MARK: Public Properties
-    
+
     @Binding public var isOn: Bool
     public var style: MenuCircleButtonStyle
     public var label: Label?
     public var onClickBlock: (Bool) -> Void
-    
+
     // MARK: Environment
-    
+
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Private State
-    
+
     @State private var isMouseDown: Bool = false
     private var controlSize: MenuCircleButtonSize
-    
+
     // MARK: Init - No Label
-    
+
     public init(
         isOn: Binding<Bool>,
         controlSize: MenuCircleButtonSize = .menu,
@@ -46,7 +46,7 @@ public struct MenuCircleToggle<Label: View>: View {
         label = nil
         self.onClickBlock = onClickBlock
     }
-    
+
     public init(
         isOn: Binding<Bool>,
         controlSize: MenuCircleButtonSize = .menu,
@@ -59,9 +59,9 @@ public struct MenuCircleToggle<Label: View>: View {
         label = nil
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With String Label
-    
+
     @_disfavoredOverload
     public init<S>(
         _ title: S,
@@ -76,7 +76,7 @@ public struct MenuCircleToggle<Label: View>: View {
         self.style = style
         self.onClickBlock = onClickBlock
     }
-    
+
     @_disfavoredOverload
     public init<S>(
         _ title: S,
@@ -91,9 +91,9 @@ public struct MenuCircleToggle<Label: View>: View {
         style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With LocalizedStringKey Label
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool>,
@@ -107,7 +107,7 @@ public struct MenuCircleToggle<Label: View>: View {
         self.style = style
         self.onClickBlock = onClickBlock
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool>,
@@ -121,9 +121,9 @@ public struct MenuCircleToggle<Label: View>: View {
         style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With LocalizedStringResource Label
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -139,7 +139,7 @@ public struct MenuCircleToggle<Label: View>: View {
         self.style = style
         self.onClickBlock = onClickBlock
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -155,9 +155,9 @@ public struct MenuCircleToggle<Label: View>: View {
         style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With Label Closure
-    
+
     public init(
         isOn: Binding<Bool>,
         controlSize: MenuCircleButtonSize = .menu,
@@ -171,7 +171,7 @@ public struct MenuCircleToggle<Label: View>: View {
         self.label = label()
         self.onClickBlock = onClickBlock
     }
-    
+
     public init(
         isOn: Binding<Bool>,
         controlSize: MenuCircleButtonSize = .menu,
@@ -185,9 +185,9 @@ public struct MenuCircleToggle<Label: View>: View {
         self.label = label()
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With Label
-    
+
     @_disfavoredOverload
     public init(
         isOn: Binding<Bool>,
@@ -202,7 +202,7 @@ public struct MenuCircleToggle<Label: View>: View {
         self.label = label
         self.onClickBlock = onClickBlock
     }
-    
+
     @_disfavoredOverload
     public init(
         isOn: Binding<Bool>,
@@ -217,16 +217,17 @@ public struct MenuCircleToggle<Label: View>: View {
         self.label = label
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         conditionalBody
-            .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
+            .contentShape(Rectangle(
+            )) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
             .geometryGroupIfSupportedByPlatform()
             .animation(nil, value: isEnabled) // TODO: prevents janky animation by turning off animation. fix, ideally.
     }
-    
+
     @ViewBuilder
     public var conditionalBody: some View {
         switch controlSize {
@@ -255,8 +256,7 @@ public struct MenuCircleToggle<Label: View>: View {
             }
         }
     }
-    
-    @ViewBuilder
+
     private var hitTestBody: some View {
         GeometryReader { geometry in
             buttonBody
@@ -284,8 +284,7 @@ public struct MenuCircleToggle<Label: View>: View {
                 }
         }
     }
-    
-    @ViewBuilder
+
     private var buttonBody: some View {
         Group {
             if let label = labelWithFormatting {
@@ -306,17 +305,16 @@ public struct MenuCircleToggle<Label: View>: View {
                 circleBody
             }
         }
-        .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
+        .contentShape(Rectangle(
+        )) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in a highlighting view
         .id(colorScheme) // forces view update when system transitions between Dark/Light mode
     }
-    
-    @ViewBuilder
+
     private var labelWithFormatting: (some View)? {
         label?
             .foregroundColor(Color.primary.opacity(isEnabled ? 1.0 : 0.5))
     }
-    
-    @ViewBuilder
+
     private var circleBody: some View {
         ZStack {
             if style.hasColor {
@@ -330,7 +328,7 @@ public struct MenuCircleToggle<Label: View>: View {
                         .foregroundColor(buttonForeColor)
                         .opacity(imageOpacity)
                         .saturation(imageSaturation)
-                    
+
                     if !style.hasColor, isMouseDown {
                         Rectangle()
                             .foregroundColor(.black)
@@ -340,7 +338,7 @@ public struct MenuCircleToggle<Label: View>: View {
                 }
             }
             .padding(imagePadding)
-            
+
             if isMouseDown, style.hasColor {
                 if colorScheme == .dark {
                     Circle()
@@ -355,13 +353,13 @@ public struct MenuCircleToggle<Label: View>: View {
         }
         .frame(width: controlSize.size, height: controlSize.size)
     }
-    
+
     private var image: (some View)? {
         style.image(forState: isOn)?
             // .resizable() // already applied in `MenuCircleButtonStyle`
             .scaledToFit()
     }
-    
+
     /// Adjust padding based on whether an image is present or not for the current toggle state.
     private var imagePadding: CGFloat {
         let circlePadding = style.hasColor
@@ -369,33 +367,33 @@ public struct MenuCircleToggle<Label: View>: View {
             : 0.0
         return circlePadding + style.imagePadding
     }
-    
+
     private var imageOpacity: CGFloat {
         var amount: CGFloat = 1.0
-        
+
         if !isOn, let dimAmount = style.offImageDimAmount {
             let multiplier = 1.0 - dimAmount.clamped(to: 0.0 ... 1.0)
             amount *= multiplier
         }
-        
+
         if !style.hasColor, isMouseDown {
             amount *= isOn ? 0.8 : 1.2
         }
-        
+
         if !style.hasColor, !isEnabled {
             amount *= 0.5
         }
-        
+
         return amount
     }
-    
+
     private var imageSaturation: CGFloat {
         guard !style.hasColor else { return 1.0 }
         return isOn ? 1.0 : 0.0
     }
-    
+
     // MARK: Helpers
-    
+
     private var visualEffect: VisualEffect? {
         guard !isOn else { return nil }
         if colorScheme == .dark {
@@ -414,18 +412,18 @@ public struct MenuCircleToggle<Label: View>: View {
             )
         }
     }
-    
-    private func mask() -> NSImage?  {
+
+    private func mask() -> NSImage? {
         NSImage(
             color: .black,
             ovalSize: .init(width: controlSize.size, height: controlSize.size)
         )
     }
-    
+
     private var buttonBackColor: Color? {
         style.color(forState: isOn, isEnabled: isEnabled, colorScheme: colorScheme)
     }
-    
+
     private var buttonForeColor: Color {
         let base: Color = switch isOn {
         case true:
@@ -451,7 +449,7 @@ public struct MenuCircleToggle<Label: View>: View {
                 Color(NSColor.selectedMenuItemTextColor)
             }
         }
-        
+
         return isEnabled ? base : base.opacity(0.4)
     }
 }

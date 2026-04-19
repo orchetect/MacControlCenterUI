@@ -1,7 +1,7 @@
 //
 //  MenuCommand.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -20,13 +20,13 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Environment
-    
+
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isMenuBarExtraPresented) private var menuBarExtraIsPresented
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Private State
-    
+
     private let label: @MainActor (_ action: @MainActor @escaping () -> Void) -> Label
     private let action: @MainActor () -> Void
     var activatesApp: Bool
@@ -35,9 +35,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
     var height: MenuItemSize = .standardTextOnly
     var spacing: CGFloat
     @State private var isHighlighted: Bool = false
-    
+
     // MARK: Init
-    
+
     @_disfavoredOverload
     public init<S>(
         _ title: S,
@@ -56,7 +56,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.dismissesMenu = dismissesMenu
         self.action = action
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         style: MenuCommandStyle = .controlCenter,
@@ -74,7 +74,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.dismissesMenu = dismissesMenu
         self.action = action
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -94,7 +94,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.dismissesMenu = dismissesMenu
         self.action = action
     }
-    
+
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
@@ -112,7 +112,7 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.dismissesMenu = dismissesMenu
         self.action = action
     }
-    
+
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize = .standardTextOnly,
@@ -130,9 +130,9 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
         self.dismissesMenu = dismissesMenu
         self.action = action
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         HighlightingMenuItem(
             style: style,
@@ -147,37 +147,37 @@ public struct MenuCommand<Label: View>: View, MacControlCenterMenuItem {
                 }
         }
     }
-    
+
     private var commandBody: some View {
         ZStack(alignment: .leading) {
             Color.clear
-            
+
             VStack(alignment: .leading, spacing: spacing) {
                 label(userTapped)
             }
         }
         .contentShape(Rectangle())
     }
-    
+
     // MARK: Helpers
-    
+
     private func userTapped() {
         func go() {
             if activatesApp {
                 NSApp.activate(ignoringOtherApps: true)
             }
-            
+
             Task {
                 if dismissesMenu {
                     menuBarExtraIsPresented.wrappedValue = false
                     // wait a small amount to give the menu a chance to close before calling the action block
                     try? await Task.sleep(seconds: 0.100) // 100 ms
                 }
-                
+
                 action()
             }
         }
-        
+
         // classic NSMenu-style menu commands still blink on click.
         // for one or two macOS releases macOS 12 (I believe, for one), Control Center style menu commands did not blink,
         // but at some point (macOS 14 or 15) Apple added this behavior back in to match the NSMenu behavior.

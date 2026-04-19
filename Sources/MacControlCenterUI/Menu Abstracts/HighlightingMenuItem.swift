@@ -1,7 +1,7 @@
 //
 //  HighlightingMenuItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -16,23 +16,23 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuItem {
     // MARK: Public Properties
-    
+
     public var style: MenuCommandStyle
     public var height: MenuItemSize
     public var content: Content
     @Binding public var isHighlighted: Bool
-    
+
     // MARK: Environment
-    
+
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Private State
-    
+
     @State private var isHighlightedInternal: Bool = false
-    
+
     // MARK: Init
-    
+
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize,
@@ -44,7 +44,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
         _isHighlighted = isHighlighted
         self.content = content()
     }
-    
+
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize,
@@ -56,13 +56,13 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
         _isHighlighted = .constant(isHighlighted)
         self.content = content()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         itemBody
             .fixedSize(horizontal: false, vertical: true)
-            .contentShape(Rectangle()) // ensures that hit test area (mouse hover and clicks) works as expected when this view is wrapped in another view
+            .contentShape(Rectangle()) // ensures hit test area works as expected when view is wrapped in another view
             .geometryGroupIfSupportedByPlatform()
             .onHover { state in
                 guard isEnabled else { setHighlight(state: false); return }
@@ -79,7 +79,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
                 }
             }
     }
-    
+
     private var itemBody: some View {
         ZStack {
             backgroundShape
@@ -87,7 +87,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
                 .foregroundColor(style.backColor(hover: isHighlightedInternal, for: colorScheme) ?? .clear)
                 .clipShape(backgroundShape)
                 .padding([.leading, .trailing], MenuGeometry.menuHorizontalHighlightInset)
-            
+
             VStack(alignment: .leading) {
                 heightBoundContent
                     .foregroundColor(style.textColor(hover: isHighlighted, isEnabled: isEnabled))
@@ -96,14 +96,14 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             .padding([.leading, .trailing], MenuGeometry.menuHorizontalContentInset)
         }
     }
-    
+
     @ViewBuilder
     private var heightBoundContent: some View {
         switch height {
         case .standardTextOnly, .controlCenterIconItem, .controlCenterSection, .custom(_, _):
             content
                 .frame(height: height.boundsHeight)
-            
+
         case let .auto(verticalPadding: isVerticalPadded):
             if isVerticalPadded {
                 content
@@ -113,9 +113,9 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             }
         }
     }
-    
+
     // MARK: Helpers
-    
+
     private var backgroundShape: some Shape {
         if #available(macOS 26, *) {
             RoundedRectangle(cornerSize: .init(width: 10, height: 10), style: .continuous)
@@ -123,7 +123,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             RoundedRectangle(cornerSize: .init(width: 5, height: 5))
         }
     }
-    
+
     private var visualEffect: VisualEffect? {
         if colorScheme == .dark {
             return VisualEffect(
@@ -139,7 +139,7 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             )
         }
     }
-    
+
     private func setHighlight(state: Bool) {
         isHighlighted = state
         isHighlightedInternal = state

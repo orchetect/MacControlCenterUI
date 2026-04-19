@@ -1,7 +1,7 @@
 //
 //  MenuView.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import MacControlCenterUI
@@ -10,9 +10,9 @@ import SwiftUI
 
 struct MenuView: View {
     @Environment(\.openSettings) var openSettings
-    
+
     @Binding var isMenuPresented: Bool
-    
+
     @State private var isEnabled = true
     @State private var isUUIDContentShown = false
     @State private var isUUIDContentAnimated = true
@@ -32,11 +32,11 @@ struct MenuView: View {
     @State private var isSafariEnabled: Bool = true
     @State private var isMusicEnabled: Bool = true
     @State private var isXcodeEnabled: Bool = false
-    
+
     init(isMenuPresented: Binding<Bool>) {
         _isMenuPresented = isMenuPresented
     }
-    
+
     var body: some View {
         MacControlCenterMenu(isPresented: $isMenuPresented) {
             // If state changes may result menu height changing, it is recommended to use the `macControlCenterMenuResize`
@@ -46,7 +46,7 @@ struct MenuView: View {
                     .toggleStyle(.switch)
                     .labelsHidden()
             }
-            
+
             // To prevent layout animation glitches, if there is menu content that may appear/disappear,
             // it is best to place it within a stable `MenuSection` container which will always be present.
             MenuSection(divider: false) {
@@ -55,7 +55,7 @@ struct MenuView: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            
+
             // To prevent layout animation glitches, if there is menu content that may change height,
             // it is best to place it within a stable `MenuSection` container which will always be present.
             MenuSection {
@@ -72,7 +72,7 @@ struct MenuView: View {
                         .textScale(.secondary)
                         .fixedSize()
                 }
-                
+
                 if isUUIDContentShown {
                     ForEach(uuidContentItems, id: \.self) { uuid in
                         Text(uuid.uuidString)
@@ -80,7 +80,7 @@ struct MenuView: View {
                     .font(.callout)
                     .monospaced()
                     .foregroundStyle(.secondary)
-                    
+
                     MenuCircleButton(style: .standard(systemImage: "plus")) {
                         withAnimation(isUUIDContentAnimated ? .macControlCenterMenuResize : nil) {
                             uuidContentItems.append(contentsOf: (0 ... 9).map { _ in UUID() })
@@ -96,14 +96,14 @@ struct MenuView: View {
                     }
                 }
             }
-            
+
             MenuSection("Display", divider: true) {
                 MenuSlider(
                     value: $brightness,
                     image: .minMax(minSystemName: "sun.min.fill", maxSystemName: "sun.max.fill")
                 )
                 .disabled(!isEnabled)
-                
+
                 HStack {
                     MenuCircleToggle(
                         isOn: $darkMode,
@@ -140,15 +140,15 @@ struct MenuView: View {
                 }
                 .frame(height: 80)
             }
-            
+
             MenuSection("Sound", divider: true) {
                 MenuVolumeSlider(value: $volume)
-                
+
                 MenuCommand("Sound Settings...") {
                     print("Sound Settings clicked")
                 }
             }
-            
+
             MenuSection("Output", divider: true) {
                 MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
                     if item.name.contains("AirPods Max") {
@@ -198,7 +198,7 @@ struct MenuView: View {
                     }
                 }
             }
-            
+
             MenuDisclosureSection("Wi-Fi Network", divider: true, isExpanded: $isWiFiExpanded) {
                 MenuScrollView(maxHeight: 135) {
                     MenuList(wiFiNetworks, selection: $wiFiSelection) { item in
@@ -209,13 +209,13 @@ struct MenuView: View {
                     .disabled(!isEnabled)
                 }
             }
-            
+
             MenuSection("Custom Icons", divider: true) {
                 MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
                 MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
                     .disabled(!isEnabled)
             }
-            
+
             MenuSection(divider: true) {
                 MenuCommand {
                     showStandardAboutWindow()
@@ -223,14 +223,14 @@ struct MenuView: View {
                     Text("About") // custom label view
                 }
                 .disabled(!isEnabled)
-                
+
                 MenuCommand {
                     openSettings()
                 } label: {
                     Text("Settings...") // custom label view
                 }
             }
-            
+
             MenuSection(divider: true) {
                 MenuCommand(height: .auto) {
                     print("Custom-size menu command clicked")
@@ -240,7 +240,7 @@ struct MenuView: View {
                         .foregroundStyle(.secondary)
                         .textScale(.secondary)
                 }
-                
+
                 MenuCommand(style: .plain, height: .auto) {
                     print("Custom-size menu command clicked")
                 } label: { action in
@@ -256,7 +256,7 @@ struct MenuView: View {
                     .buttonStyle(.link)
                 }
             }
-            
+
             MenuSection(divider: true) {
                 MenuCommand("Quit") {
                     quit()

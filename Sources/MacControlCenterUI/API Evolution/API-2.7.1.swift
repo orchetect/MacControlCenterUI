@@ -1,7 +1,7 @@
 //
 //  API-2.7.1.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -23,7 +23,7 @@ extension MenuCommand {
             label: label
         )
     }
-    
+
     @_documentation(visibility: internal)
     @_disfavoredOverload
     @available(*, deprecated, renamed: "init(dismissesMenu:action:label:)")
@@ -38,7 +38,7 @@ extension MenuCommand {
             label: label
         )
     }
-    
+
     @_documentation(visibility: internal)
     @_disfavoredOverload
     @available(*, deprecated, renamed: "init(activatesApp:dismissesMenu:action:label:)")

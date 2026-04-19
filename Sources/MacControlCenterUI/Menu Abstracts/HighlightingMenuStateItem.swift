@@ -1,7 +1,7 @@
 //
 //  HighlightingMenuStateItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -16,7 +16,7 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMenuItem {
     // MARK: Public Properties
-    
+
     public var style: MenuCommandStyle
     public var height: MenuItemSize
     @Binding public var isOn: Bool
@@ -24,15 +24,15 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
     @Binding public var isHighlighted: Bool
     public let content: () -> Content
     public var onChangeBlock: (_ state: Bool) -> Void
-    
+
     // MARK: Environment
-    
+
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Private State
-    
+
     @State private var isHighlightedInternal: Bool = false
-    
+
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize,
@@ -49,7 +49,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
         self.onChangeBlock = onChangeBlock
         _isHighlighted = .constant(false)
     }
-    
+
     public init(
         style: MenuCommandStyle = .controlCenter,
         height: MenuItemSize,
@@ -67,7 +67,7 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
         self.content = content
         self.onChangeBlock = onChangeBlock
     }
-    
+
     public var body: some View {
         GeometryReader { geometry in
             HighlightingMenuItem(
@@ -102,7 +102,6 @@ public struct HighlightingMenuStateItem<Content: View>: View, MacControlCenterMe
         }
         .frame(height: height.boundsHeight)
         .geometryGroupIfSupportedByPlatform()
-        
         .onChange(of: isHighlighted) { newValue in
             isHighlightedInternal = newValue
         }

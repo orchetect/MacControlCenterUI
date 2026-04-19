@@ -1,7 +1,7 @@
 //
 //  MenuVolumeSlider.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -15,15 +15,15 @@ import SwiftUI
 public struct MenuVolumeSlider<Label: View>: View {
     @Binding public var value: CGFloat
     public var label: Label?
-    
+
     // MARK: Init
-    
+
     public init(
         value: Binding<CGFloat>
     ) where Label == EmptyView {
         _value = value
     }
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S,
@@ -32,7 +32,7 @@ public struct MenuVolumeSlider<Label: View>: View {
         _value = value
         self.label = Text(label)
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<CGFloat>
@@ -40,7 +40,7 @@ public struct MenuVolumeSlider<Label: View>: View {
         _value = value
         label = Text(titleKey)
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -50,7 +50,7 @@ public struct MenuVolumeSlider<Label: View>: View {
         _value = value
         label = Text(titleResource)
     }
-    
+
     public init(
         value: Binding<CGFloat>,
         label: () -> Label
@@ -58,9 +58,9 @@ public struct MenuVolumeSlider<Label: View>: View {
         _value = value
         self.label = label()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         if let label = label {
             MenuSlider(

@@ -1,7 +1,7 @@
 //
 //  MenuSlider.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -12,34 +12,35 @@ import SwiftUI
 @available(iOS, unavailable)
 @available(tvOS, unavailable)
 @available(watchOS, unavailable)
-public struct MenuSlider<Label, SliderImage>: View
-where Label: View, SliderImage: MenuSliderImage {
+public struct MenuSlider<Label: View, SliderImage: MenuSliderImage>: View {
     // MARK: Public Properties
-    
+
     /// Value (0.0 ... 1.0).
     @Binding public var value: CGFloat
-    
+
     public var label: Label?
-    
+
     // MARK: Environment
-    
+
     @Environment(\.colorScheme) private var colorScheme
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Private State
-    
+
     @State private var oldValue: CGFloat? = nil
     @State private var currentImage: Image? = nil
     @State private var currentImageView: AnyView? = nil
     private let sliderImage: SliderImage?
-    
+
     /// Slider height.
     /// This value is fixed to mirror that of macOS's Control Center.
     /// These sliders are never found at variable heights. They can be any width however.
-    private static var sliderHeight: CGFloat { 22 }
-    
+    private static var sliderHeight: CGFloat {
+        22
+    }
+
     // MARK: Init - Image
-    
+
     public init(
         value: Binding<CGFloat>,
         image: @autoclosure () -> Image
@@ -47,7 +48,7 @@ where Label: View, SliderImage: MenuSliderImage {
         _value = value
         sliderImage = StaticSliderImage(image())
     }
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S,
@@ -58,7 +59,7 @@ where Label: View, SliderImage: MenuSliderImage {
         self.label = Text(label)
         sliderImage = StaticSliderImage(image())
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         value: Binding<CGFloat>,
@@ -68,7 +69,7 @@ where Label: View, SliderImage: MenuSliderImage {
         label = Text(titleKey)
         sliderImage = StaticSliderImage(image())
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -80,7 +81,7 @@ where Label: View, SliderImage: MenuSliderImage {
         label = Text(titleResource)
         sliderImage = StaticSliderImage(image())
     }
-    
+
     public init(
         value: Binding<CGFloat>,
         label: () -> Label,
@@ -90,9 +91,9 @@ where Label: View, SliderImage: MenuSliderImage {
         self.label = label()
         sliderImage = StaticSliderImage(image())
     }
-    
+
     // MARK: Init - SliderImage
-    
+
     @_disfavoredOverload
     public init(
         value: Binding<CGFloat>,
@@ -101,7 +102,7 @@ where Label: View, SliderImage: MenuSliderImage {
         _value = value
         sliderImage = image()
     }
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S,
@@ -112,7 +113,7 @@ where Label: View, SliderImage: MenuSliderImage {
         self.label = Text(label)
         sliderImage = image()
     }
-    
+
     @_disfavoredOverload
     public init(
         _ titleKey: LocalizedStringKey,
@@ -123,7 +124,7 @@ where Label: View, SliderImage: MenuSliderImage {
         label = Text(titleKey)
         sliderImage = image()
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -135,7 +136,7 @@ where Label: View, SliderImage: MenuSliderImage {
         label = Text(titleResource)
         sliderImage = image()
     }
-    
+
     @_disfavoredOverload
     public init(
         value: Binding<CGFloat>,
@@ -146,9 +147,9 @@ where Label: View, SliderImage: MenuSliderImage {
         self.label = label()
         sliderImage = image()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         sliderView
             .geometryGroupIfSupportedByPlatform()
@@ -157,7 +158,7 @@ where Label: View, SliderImage: MenuSliderImage {
                 value = value.clamped(to: 0.0 ... 1.0)
             }
     }
-    
+
     @ViewBuilder
     private var sliderView: some View {
         if #available(macOS 26, *) {
@@ -173,32 +174,34 @@ extension MenuSlider {
     @available(macOS 26.0, *)
     struct MacOS26MenuSlider: View {
         // MARK: Public Properties
-        
+
         /// Value (0.0 ... 1.0).
         @Binding private var value: CGFloat
         private var label: Label?
         private let sliderImage: SliderImage?
-        
+
         // MARK: Private State
-        
+
         @State private var minImage: AnyView? = nil
         @State private var maxImage: AnyView? = nil
-        
+
         /// Slider height.
         /// This value is fixed to mirror that of macOS's Control Center.
         /// These sliders are never found at variable heights. They can be any width however.
-        private static var sliderHeight: CGFloat { 22 }
-        
+        private static var sliderHeight: CGFloat {
+            22
+        }
+
         // MARK: Init - Image
-        
+
         init(value: Binding<CGFloat>, label: Label? = nil, image: SliderImage? = nil) {
             _value = value
             self.label = label
-            self.sliderImage = image
+            sliderImage = image
         }
-        
+
         // MARK: Body
-        
+
         var body: some View {
             VStack(spacing: 8) {
                 if let label = label {
@@ -211,8 +214,7 @@ extension MenuSlider {
                 sliderBody
             }
         }
-        
-        @ViewBuilder
+
         var sliderBody: some View {
             Slider<EmptyView, AnyView?>(
                 value: $value,
@@ -232,10 +234,10 @@ extension MenuSlider {
                 updateImage(fgColor: .secondary, force: true)
             }
         }
-        
+
         private func updateImage(fgColor: Color, oldValue: CGFloat? = nil, force: Bool = false) {
             guard let sliderImage = sliderImage else { return }
-            
+
             // first check if static image is being used
             if minImage == nil || force,
                 let imageDescriptor = sliderImage.staticImage(style: .macOS26)
@@ -268,9 +270,9 @@ extension MenuSlider {
                 }
             }
         }
-        
+
         private func formatImage(sliderImage: SliderImage, imageDescriptor: MenuSliderImageDescriptor, fgColor: Color) -> AnyView {
-            return AnyView(
+            AnyView(
                 imageDescriptor.image
                     .resizable()
                     .scaledToFit()
@@ -282,42 +284,44 @@ extension MenuSlider {
             )
         }
     }
-    
+
     /// Slider design used from macOS 10.15 (Catalina) through 15.0 (Sequoia).
     struct MacOS10_15Thru15MenuSlider: View {
         // MARK: Public Properties
-        
+
         /// Value (0.0 ... 1.0).
         @Binding private var value: CGFloat
         private var label: Label?
         private let sliderImage: SliderImage?
-        
+
         // MARK: Environment
-        
+
         @Environment(\.colorScheme) private var colorScheme
         @Environment(\.isEnabled) private var isEnabled
-        
+
         // MARK: Private State
-        
+
         @State private var oldValue: CGFloat? = nil
         @State private var currentImage: Image? = nil
         @State private var currentImageView: AnyView? = nil
-        
+
         /// Slider height.
         /// This value is fixed to mirror that of macOS's Control Center.
         /// These sliders are never found at variable heights. They can be any width however.
-        private static var sliderHeight: CGFloat { 22 }
-        
+        private static var sliderHeight: CGFloat {
+            22
+        }
+
         // MARK: Init - Image
-        
+
         init(value: Binding<CGFloat>, label: Label? = nil, image: SliderImage? = nil) {
             _value = value
             self.label = label
-            self.sliderImage = image
+            sliderImage = image
         }
-        
+
         // MARK: Body
-        
+
         var body: some View {
             VStack(spacing: 8) {
                 if let label = label {
@@ -334,7 +338,7 @@ extension MenuSlider {
             .geometryGroupIfSupportedByPlatform()
             .id(colorScheme) // forces view update when system transitions between Dark/Light mode
         }
-        
+
         @ViewBuilder
         private var dynamicImageBody: some View {
             if #available(macOS 11, *) {
@@ -352,24 +356,23 @@ extension MenuSlider {
                 sliderBody
             }
         }
-        
-        
+
         @ViewBuilder
         private var sliderBody: some View {
             let fgColor = generateFGColor(colorScheme: colorScheme)
             let bgColor = generateBGColor(colorScheme: colorScheme)
             let borderColor = generateBorderColor(colorScheme: colorScheme)
-            
+
             GeometryReader { geometry in
                 let progressRangeLower: CGFloat = Self.sliderHeight / 2
                 let progressRangeUpper: CGFloat = geometry.size.width - (Self.sliderHeight / 2)
                 let progressRange = progressRangeLower ... progressRangeUpper.clamped(to: progressRangeLower...)
-                
+
                 let sliderRangeLower: CGFloat = 0.0
                 let sliderRangeUpper: CGFloat = geometry.size.width - Self.sliderHeight
                 let sliderRange = sliderRangeLower ... sliderRangeUpper.clamped(to: sliderRangeLower...)
                 let fadeArea: CGFloat = (geometry.size.width / Self.sliderHeight) / 2
-                
+
                 ZStack(alignment: .center) {
                     Rectangle()
                         .background(visualEffect)
@@ -384,7 +387,7 @@ extension MenuSlider {
                             Group {
                                 Circle()
                                     .foregroundColor(.white)
-                                
+
                                 Circle()
                                     .stroke(borderColor.opacity(0.4), lineWidth: 0.5)
                                     .foregroundColor(.white)
@@ -398,7 +401,7 @@ extension MenuSlider {
                             )
                         }
                         .offset(x: scale(value, to: sliderRange), y: 0.0)
-                        
+
                         currentImageView
                     }
                     .frame(width: geometry.size.width)
@@ -422,7 +425,7 @@ extension MenuSlider {
                             if self.value != newValue {
                                 oldValue = self.value
                                 self.value = newValue
-                                
+
                                 if #available(macOS 11, *) {
                                     // don't update manually, it's being handled by onChange { }
                                 } else {
@@ -439,7 +442,7 @@ extension MenuSlider {
             // So to remain faithful, we shouldn't animate ours.
             // .animation(.linear(duration: 0.05))
         }
-        
+
         private var visualEffect: VisualEffect? {
             if colorScheme == .dark {
                 return VisualEffect(
@@ -457,10 +460,10 @@ extension MenuSlider {
                 )
             }
         }
-        
+
         private func updateImage(fgColor: Color, force: Bool = false) {
             guard let sliderImage = sliderImage else { return }
-            
+
             func apply(imageDescriptor: MenuSliderImageDescriptor) {
                 currentImage = imageDescriptor.image
                 currentImageView = AnyView(
@@ -470,7 +473,7 @@ extension MenuSlider {
                         .foregroundColor(fgColor)
                 )
             }
-            
+
             // first check if static image is being used
             if let imageDescriptor = sliderImage.staticImage(style: .macOS10_15Thru15) {
                 if currentImage == nil || force {
@@ -478,7 +481,7 @@ extension MenuSlider {
                     return
                 }
             }
-            
+
             // otherwise check if a variable image is being used
             if let delta = sliderImage.deltaImage(forValue: value, oldValue: oldValue, style: .macOS10_15Thru15, force: force) {
                 switch delta {
@@ -490,11 +493,11 @@ extension MenuSlider {
                 return
             }
         }
-        
+
         private func scale(_ unitIntervalValue: CGFloat, to range: ClosedRange<CGFloat>) -> CGFloat {
             range.lowerBound + (unitIntervalValue * (range.upperBound - range.lowerBound))
         }
-        
+
         private func generateFGColor(colorScheme: ColorScheme) -> Color {
             switch colorScheme {
             case .light: return Color(NSColor.gray)
@@ -502,7 +505,7 @@ extension MenuSlider {
             @unknown default: return Color(NSColor.darkGray)
             }
         }
-        
+
         private func generateBGColor(colorScheme: ColorScheme) -> Color {
             switch colorScheme {
             case .light: return Color(white: 0.8).opacity(0.2)
@@ -510,7 +513,7 @@ extension MenuSlider {
             @unknown default: return Color(white: 0.5)
             }
         }
-        
+
         private func generateBorderColor(colorScheme: ColorScheme) -> Color {
             switch colorScheme {
             case .light: return Color(white: 0.5)
@@ -525,28 +528,28 @@ extension MenuSlider {
 @available(macOS 14, *)
 #Preview("Current Platform") {
     @Previewable @State var value: CGFloat = 0.5
-    
+
     MacControlCenterMenu(isPresented: .constant(true)) {
         MenuSlider(value: $value, image: .empty)
-        
+
         Divider()
-        
+
         MenuSlider(value: $value, image: .static(systemName: "apple.logo"))
-        
+
         Divider()
-        
+
         MenuSlider("Brightness", value: $value, image: .minMax(minSystemName: "sun.min", maxSystemName: "sun.max"))
-        
+
         Divider()
-        
+
         MenuSlider("Volume", value: $value, image: .volume)
-        
+
         Divider()
-        
+
         MenuSlider(value: $value, image: .volume)
-        
+
         Divider()
-        
+
         MenuSlider("Volume (Disabled)", value: $value, image: .volume)
             .disabled(true)
     }
@@ -555,33 +558,33 @@ extension MenuSlider {
 @available(macOS 26.0, *)
 #Preview("macOS 26 Style") {
     @Previewable @State var value: CGFloat = 0.5
-    
+
     MacControlCenterMenu(isPresented: .constant(true)) {
         MenuSlider<Text, StaticSliderImage>
             .MacOS26MenuSlider(value: $value, label: nil, image: nil)
-        
+
         Divider()
-        
+
         MenuSlider<Text, StaticSliderImage>
             .MacOS26MenuSlider(value: $value, label: nil, image: .static(systemName: "apple.logo"))
-        
+
         Divider()
-        
+
         MenuSlider<Text, MinMaxSliderImage>
             .MacOS26MenuSlider(value: $value, label: Text("Brightness"), image: .minMax(minSystemName: "sun.min", maxSystemName: "sun.max"))
-        
+
         Divider()
-        
+
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS26MenuSlider(value: $value, label: Text("Volume"), image: .volume)
-        
+
         Divider()
-        
+
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS26MenuSlider(value: $value, label: nil, image: .volume)
-        
+
         Divider()
-        
+
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS26MenuSlider(value: $value, label: Text("Volume (Disabled)"), image: .volume)
             .disabled(true)
@@ -591,33 +594,37 @@ extension MenuSlider {
 @available(macOS 14, *)
 #Preview("macOS 10.15-15.0 Style") {
     @Previewable @State var value: CGFloat = 0.5
-    
+
     MacControlCenterMenu(isPresented: .constant(true)) {
         MenuSlider<Text?, EmptySliderImage>
             .MacOS10_15Thru15MenuSlider(value: $value, label: nil, image: .empty)
-        
+
         Divider()
-        
+
         MenuSlider<Text?, StaticSliderImage>
             .MacOS10_15Thru15MenuSlider(value: $value, label: nil, image: .static(systemName: "apple.logo"))
-        
+
         Divider()
-        
+
         MenuSlider<Text, MinMaxSliderImage>
-            .MacOS10_15Thru15MenuSlider(value: $value, label: Text("Brightness"), image: .minMax(minSystemName: "sun.min", maxSystemName: "sun.max"))
-        
+            .MacOS10_15Thru15MenuSlider(
+                value: $value,
+                label: Text("Brightness"),
+                image: .minMax(minSystemName: "sun.min", maxSystemName: "sun.max")
+            )
+
         Divider()
-        
+
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS10_15Thru15MenuSlider(value: $value, label: Text("Volume"), image: .volume)
-        
+
         Divider()
-        
+
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS10_15Thru15MenuSlider(value: $value, label: nil, image: .volume)
-        
+
         Divider()
-        
+
         MenuSlider<Text, VolumeMenuSliderImage>
             .MacOS10_15Thru15MenuSlider(value: $value, label: Text("Volume (Disabled)"), image: .volume)
             .disabled(true)

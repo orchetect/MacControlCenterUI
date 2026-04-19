@@ -1,7 +1,7 @@
 //
 //  ObservableScrollView.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -19,9 +19,9 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
     @Binding var scaling: CGFloat
     let content: Content
     @Binding var contentHeight: CGFloat
-    
+
     private let coordSpace = UUID().uuidString
-    
+
     init(
         _ axes: Axis.Set = .vertical,
         showsIndicators: Bool = true,
@@ -37,7 +37,7 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
         self.content = content()
         _contentHeight = contentHeight
     }
-    
+
     var body: some View {
         ScrollView(axes, showsIndicators: showsIndicators) {
             VStack(spacing: 0) {
@@ -48,7 +48,7 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
                     )
                 }
                 .frame(width: 0, height: 0)
-                
+
                 ScrollViewReader { readerProxy in
                     ZStack {
                         VStack {
@@ -85,7 +85,7 @@ struct ObservableScrollView<Content: View>: View, MacControlCenterMenuItem {
 
 private struct ScrollOffsetPreferenceKey: PreferenceKey {
     static let defaultValue: CGPoint = .zero
-    
+
     static func reduce(value: inout CGPoint, nextValue: () -> CGPoint) { }
 }
 

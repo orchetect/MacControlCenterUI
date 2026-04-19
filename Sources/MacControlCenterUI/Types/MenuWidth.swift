@@ -1,7 +1,7 @@
 //
 //  MenuWidth.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -12,10 +12,10 @@ nonisolated
 public enum MenuWidth {
     /// Standard menu width on macOS 26 (Tahoe).
     case macOS26
-    
+
     /// Standard menu width on macOS 11 (Big Sur) through 15 (Sequoia).
     case macOS11Thru15
-    
+
     /// Custom menu width.
     case custom(CGFloat)
 }

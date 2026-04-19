@@ -1,7 +1,7 @@
 //
 //  MenuDisclosureSection.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -19,14 +19,14 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
     public var divider: Bool
     @Binding public var isExpanded: Bool
     public var content: () -> [any View]
-    
+
     /// If non-nil, do not use binding.
-    var nonBindingInitiallyExpanded: Bool? = nil
-    
+    var nonBindingInitiallyExpanded: Bool?
+
     @State private var isHighlighted = false
-    
+
     // MARK: Init - With Binding
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S,
@@ -39,7 +39,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         _isExpanded = isExpanded
         self.content = content
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         divider: Bool = true,
@@ -51,7 +51,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         _isExpanded = isExpanded
         self.content = content
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -65,7 +65,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         _isExpanded = isExpanded
         self.content = content
     }
-    
+
     public init<LabelContent: View>(
         divider: Bool = true,
         isExpanded: Binding<Bool>,
@@ -77,9 +77,9 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         self.label = MenuSectionText(label())
         self.content = content
     }
-    
+
     // MARK: Init - Without Binding
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S,
@@ -93,7 +93,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         nonBindingInitiallyExpanded = initiallyExpanded
         self.content = content
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         divider: Bool = true,
@@ -106,7 +106,7 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         nonBindingInitiallyExpanded = initiallyExpanded
         self.content = content
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -121,30 +121,29 @@ public struct MenuDisclosureSection<Label: View>: View, MacControlCenterMenuItem
         nonBindingInitiallyExpanded = initiallyExpanded
         self.content = content
     }
-    
+
     public init<LabelContent: View>(
         divider: Bool = true,
         initiallyExpanded: Bool = true,
         @MacControlCenterMenuBuilder _ content: @escaping () -> [any View],
         @ViewBuilder label: () -> LabelContent
     ) where Label == MenuSectionText<LabelContent> {
-        
         self.divider = divider
         _isExpanded = .constant(false) // not used
         nonBindingInitiallyExpanded = initiallyExpanded
         self.label = MenuSectionText(label())
         self.content = content
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         if divider {
             MenuBody {
                 Divider()
             }
         }
-        
+
         if let nonBindingInitiallyExpanded {
             MenuDisclosureGroup(
                 style: .section,

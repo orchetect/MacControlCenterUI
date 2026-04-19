@@ -1,7 +1,7 @@
 //
 //  MenuHeader.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -16,16 +16,16 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MenuHeader<Label: View, TrailingContent: View>: View {
     // MARK: Public Properties
-    
+
     public var label: Label
     public var trailingContent: TrailingContent?
-    
+
     // MARK: Environment
-    
+
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Init without Trailing Content
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S
@@ -33,14 +33,14 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         self.label = Self.stylized(Text(label))
         trailingContent = nil
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey
     ) where Label == Text, TrailingContent == Never {
         label = Self.stylized(Text(titleKey))
         trailingContent = nil
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -49,16 +49,16 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         label = Self.stylized(Text(titleResource))
         trailingContent = nil
     }
-    
+
     public init(
         @ViewBuilder _ label: () -> Label
     ) where TrailingContent == Never {
         self.label = label()
         trailingContent = nil
     }
-    
+
     // MARK: Init with Trailing Content
-    
+
     @_disfavoredOverload
     public init<S>(
         _ label: S,
@@ -67,7 +67,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         self.label = Self.stylized(Text(label))
         self.trailingContent = trailingContent()
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         @ViewBuilder trailingContent: @escaping () -> TrailingContent
@@ -75,7 +75,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         label = Self.stylized(Text(titleKey))
         self.trailingContent = trailingContent()
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -85,7 +85,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         label = Self.stylized(Text(titleResource))
         self.trailingContent = trailingContent()
     }
-    
+
     public init(
         @ViewBuilder _ label: () -> Label,
         @ViewBuilder trailingContent: @escaping () -> TrailingContent
@@ -93,16 +93,15 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         self.label = label()
         self.trailingContent = trailingContent()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         conditionalHeightBody
             .geometryGroupIfSupportedByPlatform()
             .opacity(isEnabled ? 1.0 : 0.4)
-            
     }
-    
+
     @ViewBuilder
     private var conditionalHeightBody: some View {
         if trailingContent == nil {
@@ -112,8 +111,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
             headerBody
         }
     }
-    
-    @ViewBuilder
+
     private var headerBody: some View {
         HStack {
             label
@@ -124,7 +122,7 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
         }
         .frame(maxWidth: .infinity)
     }
-    
+
     private static func stylized(_ text: Text) -> Text {
         text
             .font(.system(size: MenuStyling.headerFontSize, weight: .bold))
@@ -137,17 +135,17 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     @Previewable @State var isOn: Bool = true
     @Previewable @State var isKeyboardOn: Bool = true
     @Previewable @State var isTrackpadOn: Bool = false
-    
+
     MacControlCenterMenu(isPresented: .constant(true)) {
         MenuHeader("Bluetooth")
-        
+
         Divider()
-        
+
         MenuToggle("Keyboard", isOn: $isKeyboardOn, style: .standard(systemImage: "keyboard"))
         MenuToggle("Trackpad", isOn: $isTrackpadOn, style: .standard(systemImage: "rectangle.and.hand.point.up.left.filled"))
-        
+
         Divider()
-        
+
         MenuCommand("Bluetooth Settings...") { }
     }
 }
@@ -157,21 +155,21 @@ public struct MenuHeader<Label: View, TrailingContent: View>: View {
     @Previewable @State var isOn: Bool = true
     @Previewable @State var isKeyboardOn: Bool = true
     @Previewable @State var isTrackpadOn: Bool = false
-    
+
     MacControlCenterMenu(isPresented: .constant(true)) {
         MenuHeader("Bluetooth") {
             Toggle("", isOn: $isOn)
                 .toggleStyle(.switch)
                 .labelsHidden()
         }
-        
+
         Divider()
-        
+
         MenuToggle("Keyboard", isOn: $isKeyboardOn, style: .standard(systemImage: "keyboard"))
         MenuToggle("Trackpad", isOn: $isTrackpadOn, style: .standard(systemImage: "rectangle.and.hand.point.up.left.filled"))
-        
+
         Divider()
-        
+
         MenuCommand("Bluetooth Settings...") { }
     }
 }

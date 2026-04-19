@@ -1,7 +1,7 @@
 //
 //  DemoApp.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import MacControlCenterUI
@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct DemoApp: App {
     @State var isMenuPresented: Bool = false
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()
@@ -18,11 +18,11 @@ struct DemoApp: App {
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
         .defaultPosition(.center)
-        
+
         Settings {
             SettingsView()
         }
-        
+
         MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
             MenuView(isMenuPresented: $isMenuPresented)
         }

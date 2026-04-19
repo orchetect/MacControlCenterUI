@@ -1,7 +1,7 @@
 //
 //  ContentView.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import MacControlCenterUI
@@ -15,7 +15,7 @@ struct ContentView: View {
                 .scaledToFit()
                 .frame(width: 80, height: 80)
                 .foregroundColor(.secondary)
-            
+
             Text("Open this menu bar button in the system menu bar.")
         }
         .padding()

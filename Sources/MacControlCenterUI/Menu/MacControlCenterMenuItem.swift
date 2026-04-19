@@ -1,7 +1,7 @@
 //
 //  MacControlCenterMenuItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -12,14 +12,17 @@ import SwiftUI
 
 /// Internal use only.
 /// It is not necessary to conform your views to this protocol unless you require custom view padding in a ``MacControlCenterMenu``.
-@MainActor public protocol MacControlCenterMenuItem where Self: View { }
+@MainActor
+public protocol MacControlCenterMenuItem where Self: View { }
 
 // MARK: - SwiftUI View Modifier Overrides to Retain Protocol Typing
 
 extension MacControlCenterMenuItem {
     /// Return self type-erased to `some View`.
-    nonisolated var selfAsView: some View { self }
-    
+    nonisolated var selfAsView: some View {
+        self
+    }
+
     /// Adds a condition that controls whether users can interact with this
     /// view.
     ///
@@ -48,7 +51,7 @@ extension MacControlCenterMenuItem {
 /// Generic wrapper for arbitrary view content to conform to ``MacControlCenterMenuItem``
 struct MacControlCenterMenuItemWrapper<Content: View>: View, MacControlCenterMenuItem {
     let content: Content
-    
+
     var body: some View {
         content
     }

@@ -1,7 +1,7 @@
 //
 //  MenuToggle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -19,9 +19,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
     public var style: MenuCircleButtonStyle
     public var label: Label?
     public var onClickBlock: (Bool) -> Void
-    
+
     // MARK: Init - No Label
-    
+
     public init(
         isOn: Binding<Bool> = .constant(false),
         style: MenuCircleButtonStyle,
@@ -32,7 +32,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         label = nil
         self.onClickBlock = onClickBlock
     }
-    
+
     public init(
         isOn: Binding<Bool> = .constant(false),
         image: Image,
@@ -43,9 +43,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         label = nil
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With String Label
-    
+
     @_disfavoredOverload
     public init<S>(
         _ title: S,
@@ -58,7 +58,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.style = style
         self.onClickBlock = onClickBlock
     }
-    
+
     @_disfavoredOverload
     public init<S>(
         _ title: S,
@@ -71,9 +71,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With LocalizedStringKey Label
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool> = .constant(false),
@@ -85,7 +85,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.style = style
         self.onClickBlock = onClickBlock
     }
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         isOn: Binding<Bool> = .constant(false),
@@ -97,9 +97,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With LocalizedStringResource Label
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -113,7 +113,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.style = style
         self.onClickBlock = onClickBlock
     }
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -127,9 +127,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         style = .init(image: image)
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With Label Closure
-    
+
     public init(
         isOn: Binding<Bool> = .constant(false),
         style: MenuCircleButtonStyle,
@@ -141,7 +141,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.label = label()
         self.onClickBlock = onClickBlock
     }
-    
+
     public init(
         isOn: Binding<Bool> = .constant(false),
         image: Image,
@@ -153,9 +153,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.label = label()
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Init - With Label
-    
+
     @_disfavoredOverload
     public init(
         isOn: Binding<Bool> = .constant(false),
@@ -168,7 +168,7 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.label = label
         self.onClickBlock = onClickBlock
     }
-    
+
     @_disfavoredOverload
     public init(
         isOn: Binding<Bool> = .constant(false),
@@ -181,9 +181,9 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
         self.label = label
         self.onClickBlock = onClickBlock
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         HighlightingMenuItem(height: .controlCenterIconItem) {
             MenuCircleToggle(
@@ -201,13 +201,13 @@ public struct MenuToggle<Label: View>: View, MacControlCenterMenuItem, MenuListS
             )
         }
     }
-    
+
     // MARK: MenuListStateItem
-    
+
     public mutating func setState(state: Bool) {
         _isOn = .constant(state)
     }
-    
+
     public mutating func setItemClicked(_ block: @escaping () -> Void) {
         onClickBlock = { _ in block() }
     }

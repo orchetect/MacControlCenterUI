@@ -1,7 +1,7 @@
 //
 //  MenuDisclosureChevron.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -11,22 +11,22 @@ import SwiftUI
 /// Disclosure chevron used in ``MacControlCenterMenu`` items.
 public struct MenuDisclosureChevron: View {
     // MARK: Public Properties
-    
+
     public let size: CGFloat
     @Binding public var isExpanded: Bool
-    
+
     // MARK: Environment
-    
+
     @Environment(\.isEnabled) private var isEnabled
-    
+
     // MARK: Private State
-    
+
     @State private var isPressed: Bool = false
     @State private var frame: CGRect = .zero
     @State private var rotationAngle: Angle = .zero
-    
+
     // MARK: Init
-    
+
     public init(
         size: CGFloat = 10,
         isExpanded: Binding<Bool>
@@ -34,9 +34,9 @@ public struct MenuDisclosureChevron: View {
         self.size = size
         _isExpanded = isExpanded
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         chevronBody
             .geometryGroupIfSupportedByPlatform()
@@ -46,7 +46,7 @@ public struct MenuDisclosureChevron: View {
                 }
             }
     }
-    
+
     @ViewBuilder
     private var chevronBody: some View {
         if #available(macOS 13.0, *) {
@@ -69,7 +69,7 @@ public struct MenuDisclosureChevron: View {
             .frame(width: size, height: size)
         }
     }
-    
+
     private var imageBody: some View {
         Image(systemName: "chevron.right")
             .resizable()
@@ -80,7 +80,6 @@ public struct MenuDisclosureChevron: View {
             .rotationEffect(rotationAngle)
             .opacity(opacityValue)
             // .animation(.default, value: isExpanded) // avoid, causes side effects
-        
             .onAppear {
                 updateState()
             }
@@ -88,7 +87,7 @@ public struct MenuDisclosureChevron: View {
                 handleRotation()
             }
     }
-        
+
     private var gesture: some Gesture {
         DragGesture(minimumDistance: 0)
             .onChanged { value in
@@ -104,17 +103,17 @@ public struct MenuDisclosureChevron: View {
                 }
             }
     }
-    
+
     private func handleRotation() {
         withAnimation {
             updateState()
         }
     }
-    
+
     private func updateState() {
         rotationAngle = isExpanded ? .degrees(90) : .zero
     }
-    
+
     private var opacityValue: CGFloat {
         guard isEnabled else { return 0.4 }
         return isPressed ? 0.7 : 1.0

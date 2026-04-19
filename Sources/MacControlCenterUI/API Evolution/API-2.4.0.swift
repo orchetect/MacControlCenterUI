@@ -1,7 +1,7 @@
 //
 //  API-2.4.0.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -10,7 +10,7 @@ import SwiftUI
 
 extension MenuDisclosureSection {
     // MARK: Init - With Binding
-    
+
     @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "init(divider:isExpanded:_:label:)")
     public init<LabelContent: View>(
@@ -26,9 +26,9 @@ extension MenuDisclosureSection {
             label: label
         )
     }
-    
+
     // MARK: Init - Without Binding
-    
+
     @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "init(divider:initiallyExpanded:_:label:)")
     public init<LabelContent: View>(

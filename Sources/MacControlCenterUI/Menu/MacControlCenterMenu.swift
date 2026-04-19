@@ -1,7 +1,7 @@
 //
 //  MacControlCenterMenu.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -56,14 +56,14 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MacControlCenterMenu: View {
     // MARK: Public Properties
-    
+
     @Binding public var menuBarExtraIsPresented: Bool
     public var width: MenuWidth?
     public var activateAppOnCommandSelection: Bool
     public var content: [any View]
-    
+
     // MARK: Init
-    
+
     /// Useful for building a custom `MenuBarExtra` menu when using `.menuBarExtraStyle(.window)`.
     /// This builder allows the use of any custom View, and also supplies a special
     /// ``MenuCommand`` view for replicating clickable system menu items.
@@ -89,9 +89,9 @@ public struct MacControlCenterMenu: View {
         self.activateAppOnCommandSelection = activateAppOnCommandSelection
         self.content = content()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         Group {
             if #available(macOS 26, *) {
@@ -101,13 +101,13 @@ public struct MacControlCenterMenu: View {
             }
         }
     }
-    
+
     @available(macOS 26, *)
     public var menuBodyMacOS26: some View {
         VStack(alignment: .leading, spacing: 0) {
             Spacer()
                 .frame(height: MenuGeometry.menuPadding)
-            
+
             MenuScrollView(
                 maxHeight: maxMenuHeight,
                 showsIndicators: true,
@@ -118,7 +118,7 @@ public struct MacControlCenterMenu: View {
                         .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
                 }
             }
-            
+
             Spacer()
                 .frame(height: MenuGeometry.menuPadding)
         }
@@ -126,13 +126,13 @@ public struct MacControlCenterMenu: View {
         .menuBackgroundEffectForCurrentPlatform()
         .geometryGroupIfSupportedByPlatform()
     }
-    
+
     public var menuBodyMacOS10_15Thru15: some View {
         ZStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 0) {
                 Spacer()
                     .frame(height: MenuGeometry.menuPadding)
-                
+
                 MenuScrollView(
                     maxHeight: maxMenuHeight,
                     showsIndicators: true,
@@ -143,11 +143,11 @@ public struct MacControlCenterMenu: View {
                             .environment(\.isMenuBarExtraPresented, $menuBarExtraIsPresented)
                     }
                 }
-                
+
                 Spacer()
                     .frame(height: MenuGeometry.menuPadding)
             }
-            
+
             // not sure why this helps, but it keeps the window in place when its size changes
             // and prevents janky view animations
             Spacer().frame(minHeight: 0)
@@ -155,9 +155,9 @@ public struct MacControlCenterMenu: View {
         .frame(width: width?.width)
         .menuBackgroundEffectForCurrentPlatform()
     }
-    
+
     // MARK: - Computed Properties
-    
+
     private var maxMenuHeight: CGFloat {
         // `NSScreen.main`:
         // The main screen is not necessarily the same screen that contains the menu bar or has its origin at
@@ -165,22 +165,22 @@ public struct MacControlCenterMenu: View {
         // keyboard events.
         // It will however reference the currently focused screen if user has "Displays have separate Spaces"
         // enabled in System Preferences -> Mission Control.
-        
+
         // `NSScreen.screens`:
         // The screen at index 0 in the returned array corresponds to the primary screen of the user’s system.
         // This is the screen that contains the menu bar and whose origin is at the point (0, 0).
-        
+
         // `visibleFrame`:
         // The returned rectangle is always based on the current user-interface settings and does not include
         // the area currently occupied by the dock and menu bar.
-        
+
         guard let availableScreenHeight = NSScreen.screens.first?.visibleFrame.height else {
             // should never happen, but provide a reasonable default just in case we get nil
             return 800
         }
-        
+
         // TODO: If the screen resolution changes or the user modifies system display configuration, this value might not recalculate in response. It might require adding a system notification observer to detect when screen geometry has changed.
-        
+
         return availableScreenHeight - 30 // allow for a modest margin to add spacing
     }
 }
@@ -190,7 +190,7 @@ public struct MacControlCenterMenu: View {
     MacControlCenterMenu(isPresented: .constant(true)) {
         MenuHeader("Header")
         MenuCommand("Test Command") { }
-        
+
         MenuSection("Section", divider: true)
         MenuCommand("Test Command") { }
     }
@@ -200,7 +200,7 @@ public struct MacControlCenterMenu: View {
     MacControlCenterMenu(isPresented: .constant(true), width: .macOS26) {
         MenuHeader("Header")
         MenuCommand("Test Command") { }
-        
+
         MenuSection("Section", divider: true)
         MenuCommand("Test Command") { }
     }
@@ -210,7 +210,7 @@ public struct MacControlCenterMenu: View {
     MacControlCenterMenu(isPresented: .constant(true), width: .macOS11Thru15) {
         MenuHeader("Header")
         MenuCommand("Test Command") { }
-        
+
         MenuSection("Section", divider: true)
         MenuCommand("Test Command") { }
     }
@@ -220,7 +220,7 @@ public struct MacControlCenterMenu: View {
     MacControlCenterMenu(isPresented: .constant(true), width: nil) {
         MenuHeader("Header")
         MenuCommand("Test Command") { }
-        
+
         MenuSection("Section", divider: true)
         MenuCommand("Test Command") { }
     }

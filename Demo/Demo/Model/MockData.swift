@@ -1,7 +1,7 @@
 //
 //  MockData.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 import SwiftUI
@@ -15,14 +15,14 @@ enum MockData {
         .init(name: "Tim's AirPods Max", systemImage: "airpodsmax"),
         .init(name: "AppleTV", systemImage: "appletv.fill")
     ]
-    
+
     static let airPodsOptionsDefault: MenuEntry.ID = "Off"
     static let airPodsOptions: [MenuEntry] = [
         .init(name: "Off", systemImage: "person.fill"),
         .init(name: "Noise Cancellation", systemImage: "person.crop.circle.fill"),
         .init(name: "Transparency", systemImage: "person.wave.2.fill")
     ]
-    
+
     static let wiFiNetworksDefault: MenuEntry.ID = "Wi-Fi Art Thou Romeo"
     static let wiFiNetworks: [MenuEntry] = [
         .init(name: "Wi-Fi Art Thou Romeo", image: .randomWiFiImage()),

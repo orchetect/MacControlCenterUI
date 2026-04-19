@@ -1,7 +1,7 @@
 //
 //  FullWidthMenuItem.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -17,9 +17,9 @@ import SwiftUI
 public struct FullWidthMenuItem<Content: View>: View, MacControlCenterMenuItem {
     public var verticalPadding: Bool
     public var content: Content
-    
+
     // MARK: Init
-    
+
     public init(
         verticalPadding: Bool = true,
         @ViewBuilder _ content: () -> Content
@@ -27,9 +27,9 @@ public struct FullWidthMenuItem<Content: View>: View, MacControlCenterMenuItem {
         self.verticalPadding = verticalPadding
         self.content = content()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         VStack(alignment: .leading) {
             content

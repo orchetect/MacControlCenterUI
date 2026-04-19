@@ -1,7 +1,7 @@
 //
 //  HighlightingMenuDisclosureGroup.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -17,24 +17,24 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
     // MARK: Public Properties
-    
+
     public var style: MenuDisclosureGroupStyle
     public var labelHeight: MenuItemSize
     public var toggleVisibility: ControlVisibility
     public var label: Label
     public var content: () -> [any View]
     @Binding public var isExpandedBinding: Bool
-    
+
     // MARK: Private State
-    
+
     @State private var isExpanded: Bool
     @State private var isChevronVisible: Bool
-    
+
     @Binding private var isHighlighted: Bool
     @State private var isHighlightedInternal: Bool = false
-    
+
     // MARK: Init - With Binding
-    
+
     public init(
         style: MenuDisclosureGroupStyle,
         isExpanded: Binding<Bool>,
@@ -54,9 +54,9 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         _isHighlighted = isHighlighted ?? .constant(false)
         isChevronVisible = toggleVisibility == .always
     }
-    
+
     // MARK: Init - Without Binding
-    
+
     public init(
         style: MenuDisclosureGroupStyle,
         initiallyExpanded: Bool = true,
@@ -76,9 +76,9 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
         self.content = content
         isChevronVisible = toggleVisibility == .always
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         MenuDisclosureGroup(
             style: style,
@@ -122,7 +122,7 @@ public struct HighlightingMenuDisclosureGroup<Label: View>: View, MacControlCent
             isExpandedBinding = newValue
         }
     }
-    
+
     private var shouldChevronBeVisible: Bool {
         guard toggleVisibility != .never else { return false }
         return isExpanded || isHighlightedInternal || toggleVisibility == .always

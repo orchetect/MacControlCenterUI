@@ -1,7 +1,7 @@
 //
 //  MenuCircleButtonStyle.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -18,7 +18,7 @@ public struct MenuCircleButtonStyle {
     public var color: Color?
     public var offColor: Color?
     public var invertForeground: Bool
-    
+
     public init(
         image: Image?,
         offImageDimAmount: CGFloat? = nil,
@@ -28,14 +28,14 @@ public struct MenuCircleButtonStyle {
         invertForeground: Bool = false
     ) {
         self.image = image?.resizable()
-        offImage =  image?.resizable()
+        offImage = image?.resizable()
         self.offImageDimAmount = offImageDimAmount
         self.imagePadding = imagePadding
         self.color = color
         self.offColor = offColor
         self.invertForeground = invertForeground
     }
-    
+
     public init(
         image: Image?,
         offImage: Image?,
@@ -68,14 +68,14 @@ extension MenuCircleButtonStyle {
             image: image
         )
     }
-    
+
     /// Standard circle button style.
     public static func standard(systemImage: String) -> Self {
         MenuCircleButtonStyle(
             image: Image(systemName: systemImage)
         )
     }
-    
+
     /// Checkmark button style suitable for options nested under a ``MenuDisclosureGroup``.
     public static func checkmark() -> Self {
         MenuCircleButtonStyle(
@@ -86,7 +86,7 @@ extension MenuCircleButtonStyle {
             offColor: nil
         )
     }
-    
+
     /// A full-size custom image button style without a circle background.
     public static func icon(_ image: Image) -> Self {
         MenuCircleButtonStyle(
@@ -106,26 +106,26 @@ extension MenuCircleButtonStyle {
     public var hasColor: Bool {
         color != nil && color != .clear
     }
-    
+
     public var hasOffColor: Bool {
         offColor != nil && offColor != .clear
     }
-    
+
     public func hasColor(forState state: Bool) -> Bool {
         state ? hasColor : hasOffColor
     }
-    
+
     public func color(forState state: Bool, isEnabled: Bool, colorScheme: ColorScheme) -> Color? {
         let base: Color? = state
             ? color
             : (colorScheme == .dark ? offColor : offColor?.opacity(0.2))
         return isEnabled ? base : base?.opacity(0.4)
     }
-    
+
     public func image(forState state: Bool) -> Image? {
         state ? image : offImage
     }
-    
+
     public func hasImage(forState state: Bool) -> Bool {
         state ? image != nil : offImage != nil
     }

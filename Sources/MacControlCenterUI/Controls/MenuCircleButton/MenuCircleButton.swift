@@ -1,7 +1,7 @@
 //
 //  MenuCircleButton.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -16,18 +16,18 @@ import SwiftUI
 @available(watchOS, unavailable)
 public struct MenuCircleButton<Label: View>: View {
     // MARK: Public Properties
-    
+
     public var controlSize: MenuCircleButtonSize
     public var style: MenuCircleButtonStyle
     public var label: Label?
     public var actionBlock: () -> Void
-    
+
     // MARK: Private State
-    
+
     @State private var isMouseDown: Bool = false
-    
+
     // MARK: Init - No Label
-    
+
     public init(
         controlSize: MenuCircleButtonSize = .menu,
         style: MenuCircleButtonStyle,
@@ -38,9 +38,9 @@ public struct MenuCircleButton<Label: View>: View {
         label = nil
         self.actionBlock = actionBlock
     }
-    
+
     // MARK: Init - With String Label
-    
+
     @_disfavoredOverload
     public init<S>(
         _ title: S,
@@ -55,9 +55,9 @@ public struct MenuCircleButton<Label: View>: View {
             label: { Text(title) }
         )
     }
-    
+
     // MARK: Init - With LocalizedStringKey Label
-    
+
     public init(
         _ titleKey: LocalizedStringKey,
         controlSize: MenuCircleButtonSize = .menu,
@@ -71,9 +71,9 @@ public struct MenuCircleButton<Label: View>: View {
             label: { Text(titleKey) }
         )
     }
-    
+
     // MARK: Init - With LocalizedStringResource Label
-    
+
     @available(macOS 13, iOS 16, tvOS 16, watchOS 9, *)
     @_disfavoredOverload
     public init(
@@ -89,9 +89,9 @@ public struct MenuCircleButton<Label: View>: View {
             label: { Text(titleResource) }
         )
     }
-    
+
     // MARK: Init - With Label Closure
-    
+
     public init(
         controlSize: MenuCircleButtonSize = .menu,
         style: MenuCircleButtonStyle,
@@ -103,9 +103,9 @@ public struct MenuCircleButton<Label: View>: View {
         self.actionBlock = actionBlock
         self.label = label()
     }
-    
+
     // MARK: Body
-    
+
     public var body: some View {
         MenuCircleToggle(
             isOn: .constant(false),

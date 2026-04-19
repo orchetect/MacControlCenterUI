@@ -1,7 +1,7 @@
 //
 //  MenuScrollView.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -18,10 +18,10 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
     public var maxHeight: CGFloat
     public var showsIndicators: Bool
     public var disableScrollIfFullContentIsVisible: Bool
-    
+
     @State private var scrollPosition: CGPoint = .zero
     @State private var contentHeight: CGFloat = .zero
-    
+
     public init(
         maxHeight: CGFloat = 300,
         showsIndicators: Bool = true,
@@ -33,7 +33,7 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
         self.disableScrollIfFullContentIsVisible = disableScrollIfFullContentIsVisible
         self.content = content()
     }
-    
+
     public var body: some View {
         ZStack {
             ObservableScrollView(
@@ -44,7 +44,7 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
             ) {
                 MenuBody(content: content)
             }
-            
+
             VStack(spacing: 0) {
                 Group {
                     if scrollPosition.y < -1 {
@@ -56,9 +56,9 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
                     }
                 }
                 .frame(height: 5)
-                
+
                 Spacer()
-                
+
                 Group {
                     if scrollPosition.y > maxHeight - contentHeight {
                         Image(systemName: "chevron.compact.down")
@@ -75,16 +75,16 @@ public struct MenuScrollView: View, MacControlCenterMenuItem {
         .geometryGroupIfSupportedByPlatform()
         .scrollDisabledIfSupportedByPlatform(isScrollDisabled)
     }
-    
+
     private var frameHeight: CGFloat {
         min(maxHeight, contentHeight)
     }
-    
+
     private var isScrollDisabled: Bool {
         guard disableScrollIfFullContentIsVisible else { return false }
         return isFullContentIsVisible
     }
-    
+
     private var isFullContentIsVisible: Bool {
         contentHeight <= maxHeight
     }

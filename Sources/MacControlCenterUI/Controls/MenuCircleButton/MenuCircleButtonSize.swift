@@ -1,7 +1,7 @@
 //
 //  MenuCircleButtonSize.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -13,7 +13,7 @@ nonisolated
 public enum MenuCircleButtonSize {
     /// Standard Control Center Menu item size with trailing label.
     case menu
-    
+
     /// Prominent size with bottom edge label.
     case prominent
 }
@@ -35,7 +35,7 @@ extension MenuCircleButtonSize {
         case .prominent: return 38
         }
     }
-    
+
     public var imagePadding: CGFloat {
         switch self {
         case .menu: return 5

@@ -1,7 +1,7 @@
 //
 //  MenuList.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -25,7 +25,7 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
         _ isSelected: Bool,
         _ itemClicked: @escaping () -> Void
     ) -> Content
-    
+
     /// List.
     public init(
         _ data: Data,
@@ -35,7 +35,7 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
         _selection = .constant(nil)
         self.content = { item, _, _ in content(item) }
     }
-    
+
     /// List with single item selection.
     public init(
         _ data: Data,
@@ -51,7 +51,7 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
             return c
         }
     }
-    
+
     /// List with single item selection.
     @_disfavoredOverload
     public init(
@@ -67,7 +67,7 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
         _selection = selection
         self.content = content
     }
-    
+
     public var body: some View {
         VStack(spacing: 0) {
             ForEach(data, id: \.id) { item in
@@ -76,7 +76,7 @@ public struct MenuList<Data: RandomAccessCollection, Content: View>: View,
         }
         .geometryGroupIfSupportedByPlatform()
     }
-    
+
     private func itemClicked(id: Data.Element.ID) {
         if selection == id { selection = nil; return }
         selection = id

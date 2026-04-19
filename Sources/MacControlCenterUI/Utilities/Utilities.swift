@@ -1,7 +1,7 @@
 //
 //  Utilities.swift
 //  MacControlCenterUI • https://github.com/orchetect/MacControlCenterUI
-//  © 2024 Steffan Andrews • Licensed under MIT License
+//  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if os(macOS)
@@ -14,7 +14,7 @@ extension CGFloat {
         if self > range.upperBound { return range.upperBound }
         return self
     }
-    
+
     func clamped(to range: PartialRangeFrom<Self>) -> Self {
         if self < range.lowerBound { return range.lowerBound }
         return self
@@ -23,7 +23,7 @@ extension CGFloat {
 
 // MARK: - Image Utils
 
-class NoInsetHostingView<V>: NSHostingView<V> where V: View {
+class NoInsetHostingView<V: View>: NSHostingView<V> {
     override var safeAreaInsets: NSEdgeInsets {
         .init()
     }
@@ -54,16 +54,16 @@ extension NSImage {
     /// Fills the image with a solid color.
     convenience init(color: NSColor, size: NSSize) {
         self.init(size: size)
-        
+
         lockFocus()
         color.drawSwatch(in: NSRect(origin: .zero, size: size))
         unlockFocus()
     }
-    
+
     /// Draws a oval (or circle if height == width) within the given size's bounds with a solid fill color.
     convenience init(color: NSColor, ovalSize size: NSSize) {
         self.init(size: size)
-        
+
         lockFocus()
         NSGraphicsContext.current?.imageInterpolation = .high
         let frame = NSRect(origin: .zero, size: size)
@@ -78,13 +78,13 @@ extension NSImage {
     /// Copies this image to a new one with a circular mask.
     convenience init(circleMask size: NSSize) {
         self.init(size: size)
-        
+
         lockFocus()
         NSGraphicsContext.current?.imageInterpolation = .high
         let frame = NSRect(origin: .zero, size: size)
         NSColor.black.drawSwatch(in: frame)
         unlockFocus()
-        
+
         lockFocus()
         NSBezierPath(ovalIn: frame).addClip()
         draw(at: .zero, from: frame, operation: .destinationOut, fraction: 1)
