@@ -9,11 +9,12 @@ import SwiftUI
 
 @main
 struct DemoApp: App {
-    @State var isMenuPresented: Bool = false
+    @State private var model = MenuModel()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(model)
         }
         .windowStyle(.hiddenTitleBar)
         .windowResizability(.contentSize)
@@ -24,9 +25,10 @@ struct DemoApp: App {
         }
 
         MenuBarExtra("MacControlCenterUI Demo", systemImage: "message.fill") {
-            MenuView(isMenuPresented: $isMenuPresented)
+            MenuView()
+                .environment(model)
         }
-        .menuBarExtraAccess(isPresented: $isMenuPresented) // required for menu builder
+        .menuBarExtraAccess(isPresented: $model.isMenuPresented) // required for menu builder
         .menuBarExtraStyle(.window) // required for menu builder
         .windowResizability(.contentSize) // this modifier is not necessary; it may affect menu height animations. YMMV.
     }

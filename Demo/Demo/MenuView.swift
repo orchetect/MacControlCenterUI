@@ -9,40 +9,17 @@ import MenuBarExtraAccess
 import SwiftUI
 
 struct MenuView: View {
-    @Environment(\.openSettings) var openSettings
-
-    @Binding var isMenuPresented: Bool
-
-    @State private var isEnabled = true
-    @State private var isUUIDContentShown = false
-    @State private var isUUIDContentAnimated = true
-    @State private var uuidContentItems: [UUID] = (0 ... 9).map { _ in UUID() }
-    @State private var darkMode: Bool = true
-    @State private var nightShift: Bool = true
-    @State private var trueTone: Bool = true
-    @State private var volume: CGFloat = 0.75
-    @State private var brightness: CGFloat = 0.5
-    @State private var audioOutputSelection: MenuEntry.ID? = MockData.audioOutputsDefault
-    @State private var airPodsOptionSelection: MenuEntry.ID? = MockData.airPodsOptionsDefault
-    @State private var isWiFiExpanded = true
-    @State private var wiFiSelection: MenuEntry.ID? = MockData.wiFiNetworksDefault
-    @State private var audioOutputs: [MenuEntry] = MockData.audioOutputs
-    @State private var airPodsOptions: [MenuEntry] = MockData.airPodsOptions
-    @State private var wiFiNetworks: [MenuEntry] = MockData.wiFiNetworks
-    @State private var isSafariEnabled: Bool = true
-    @State private var isMusicEnabled: Bool = true
-    @State private var isXcodeEnabled: Bool = false
-
-    init(isMenuPresented: Binding<Bool>) {
-        _isMenuPresented = isMenuPresented
-    }
+    @Environment(\.openSettings) private var openSettings
+    @Environment(MenuModel.self) private var model
 
     var body: some View {
-        MacControlCenterMenu(isPresented: $isMenuPresented) {
+        @Bindable var model = model
+
+        MacControlCenterMenu(isPresented: $model.isMenuPresented) {
             // If state changes may result menu height changing, it is recommended to use the `macControlCenterMenuResize`
             // animation constant which replicates menu height change animations.
             MenuHeader("Enabled") {
-                Toggle("", isOn: $isEnabled.animation(.macControlCenterMenuResize))
+                Toggle("", isOn: $model.isEnabled.animation(.macControlCenterMenuResize))
                     .toggleStyle(.switch)
                     .labelsHidden()
             }
@@ -50,7 +27,7 @@ struct MenuView: View {
             // To prevent layout animation glitches, if there is menu content that may appear/disappear,
             // it is best to place it within a stable `MenuSection` container which will always be present.
             MenuSection(divider: false) {
-                if !isEnabled {
+                if !model.isEnabled {
                     Text("Some menu items are now disabled.")
                         .foregroundStyle(.secondary)
                 }
@@ -60,21 +37,21 @@ struct MenuView: View {
             // it is best to place it within a stable `MenuSection` container which will always be present.
             MenuSection {
                 MenuToggle(
-                    isOn: $isUUIDContentShown.animation(isUUIDContentAnimated ? .macControlCenterMenuResize : nil),
+                    isOn: $model.isUUIDContentShown.animation(model.isUUIDContentAnimated ? .macControlCenterMenuResize : nil),
                     image: Image(systemName: "questionmark.circle")
                 ) {
                     Text("Show UUIDs")
                         .fixedSize()
                     Spacer()
-                    Toggle("Animate Changes", isOn: $isUUIDContentAnimated)
+                    Toggle("Animate Changes", isOn: $model.isUUIDContentAnimated)
                         .toggleStyle(.switch)
                         .controlSize(.mini)
                         .textScale(.secondary)
                         .fixedSize()
                 }
 
-                if isUUIDContentShown {
-                    ForEach(uuidContentItems, id: \.self) { uuid in
+                if model.isUUIDContentShown {
+                    ForEach(model.uuidContentItems, id: \.self) { uuid in
                         Text(uuid.uuidString)
                     }
                     .font(.system(size: 11))
@@ -82,8 +59,8 @@ struct MenuView: View {
                     .foregroundStyle(.secondary)
 
                     MenuCircleButton(style: .standard(systemImage: "plus")) {
-                        withAnimation(isUUIDContentAnimated ? .macControlCenterMenuResize : nil) {
-                            uuidContentItems.append(contentsOf: (0 ... 9).map { _ in UUID() })
+                        withAnimation(model.isUUIDContentAnimated ? .macControlCenterMenuResize : nil) {
+                            model.addUUIDContentItems()
                         }
                     } label: {
                         VStack(alignment: .leading) {
@@ -99,14 +76,14 @@ struct MenuView: View {
 
             MenuSection("Display", divider: true) {
                 MenuSlider(
-                    value: $brightness,
+                    value: $model.brightness,
                     image: .minMax(minSystemName: "sun.min.fill", maxSystemName: "sun.max.fill")
                 )
-                .disabled(!isEnabled)
+                .disabled(!model.isEnabled)
 
                 HStack {
                     MenuCircleToggle(
-                        isOn: $darkMode,
+                        isOn: $model.darkMode,
                         controlSize: .prominent,
                         style: .init(
                             image: Image(systemName: "airplayvideo"),
@@ -117,7 +94,7 @@ struct MenuView: View {
                         Text("Dark Mode")
                     }
                     MenuCircleToggle(
-                        isOn: $nightShift,
+                        isOn: $model.nightShift,
                         controlSize: .prominent,
                         style: .init(
                             image: Image(systemName: "sun.max.fill"),
@@ -127,7 +104,7 @@ struct MenuView: View {
                         Text("Night Shift")
                     }
                     MenuCircleToggle(
-                        isOn: $trueTone,
+                        isOn: $model.trueTone,
                         controlSize: .prominent,
                         style: .init(
                             image: Image(systemName: "sun.max.fill"),
@@ -136,13 +113,13 @@ struct MenuView: View {
                     ) {
                         Text("True Tone")
                     }
-                    .disabled(!isEnabled)
+                    .disabled(!model.isEnabled)
                 }
                 .frame(height: 80)
             }
 
             MenuSection("Sound", divider: true) {
-                MenuVolumeSlider(value: $volume)
+                MenuVolumeSlider(value: $model.volume)
 
                 MenuCommand("Sound Settings...") {
                     print("Sound Settings clicked")
@@ -150,7 +127,7 @@ struct MenuView: View {
             }
 
             MenuSection("Output", divider: true) {
-                MenuList(audioOutputs, selection: $audioOutputSelection) { item, isSelected, itemClicked in
+                MenuList(model.audioOutputs, selection: $model.audioOutputSelection) { item, isSelected, itemClicked in
                     if item.name.contains("AirPods Max") {
                         HighlightingMenuDisclosureGroup(
                             style: .menuItem,
@@ -174,7 +151,7 @@ struct MenuView: View {
                                 }
                             },
                             content: {
-                                MenuList(airPodsOptions, selection: $airPodsOptionSelection) { item, isSelected, itemClicked in
+                                MenuList(model.airPodsOptions, selection: $model.airPodsOptionSelection) { item, isSelected, itemClicked in
                                     MenuToggle(
                                         isOn: .constant(isSelected),
                                         style: .checkmark()
@@ -190,7 +167,7 @@ struct MenuView: View {
                                 }
                             }
                         )
-                        .disabled(!isEnabled)
+                        .disabled(!model.isEnabled)
                     } else {
                         MenuToggle(isOn: .constant(isSelected), image: item.image) {
                             Text(item.name)
@@ -199,21 +176,21 @@ struct MenuView: View {
                 }
             }
 
-            MenuDisclosureSection("Wi-Fi Network", divider: true, isExpanded: $isWiFiExpanded) {
+            MenuDisclosureSection("Wi-Fi Network", divider: true, isExpanded: $model.isWiFiExpanded) {
                 MenuScrollView(maxHeight: 135) {
-                    MenuList(wiFiNetworks, selection: $wiFiSelection) { item in
+                    MenuList(model.wiFiNetworks, selection: $model.wiFiSelection) { item in
                         MenuToggle(image: item.image) {
                             Text(item.name)
                         }
                     }
-                    .disabled(!isEnabled)
+                    .disabled(!model.isEnabled)
                 }
             }
 
             MenuSection("Custom Icons", divider: true) {
-                MenuToggle("Safari", isOn: $isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
-                MenuToggle("Music", isOn: $isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
-                    .disabled(!isEnabled)
+                MenuToggle("Safari", isOn: $model.isSafariEnabled, style: .icon(appIcon(for: "com.apple.Safari")))
+                MenuToggle("Music", isOn: $model.isMusicEnabled, style: .icon(appIcon(for: "com.apple.Music")))
+                    .disabled(!model.isEnabled)
             }
 
             MenuSection(divider: true) {
@@ -222,7 +199,7 @@ struct MenuView: View {
                 } label: {
                     Text("About") // custom label view
                 }
-                .disabled(!isEnabled)
+                .disabled(!model.isEnabled)
 
                 MenuCommand {
                     openSettings()
