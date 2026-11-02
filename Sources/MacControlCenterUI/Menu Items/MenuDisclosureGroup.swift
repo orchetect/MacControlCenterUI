@@ -142,8 +142,11 @@ public struct MenuDisclosureGroup<Label: View>: View, MacControlCenterMenuItem {
                     .frame(width: MenuGeometry.menuHorizontalContentInset)
             }
         }
-        .onHover { state in
-            guard isEnabled else { return }
+        .onMouseHover { state in // more reliable than `.onHover { }`
+            guard isEnabled else {
+                return
+            }
+
             isHighlighted = state
         }
         .onChange(of: isEnabled) { newValue in
