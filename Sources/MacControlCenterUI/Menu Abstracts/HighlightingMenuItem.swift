@@ -64,8 +64,11 @@ public struct HighlightingMenuItem<Content: View>: View, MacControlCenterMenuIte
             .fixedSize(horizontal: false, vertical: true)
             .contentShape(Rectangle()) // ensures hit test area works as expected when view is wrapped in another view
             .geometryGroupIfSupportedByPlatform()
-            .onHover { state in
-                guard isEnabled else { setHighlight(state: false); return }
+            .onMouseHover { state in // more reliable than `.onHover { }`
+                guard isEnabled else {
+                    setHighlight(state: false)
+                    return
+                }
                 if isHighlightedInternal != state {
                     setHighlight(state: state)
                 }
